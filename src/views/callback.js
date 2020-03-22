@@ -1,15 +1,19 @@
-import React from "react";
-import Link from "../components/link";
-import { logout, getProfile } from "../utils/auth";
+import React, { useEffect } from "react";
 
-export default function Callback() {
-  const user = getProfile();
+import { useAuth } from "react-use-auth";
+import Layout from "../components/layout";
+
+const Auth0CallbackPage = () => {
+  const { handleAuthentication } = useAuth();
+  useEffect(() => {
+    handleAuthentication();
+  }, []);
 
   return (
-    <div>
-      You are now logged in!
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <Link onClick={logout}>Logout</Link>
-    </div>
+    <h1>
+      This is the auth callback page, you should be redirected immediately.
+    </h1>
   );
-}
+};
+
+export default Auth0CallbackPage;
