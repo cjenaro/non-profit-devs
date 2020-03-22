@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, lazy } from "react";
+import Layout from "./components/layout";
+import { Router } from "@reach/router";
+
+const Home = lazy(() => import("./views/home"));
+const Projects = lazy(() => import("./views/projects"));
+const NewProject = lazy(() => import("./views/projects/new"));
+const Callback = lazy(() => import("./views/callback"));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Suspense fallback={<div>LOADING...</div>}>
+          <Router>
+            <Home path="/" />
+            <Projects path="/projects" />
+            <NewProject path="/projects/new" />
+            <Callback path="/callback" />
+          </Router>
+        </Suspense>
+      </Layout>
     </div>
   );
 }
