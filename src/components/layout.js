@@ -44,6 +44,8 @@ const Layout = ({ children }) => {
         css={css`
           min-height: calc(100vh - 133px);
           position: relative;
+          overflow-x: hidden;
+
           > div {
             position: absolute;
             z-index: 2;
@@ -66,7 +68,6 @@ const Layout = ({ children }) => {
           top: 0;
           left: 0;
           transition: clip-path 0.3s ease-in-out;
-          clip-path: polygon(0 50%, 50% 50%, 50% 50%, 85% 100%, 0% 100%);
         `}
       ></div>
     </React.Fragment>

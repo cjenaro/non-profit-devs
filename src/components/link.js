@@ -6,12 +6,11 @@ import { Link } from "@reach/router";
 export default function({
   children,
   to,
-  entry,
-  exit,
   color,
   bgColor,
   inverted,
-  onClick
+  onClick,
+  styles
 }) {
   return to ? (
     <Link
@@ -22,10 +21,18 @@ export default function({
         border: 1px solid ${!inverted ? color : bgColor};
         border-radius: 10px;
         text-decoration: none;
+        text-align: center;
         font-size: 24px;
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out,
+          border-color 0.2s ease-in-out;
+        ${styles}
+
+        &:hover {
+          color: ${!inverted ? bgColor : color};
+          background-color: ${!inverted ? color : bgColor};
+          border: 1px solid ${inverted ? color : bgColor};
+        }
       `}
-      entry={entry}
-      exit={exit}
       to={to}
     >
       {children}
@@ -39,7 +46,18 @@ export default function({
         border: 1px solid ${!inverted ? color : bgColor};
         border-radius: 10px;
         text-decoration: none;
+        text-align: center;
+        cursor: pointer;
         font-size: 24px;
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out,
+          border-color 0.2s ease-in-out;
+        ${styles}
+
+        &:hover {
+          color: ${!inverted ? bgColor : color};
+          background-color: ${!inverted ? color : bgColor};
+          border: 1px solid ${inverted ? color : bgColor};
+        }
       `}
       onClick={onClick}
     >
