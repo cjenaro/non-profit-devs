@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useAuth } from "react-use-auth";
+import useMount from "../hooks/use-mount";
 
 const Auth0CallbackPage = () => {
   const { handleAuthentication } = useAuth();
-  useEffect(() => {
-    handleAuthentication({ postLoginRoute: "/account" });
-  }, []);
+  useMount(() => {
+    handleAuthentication({ postLoginRoute: "/profile" });
+  });
 
   return (
     <h1>

@@ -8,12 +8,14 @@ const Layout = ({ children }) => {
     <React.Fragment>
       <Global
         styles={css`
+          @import url("https://fonts.googleapis.com/css2?family=Hind+Madurai&family=Montserrat:wght@700&display=swap");
+
           body {
             margin: 0;
             padding: 0;
-            font-family: "ABeeZee", sans-serif;
-            color: var(--violet);
-            background-color: var(--pastel-one);
+            font-family: "Hind Madurai", sans-serif;
+            color: var(--lavender);
+            background-color: var(--ember);
           }
 
           h1,
@@ -21,15 +23,12 @@ const Layout = ({ children }) => {
           h3,
           h4,
           h5 {
-            font-family: "Expletus Sans";
+            font-family: "Montserrat", sans-serif;
           }
 
           :root {
-            --brandRed: #ee5e11;
-            --violet: #2e0f39;
-            --dark-pastel: #f7c6a1;
-            --pastel-one: #efefd1;
-            --pastel-two: #ddeed2;
+            --lavender: #f9e8e8;
+            --ember: #e16036;
           }
 
           ul {
@@ -40,36 +39,8 @@ const Layout = ({ children }) => {
         `}
       />
       <Header />
-      <main
-        css={css`
-          min-height: calc(100vh - 133px);
-          position: relative;
-          overflow-x: hidden;
-
-          > div {
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-          }
-        `}
-      >
-        {children}
-      </main>
-      <div
-        id="bg-shape"
-        css={css`
-          background-color: var(--brandRed);
-          position: absolute;
-          height: 100vh;
-          width: 100vw;
-          top: 0;
-          left: 0;
-          transition: clip-path 0.3s ease-in-out;
-        `}
-      ></div>
+      <main>{children}</main>
+      <Header sticky />
     </React.Fragment>
   );
 };

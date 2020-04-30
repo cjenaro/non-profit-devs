@@ -1,14 +1,13 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import Layout from "./components/layout";
 import { Router, navigate } from "@reach/router";
 import { AuthProvider } from "react-use-auth";
 import { ApolloWrapper } from "./utils/apollo";
-
-const Home = lazy(() => import("./views/home"));
-const Projects = lazy(() => import("./views/projects"));
-const NewProject = lazy(() => import("./views/projects/new"));
-const Auth0CallbackPage = lazy(() => import("./views/callback"));
-const Account = lazy(() => import("./views/account"));
+import Auth0CallbackPage from "./views/callback";
+import Home from "./views/home";
+import Profile from "./views/profile";
+import Pitch from "./views/pitch";
+import Projects from "./views/projects";
 
 function App() {
   return (
@@ -20,15 +19,13 @@ function App() {
       >
         <ApolloWrapper>
           <Layout>
-            <Suspense fallback={<div>LOADING...</div>}>
-              <Router>
-                <Home path="/" />
-                <Projects path="/projects" />
-                <NewProject path="/projects/new" />
-                <Account path="/account" />
-                <Auth0CallbackPage path="/auth0_callback" />
-              </Router>
-            </Suspense>
+            <Router>
+              <Home path="/" />
+              <Profile path="/profile" />
+              <Pitch path="/pitch" />
+              <Projects path="/projects" />
+              <Auth0CallbackPage path="/auth0_callback" />
+            </Router>
           </Layout>
         </ApolloWrapper>
       </AuthProvider>
