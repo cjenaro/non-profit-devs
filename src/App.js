@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
 import { Router, navigate } from "@reach/router";
 import { AuthProvider } from "react-use-auth";
 import { ApolloWrapper } from "./utils/apollo";
