@@ -10,6 +10,25 @@ const styles = `
     border: 1px solid var(--ember);
     color: var(--ember);
     background-color: transparent;
+    cursor: pointer;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    &:hover {
+      &::before {
+        background-color: rgba(0,0,0, 0.15);
+      }
+    }
 
     &.contained {
         background-color: var(--ember);
@@ -19,7 +38,6 @@ const styles = `
     &.text {
         color: var(--lavender);
         border: 0;
-        position: relative;
 
         &::after {
             content: '';

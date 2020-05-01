@@ -26,6 +26,12 @@ const Layout = ({ children }) => {
             font-family: "Montserrat", sans-serif;
           }
 
+          .container {
+            max-width: calc(var(--max-width) - 20px);
+            padding: 0 20px;
+            margin: 0 auto;
+          }
+
           :root {
             --lavender: #f9e8e8;
             --ember: #e16036;

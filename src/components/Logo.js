@@ -7,7 +7,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   border: 1px solid var(--ember);
   max-width: 55px;
-  padding: 2px 7px;
+  padding: 5px 7px;
 `;
 
 const Logo = ({ to }) => (
