@@ -28,13 +28,14 @@ const Layout = ({ children }) => {
 
           .container {
             max-width: calc(var(--max-width) - 20px);
-            padding: 0 20px;
+            padding: 0 10px;
             margin: 0 auto;
           }
 
           :root {
             --lavender: #f9e8e8;
             --ember: #e16036;
+            --max-width: 300px;
           }
 
           ul {

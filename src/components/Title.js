@@ -1,7 +1,7 @@
 //* @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-export default function Title({ color, borderColor, children }) {
+export default function Title({ color, borderColor, children, styles }) {
   return (
     <h3
       css={css`
@@ -9,7 +9,7 @@ export default function Title({ color, borderColor, children }) {
         font-size: 38px;
         color: ${color};
         width: max-content;
-        -webkit-text-stroke: 2px ${borderColor};
+        -webkit-text-stroke: 1px ${borderColor};
         z-index: 2;
         margin: 0 auto;
 
@@ -23,6 +23,8 @@ export default function Title({ color, borderColor, children }) {
           left: 0;
           position: absolute;
         }
+
+        ${styles && styles}
       `}
     >
       {children}
