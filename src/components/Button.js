@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   border: 1px solid var(--ember);
   color: var(--ember);
-  background-color: transparent;
+  background-color: var(--lavender);
   cursor: pointer;
   position: relative;
   text-decoration: none;

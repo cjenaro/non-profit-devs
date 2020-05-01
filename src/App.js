@@ -8,6 +8,7 @@ import Home from "./views/home/index";
 import Profile from "./views/profile";
 import Pitch from "./views/pitch";
 import Projects from "./views/projects";
+import NotFound from "./views/not-found";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Pitch path="/pitch" />
               <Projects path="/projects" />
               <Auth0CallbackPage path="/auth0_callback" />
+              <NotFound path="/*" />
             </Router>
           </Layout>
         </ApolloWrapper>

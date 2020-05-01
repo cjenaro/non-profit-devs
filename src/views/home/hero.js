@@ -6,28 +6,45 @@ export default function Hero() {
     <section
       css={css`
         padding-top: 40px;
-        min-height: 415px;
+        padding-bottom: 40px;
       `}
     >
       <div
         css={css`
-          width: 300px;
-          height: 300px;
-          display: block;
+          max-width: var(--max-width);
           margin: 0 auto;
-          border: 1px solid var(--lavender);
         `}
       >
-        <h1
+        <div
           css={css`
-            text-transform: uppercase;
-            font-size: 82px;
-            margin: 0 -12px 0;
-            -webkit-text-stroke: 2px var(--ember);
+            width: 300px;
+            height: 300px;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid var(--lavender);
+
+            @media (min-width: 768px) {
+              margin: 0 auto 0 0;
+            }
           `}
         >
-          Non Profit Devs
-        </h1>
+          <h1
+            css={css`
+              text-transform: uppercase;
+              font-size: 82px;
+              margin: 0 -12px 0;
+              -webkit-text-stroke: 2px var(--ember);
+              letter-spacing: 4px;
+            `}
+          >
+            Non Profit Devs
+          </h1>
+        </div>
+        <div
+          css={css`
+            display: none;
+          `}
+        ></div>
       </div>
     </section>
   );

@@ -36,6 +36,14 @@ const Layout = ({ children }) => {
             --lavender: #f9e8e8;
             --ember: #e16036;
             --max-width: 300px;
+
+            @media (min-width: 495px) {
+              --max-width: 430px;
+            }
+
+            @media (min-width: 768px) {
+              --max-width: 650px;
+            }
           }
 
           ul {

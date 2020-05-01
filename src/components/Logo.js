@@ -19,6 +19,7 @@ const Logo = ({ to }) => (
         font-size: 14px;
         color: var(--ember);
         text-transform: uppercase;
+        letter-spacing: 0.5px;
       `}
     >
       Non Profit Devs
