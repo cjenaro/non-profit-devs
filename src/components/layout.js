@@ -47,7 +47,7 @@ const Layout = ({ children }) => {
       />
       <Header />
       <main>{children}</main>
-      <Header sticky />
+      <Header fixed />
     </React.Fragment>
   );
 };

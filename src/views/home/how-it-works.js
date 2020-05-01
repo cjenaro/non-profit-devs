@@ -7,7 +7,7 @@ export default function HowItWorks() {
   return (
     <section
       css={css`
-        padding: 50px 0;
+        padding: 50px 0 100px;
 
         .text-center {
           text-align: center;
