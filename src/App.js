@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
 import { Router, navigate } from "@reach/router";
 import { AuthProvider } from "react-use-auth";
 import { ApolloWrapper } from "./utils/apollo";
 import Auth0CallbackPage from "./views/callback";
-import Home from "./views/home";
+import Home from "./views/home/index";
 import Profile from "./views/profile";
 import Pitch from "./views/pitch";
 import Projects from "./views/projects";

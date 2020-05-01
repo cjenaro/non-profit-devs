@@ -1,7 +1,7 @@
 import React from "react";
 //* @jsx jsx */
 import { jsx, Global, css } from "@emotion/core";
-import Header from "./header";
+import Header from "./Header";
 
 const Layout = ({ children }) => {
   return (
@@ -26,9 +26,16 @@ const Layout = ({ children }) => {
             font-family: "Montserrat", sans-serif;
           }
 
+          .container {
+            max-width: calc(var(--max-width) - 20px);
+            padding: 0 10px;
+            margin: 0 auto;
+          }
+
           :root {
             --lavender: #f9e8e8;
             --ember: #e16036;
+            --max-width: 300px;
           }
 
           ul {
@@ -40,7 +47,7 @@ const Layout = ({ children }) => {
       />
       <Header />
       <main>{children}</main>
-      <Header sticky />
+      <Header fixed />
     </React.Fragment>
   );
 };
