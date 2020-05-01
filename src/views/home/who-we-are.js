@@ -2,8 +2,11 @@
 import { jsx, css } from "@emotion/core";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import { useAuth } from "react-use-auth";
 
 export default function WhoWeAre() {
+  const { login } = useAuth();
+
   return (
     <section
       css={css`
@@ -33,8 +36,12 @@ export default function WhoWeAre() {
           We are a team of developers working for free for non-profit
           organizations
         </p>
-        <Button className="big-button">Pitch ONG Website</Button>
-        <Button className="big-button">Join as developer</Button>
+        <Button to="/pitch" className="big-button">
+          Pitch ONG Website
+        </Button>
+        <Button onClick={login} className="big-button">
+          Join as developer
+        </Button>
       </div>
     </section>
   );
