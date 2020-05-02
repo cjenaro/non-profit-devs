@@ -5,6 +5,7 @@ import useMount from "../hooks/use-mount";
 
 const Auth0CallbackPage = () => {
   const { handleAuthentication } = useAuth();
+
   useMount(() => {
     handleAuthentication({ postLoginRoute: "/profile" });
   });

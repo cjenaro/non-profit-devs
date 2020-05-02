@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.1.2",
     "apollo-boost": "^0.4.7",
     "auth0-js": "9.13.2",
+    "downshift": "^5.2.3",
     "graphql": "^14.6.0",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.13.1",

@@ -6,7 +6,7 @@ import Logo from "./Logo";
 import Button from "./Button";
 
 const Header = ({ fixed }) => {
-  const { isAuthenticated, login, logout, user } = useAuth();
+  const { isAuthenticated, login, logout } = useAuth();
   const isProfile = window.location.pathname.includes("profile");
 
   return (
