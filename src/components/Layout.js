@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
 
           :root {
             --lavender: #f9e8e8;
-            --ember: #e16036;
+            --ember: #c42e2e;
             --max-width: 300px;
 
             @media (min-width: 495px) {
@@ -43,6 +43,10 @@ const Layout = ({ children }) => {
 
             @media (min-width: 768px) {
               --max-width: 650px;
+            }
+
+            @media (min-width: 1100px) {
+              --max-width: 800px;
             }
           }
 
