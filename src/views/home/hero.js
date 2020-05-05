@@ -13,6 +13,7 @@ export default function Hero() {
         css={css`
           max-width: var(--max-width);
           margin: 0 auto;
+          position: relative;
         `}
       >
         <div
@@ -40,11 +41,69 @@ export default function Hero() {
             Non Profit Devs
           </h1>
         </div>
-        <div
+        <svg
           css={css`
             display: none;
+            position: absolute;
+            opacity: 0.1;
+            top: 20px;
+            right: -35%;
+            color: var(--lavender);
+            @media (min-width: 768px) {
+              display: block;
+            }
           `}
-        ></div>
+          id="BRICKS"
+          xmlns="http://www.w3.org/2000/svg"
+          width="610"
+          height="268"
+          viewBox="0 0 610 268"
+        >
+          <rect
+            id="_5"
+            data-name="5"
+            width="230"
+            height="74"
+            rx="5"
+            transform="translate(252 194)"
+            fill="currentColor"
+          />
+          <rect
+            id="_4"
+            data-name="4"
+            width="230"
+            height="74"
+            rx="5"
+            transform="translate(0 194)"
+            fill="currentColor"
+          />
+          <rect
+            id="_3"
+            data-name="3"
+            width="230"
+            height="76"
+            rx="5"
+            transform="translate(380 96)"
+            fill="currentColor"
+          />
+          <rect
+            id="_2"
+            data-name="2"
+            width="232"
+            height="76"
+            rx="5"
+            transform="translate(126 96)"
+            fill="currentColor"
+          />
+          <rect
+            id="_1"
+            data-name="1"
+            width="230"
+            height="74"
+            rx="5"
+            fill="currentColor"
+          />
+        </svg>
       </div>
     </section>
   );
