@@ -3,23 +3,31 @@ import { useContext, useState } from "react";
 import { css, jsx } from "@emotion/core";
 import { UserContext } from "../context/UserContext";
 import { useAuth } from "react-use-auth";
-import useMount from "../hooks/use-mount";
 import { useQuery } from "@apollo/react-hooks";
+import { Link } from "@reach/router";
 import gql from "graphql-tag";
 
+import useMount from "../hooks/use-mount";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import Divider from "../components/Divider";
-import { Link } from "@reach/router";
 
 const USER_QUERY = gql`
-  query USER_QUERY {
-    users_by_pk(id: "google-oauth2|113155641271523621296") {
+  query USER_QUERY($id: String!) {
+    users_by_pk(id: $id) {
       email
       name
       skills
+    }
+  }
+`;
+
+const SKILLS_QUERY = gql`
+  query SKILLS_QUERY {
+    skills {
+      skill
     }
   }
 `;
@@ -43,7 +51,10 @@ export default function Profile() {
   const { user, accessToken } = useAuth();
   const [myUser, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
-  const { data, loading, error } = useQuery(USER_QUERY);
+  const { data, loading, error } = useQuery(USER_QUERY, {
+    variables: { id: myUser.id },
+  });
+  const skills = useQuery(SKILLS_QUERY);
 
   const handleUserUpdate = (e) => {
     e.preventDefault();
@@ -90,13 +101,16 @@ export default function Profile() {
             name="email"
             id="email"
           />
-          <Select
-            styles={css`
-              margin-top: 16px;
-            `}
-            placeholder="Skill"
-            onChange={handleSkills}
-          />
+          {!skills.loading && !skills.error && (
+            <Select
+              styles={css`
+                margin-top: 16px;
+              `}
+              placeholder="Skill"
+              onChange={handleSkills}
+              options={skills.data.skills}
+            />
+          )}
           <Button className="submit-btn">Submit</Button>
         </form>
       </div>

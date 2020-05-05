@@ -3,9 +3,7 @@ import { jsx, css } from "@emotion/core";
 import { useSelect } from "downshift";
 import { useEffect } from "react";
 
-const skills = ["Front end", "Back end", "Designer", "Fullstack"];
-
-function Select({ onChange, styles, placeholder }) {
+function Select({ onChange, styles, placeholder, options }) {
   const {
     isOpen,
     selectedItem,
@@ -14,7 +12,7 @@ function Select({ onChange, styles, placeholder }) {
     getMenuProps,
     highlightedIndex,
     getItemProps,
-  } = useSelect({ items: skills });
+  } = useSelect({ items: options });
 
   useEffect(() => {
     onChange(selectedItem);
@@ -51,7 +49,7 @@ function Select({ onChange, styles, placeholder }) {
       </button>
       <ul {...getMenuProps()}>
         {isOpen &&
-          skills.map((skill, index) => (
+          options.map((option, index) => (
             <li
               style={
                 highlightedIndex === index ? { backgroundColor: "#c6542f" } : {}
@@ -62,10 +60,10 @@ function Select({ onChange, styles, placeholder }) {
                 border-left: 1px solid var(--lavender);
                 border-right: 1px solid var(--lavender);
               `}
-              key={`${skill}${index}`}
-              {...getItemProps({ skill, index })}
+              key={`${option}${index}`}
+              {...getItemProps({ option, index })}
             >
-              {skill}
+              {option}
             </li>
           ))}
       </ul>
