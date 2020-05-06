@@ -9,8 +9,29 @@ export default function Input({ placeholder, label, name, id, type, styles }) {
         text-transform: uppercase;
         width: 100%;
         display: block;
+        position: relative;
+
+        &::before {
+          content: "";
+          width: 5px;
+          height: 100%;
+          background-color: var(--ember);
+          position: absolute;
+          top: 0;
+          left: -15px;
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.2s ease-in-out;
+        }
+
+        &:focus-within {
+          &::before {
+            transform: scaleX(1);
+          }
+        }
 
         input {
+          margin-top: 4px;
           font-size: 16px;
           border: 1px solid var(--lavender);
           background-color: var(--ember);
