@@ -8,7 +8,25 @@ export function useGetUser(id) {
         users_by_pk(id: $id) {
           email
           name
-          skills
+          userskills {
+            userSkills {
+              skill
+            }
+          }
+          userProjects {
+            userProjects {
+              description
+              contact
+              id
+              name
+              slug
+              projectstatuses {
+                statusProject {
+                  status
+                }
+              }
+            }
+          }
         }
       }
     `,
@@ -29,4 +47,21 @@ export function useAddSkillToUser() {
       }
     `
   );
+}
+
+export function useUpdateUser() {
+  return useMutation(gql`
+    mutation UPDATE_USER($id: String!, $email: String!, $name: String!) {
+      update_users(
+        where: { id: { _eq: $id } }
+        _set: { email: $email, name: $name }
+      ) {
+        returning {
+          email
+          name
+          id
+        }
+      }
+    }
+  `);
 }
