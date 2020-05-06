@@ -13,48 +13,35 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import Divider from "../components/Divider";
-
-const USER_QUERY = gql`
-  query USER_QUERY($id: String!) {
-    users_by_pk(id: $id) {
-      email
-      name
-      skills
-    }
-  }
-`;
-
-const SKILLS_QUERY = gql`
-  query SKILLS_QUERY {
-    skills {
-      skill
-    }
-  }
-`;
+import ProjectItem from "../components/ProjectItem";
+import { useGetSkills } from "../hooks/use-skills";
+import { useGetUser } from "../hooks/use-devs";
 
 const projects = [
   {
     name: "Water Org.",
+    slug: "water-org",
     id: 1,
   },
   {
     name: "Pet Shelter.",
+    slug: "pet-shelter",
     id: 2,
   },
   {
     name: "UNICEF.",
+    slug: "unicef",
     id: 3,
   },
 ];
 
 export default function Profile() {
-  const { user, accessToken } = useAuth();
+  const { user, accessToken, authResult } = useAuth();
   const [myUser, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
-  const { data, loading, error } = useQuery(USER_QUERY, {
-    variables: { id: myUser.id },
-  });
-  const skills = useQuery(SKILLS_QUERY);
+  const { data, loading, error } = useGetUser(user.sub);
+
+  const skills = useGetSkills();
 
   const handleUserUpdate = (e) => {
     e.preventDefault();
@@ -65,7 +52,7 @@ export default function Profile() {
   };
 
   useMount(() => {
-    setUser({ ...user, ...accessToken });
+    setUser({ ...user, ...accessToken, ...authResult });
   });
 
   const handleSkills = (skill) => {
@@ -86,6 +73,10 @@ export default function Profile() {
           border: 1px solid var(--lavender);
           color: var(--lavender);
           background-color: var(--emberr);
+        }
+
+        @media (min-width: 768px) {
+          padding-bottom: 50px;
         }
       `}
     >
@@ -175,34 +166,7 @@ export default function Profile() {
               `}
               key={project.id}
             >
-              <Link
-                to="/projects"
-                css={css`
-                  text-decoration: none;
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  padding: 17px 14px;
-                  color: var(--lavender);
-                `}
-              >
-                <p
-                  css={css`
-                    margin: 0;
-                    font-size: 30px;
-                  `}
-                >
-                  {project.name}
-                </p>
-                <p
-                  css={css`
-                    margin: 0;
-                    font-size: 30px;
-                  `}
-                >
-                  &rarr;
-                </p>
-              </Link>
+              <ProjectItem project={project} />
             </li>
           ))}
         </ul>
