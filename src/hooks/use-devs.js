@@ -51,7 +51,7 @@ export function useAddSkillToUser() {
 
 export function useUpdateUser() {
   return useMutation(gql`
-    mutation UPDATE_USER($id: String!, $email: String!, $name: String!) {
+    mutation UPDATE_USER($id: String!, $email: String, $name: String) {
       update_users(
         where: { id: { _eq: $id } }
         _set: { email: $email, name: $name }

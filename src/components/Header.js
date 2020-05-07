@@ -50,7 +50,13 @@ const Header = ({ fixed }) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Button>{isProfile ? "Profile" : "Projects"}</Button>
+            <Button
+              css={css`
+                margin-right: 10px;
+              `}
+            >
+              {isProfile ? "Profile" : "Projects"}
+            </Button>
             <Button onClick={logout}>Sign Out</Button>
           </React.Fragment>
         )}

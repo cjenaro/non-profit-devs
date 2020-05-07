@@ -6,14 +6,19 @@ export default function NotFound() {
   return (
     <section
       css={css`
-        height: 100%;
+        height: calc(100vh - 128px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
       `}
     >
       <div className="container">
         <h1
           css={css`
+            margin-top: 0;
+            margin-bottom: 30px;
             font-size: 40px;
-            text-align: center;
           `}
         >
           Oops! The page you are trying to access does not exist!

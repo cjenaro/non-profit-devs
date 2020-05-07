@@ -15,6 +15,17 @@ const StyledButton = styled.button`
   text-decoration: none;
   width: max-content;
 
+  @keyframes load {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   &::before {
     content: "";
     position: absolute;
@@ -24,6 +35,19 @@ const StyledButton = styled.button`
     height: 100%;
     background-color: transparent;
     transition: background-color 0.2s ease-in-out;
+  }
+
+  &.loading {
+    &::before {
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      margin-top: -5px;
+      left: 5px;
+      background-color: var(--ember);
+      border-radius: 50%;
+      animation: load 0.7s ease-in-out infinite;
+    }
   }
 
   &:hover {
@@ -53,13 +77,16 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function Button({ onClick, to, children, className }) {
+export default function Button({ onClick, to, children, className, loading }) {
   const handleTo = () => {
     navigate(to);
   };
 
   return (
-    <StyledButton className={className} onClick={to ? handleTo : onClick}>
+    <StyledButton
+      className={`${className} ${loading ? "loading" : ""}`}
+      onClick={to ? handleTo : onClick}
+    >
       {children}
     </StyledButton>
   );

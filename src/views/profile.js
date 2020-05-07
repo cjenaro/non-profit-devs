@@ -15,7 +15,11 @@ import Select from "../components/Select";
 import Divider from "../components/Divider";
 import ProjectItem from "../components/ProjectItem";
 import { useGetSkills } from "../hooks/use-skills";
-import { useGetUser } from "../hooks/use-devs";
+import {
+  useGetUser,
+  useUpdateUser,
+  useAddSkillToUser,
+} from "../hooks/use-devs";
 
 const projects = [
   {
@@ -39,12 +43,29 @@ export default function Profile() {
   const { user, accessToken, authResult } = useAuth();
   const [myUser, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
-  const { data, loading, error } = useGetUser(user.sub);
+  const getUser = useGetUser(user.sub);
+  const [updateUser, { loading }] = useUpdateUser();
+  const [addSkill, addSkillRes] = useAddSkillToUser();
 
   const skills = useGetSkills();
 
-  const handleUserUpdate = (e) => {
+  const handleUserUpdate = async (e) => {
     e.preventDefault();
+
+    await updateUser({
+      variables: {
+        id: user.sub,
+        email: e.target.email.value,
+        name: e.target.name.value,
+      },
+    });
+
+    await addSkill({
+      variables: {
+        dev: user.sub,
+        skill: skill.id,
+      },
+    });
   };
 
   const handlePasswordChange = (e) => {
@@ -57,6 +78,16 @@ export default function Profile() {
 
   const handleSkills = (skill) => {
     setSkill(skill);
+  };
+
+  const getSkill = () => {
+    return (
+      getUser.data &&
+      getUser.data.users_by_pk &&
+      getUser.data.users_by_pk.userskills &&
+      getUser.data.users_by_pk.userskills.length > 0 &&
+      getUser.data.users_by_pk.userskills[0].userSkills.skill
+    );
   };
 
   if (!myUser) return null;
@@ -85,24 +116,40 @@ export default function Profile() {
           {myUser.name}.
         </Title>
 
+        <pre>{getUser.data && JSON.stringify(getUser.data, null, 2)}</pre>
+
         <form onSubmit={handleUserUpdate}>
           <Input
             label="Email:"
-            placeholder={myUser.email}
+            placeholder={getUser.data && getUser.data.users_by_pk.email}
             name="email"
             id="email"
+          />
+          <Input
+            label="Name:"
+            name="name"
+            placeholder={getUser.data && getUser.data.users_by_pk.name}
+            id="name"
+            styles={css`
+              margin-top: 16px;
+            `}
           />
           {!skills.loading && !skills.error && (
             <Select
               styles={css`
                 margin-top: 16px;
               `}
-              placeholder="Skill"
+              placeholder={getSkill() || "Skills"}
               onChange={handleSkills}
               options={skills.data.skills}
             />
           )}
-          <Button className="submit-btn">Submit</Button>
+          <Button
+            loading={addSkillRes.loading && updateUser.loading}
+            className="submit-btn"
+          >
+            Submit
+          </Button>
         </form>
       </div>
       <Divider

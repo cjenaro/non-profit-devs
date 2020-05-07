@@ -36,6 +36,7 @@ function Select({ onChange, styles, placeholder, options }) {
       </label>
       <button
         {...getToggleButtonProps()}
+        type="button"
         css={css`
           font-size: 16px;
           border: 1px solid var(--lavender);
@@ -45,7 +46,7 @@ function Select({ onChange, styles, placeholder, options }) {
           color: var(--lavender);
         `}
       >
-        {selectedItem || placeholder}
+        {(selectedItem && selectedItem.skill) || placeholder}
       </button>
       <ul {...getMenuProps()}>
         {isOpen &&
@@ -60,10 +61,10 @@ function Select({ onChange, styles, placeholder, options }) {
                 border-left: 1px solid var(--lavender);
                 border-right: 1px solid var(--lavender);
               `}
-              key={`${option}${index}`}
+              key={`${option.id}-${index}`}
               {...getItemProps({ option, index })}
             >
-              {option}
+              {option.skill}
             </li>
           ))}
       </ul>
