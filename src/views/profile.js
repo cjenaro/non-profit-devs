@@ -3,9 +3,6 @@ import { useContext, useState } from "react";
 import { css, jsx } from "@emotion/core";
 import { UserContext } from "../context/UserContext";
 import { useAuth } from "react-use-auth";
-import { useQuery } from "@apollo/react-hooks";
-import { Link } from "@reach/router";
-import gql from "graphql-tag";
 
 import useMount from "../hooks/use-mount";
 import Title from "../components/Title";
@@ -20,24 +17,6 @@ import {
   useUpdateUser,
   useAddSkillToUser,
 } from "../hooks/use-devs";
-
-const projects = [
-  {
-    name: "Water Org.",
-    slug: "water-org",
-    id: 1,
-  },
-  {
-    name: "Pet Shelter.",
-    slug: "pet-shelter",
-    id: 2,
-  },
-  {
-    name: "UNICEF.",
-    slug: "unicef",
-    id: 3,
-  },
-];
 
 export default function Profile() {
   const { user, accessToken, authResult } = useAuth();
@@ -145,7 +124,7 @@ export default function Profile() {
             />
           )}
           <Button
-            loading={addSkillRes.loading && updateUser.loading}
+            loading={addSkillRes.loading || loading}
             className="submit-btn"
           >
             Submit
@@ -204,18 +183,22 @@ export default function Profile() {
       />
       <div className="container">
         <ul>
-          {projects.map((project) => (
-            <li
-              css={css`
-                margin-bottom: 45px;
-                min-height: 17px;
-                border: 3px solid var(--lavender);
-              `}
-              key={project.id}
-            >
-              <ProjectItem project={project} />
-            </li>
-          ))}
+          {!getUser.loading &&
+            getUser.data &&
+            getUser.data.users_by_pk.userProjects.map(
+              ({ userProjects: project }) => (
+                <li
+                  css={css`
+                    margin-bottom: 45px;
+                    min-height: 17px;
+                    border: 3px solid var(--lavender);
+                  `}
+                  key={project.id}
+                >
+                  <ProjectItem project={project} />
+                </li>
+              )
+            )}
         </ul>
       </div>
     </section>
