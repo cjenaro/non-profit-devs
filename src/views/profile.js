@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 //* @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { UserContext } from "../context/UserContext";
-import { useAuth } from "react-use-auth";
 
 import useMount from "../hooks/use-mount";
 import Title from "../components/Title";
@@ -19,10 +18,9 @@ import {
 } from "../hooks/use-devs";
 
 export default function Profile() {
-  const { user, accessToken, authResult } = useAuth();
-  const [myUser, setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
-  const getUser = useGetUser(user.sub);
+  const getUser = useGetUser(user);
   const [updateUser, { loading }] = useUpdateUser();
   const [addSkill, addSkillRes] = useAddSkillToUser();
 
@@ -52,7 +50,7 @@ export default function Profile() {
   };
 
   useMount(() => {
-    setUser({ ...user, ...accessToken, ...authResult });
+    setUser({ ...user });
   });
 
   const handleSkills = (skill) => {
@@ -69,7 +67,7 @@ export default function Profile() {
     );
   };
 
-  if (!myUser) return null;
+  if (!user) return null;
 
   return (
     <section
@@ -92,7 +90,7 @@ export default function Profile() {
     >
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
-          {myUser.name}.
+          {user.name}.
         </Title>
 
         <pre>{getUser.data && JSON.stringify(getUser.data, null, 2)}</pre>

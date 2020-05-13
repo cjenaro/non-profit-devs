@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 //* @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import { useAuth } from "react-use-auth";
 import Logo from "./Logo";
 import Button from "./Button";
+import { UserContext } from "../context/UserContext";
 
 const Header = ({ fixed }) => {
-  const { isAuthenticated, login, logout } = useAuth();
   const isProfile = window.location.pathname.includes("profile");
+  const [user, setUser] = useContext(UserContext);
+
+  const logout = () => {
+    setUser(null);
+  };
 
   return (
     <header
@@ -34,17 +38,17 @@ const Header = ({ fixed }) => {
       <Logo to="/" />
 
       <nav>
-        {!isAuthenticated() ? (
+        {!user ? (
           <React.Fragment>
             <Button
               css={css`
                 margin-right: 10px;
               `}
-              onClick={login}
+              to="/login"
             >
               Log In
             </Button>
-            <Button className="contained" onClick={login}>
+            <Button className="contained" to="/signup">
               Sign Up
             </Button>
           </React.Fragment>

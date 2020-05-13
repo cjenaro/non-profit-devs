@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   ApolloClient,
   HttpLink,
@@ -7,20 +7,19 @@ import {
 } from "apollo-boost";
 import fetch from "isomorphic-fetch";
 import { ApolloProvider } from "react-apollo";
-import { useAuth } from "react-use-auth";
+import { UserContext } from "../context/UserContext";
 
 export const ApolloWrapper = ({ children }) => {
-  const { authResult } = useAuth();
-
+  const [user] = useContext(UserContext);
   const httpLink = new HttpLink({
-    uri: "https://non-profit-devs.herokuapp.com/v1/graphql",
+    uri: process.env.REACT_APP_BACKEND_URL,
   });
 
   const authLink = new ApolloLink((operation, forward) => {
-    if (authResult && authResult.idToken) {
+    if (user && user.jwt) {
       operation.setContext({
         headers: {
-          Authorization: `Bearer ${authResult.idToken}`,
+          Authorization: `Bearer ${user.jwt}`,
         },
       });
     }
