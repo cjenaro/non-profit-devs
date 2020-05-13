@@ -1,47 +1,19 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-export function useGetUser(id) {
-  return useQuery(
-    gql`
-      query USER_QUERY($id: String!) {
-        users_by_pk(id: $id) {
-          email
-          name
-          userskills {
-            userSkills {
-              skill
-            }
-          }
-          userProjects {
-            userProjects {
-              description
-              contact
-              id
-              name
-              slug
-              projectstatuses {
-                statusProject {
-                  status
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-    { variables: { id } }
-  );
-}
-
-export function useAddSkillToUser() {
+export function useAddProjectToUser() {
   return useMutation(
     gql`
-      mutation ADD_SKILL_TO_USER($dev: String!, $skill: uuid!) {
-        insert_userskills(objects: { dev: $dev, skill: $skill }) {
-          returning {
-            dev
-            skill
+      mutation ADD_PROJECT_TO_USER($id: ID!, $input: AddProjectInput!) {
+        addProjectToUser(id: $id, input: $input) {
+          id
+          name
+          email
+          projects {
+            id
+            name
+            description
+            contactEmail
           }
         }
       }
@@ -49,19 +21,49 @@ export function useAddSkillToUser() {
   );
 }
 
-export function useUpdateUser() {
+export function useSignup() {
   return useMutation(gql`
-    mutation UPDATE_USER($id: String!, $email: String, $name: String) {
-      update_users(
-        where: { id: { _eq: $id } }
-        _set: { email: $email, name: $name }
-      ) {
-        returning {
-          email
-          name
-          id
-        }
+    mutation SIGNUP($input: SignupInput!) {
+      signup(input: $input) {
+        name
+        id
+        email
+        skills
       }
     }
   `);
+}
+
+export function useLogin() {
+  return useMutation(gql`
+    mutation LOGIN($input: LoginInput!) {
+      login(input: $input) {
+        token
+      }
+    }
+  `);
+}
+
+export function useGetUser(id) {
+  return useQuery(
+    gql`
+      query USER($id: ID!) {
+        user(id: $id) {
+          id
+          name
+          email
+          skills
+          createdAt
+          updatedAt
+          projects {
+            id
+            name
+            description
+            contactEmail
+          }
+        }
+      }
+    `,
+    { variables: { id } }
+  );
 }

@@ -10,39 +10,15 @@ import Button from "../components/Button";
 import Select from "../components/Select";
 import Divider from "../components/Divider";
 import ProjectItem from "../components/ProjectItem";
-import { useGetSkills } from "../hooks/use-skills";
-import {
-  useGetUser,
-  useUpdateUser,
-  useAddSkillToUser,
-} from "../hooks/use-devs";
+import { useGetUser } from "../hooks/use-devs";
 
 export default function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
   const getUser = useGetUser(user);
-  const [updateUser, { loading }] = useUpdateUser();
-  const [addSkill, addSkillRes] = useAddSkillToUser();
-
-  const skills = useGetSkills();
 
   const handleUserUpdate = async (e) => {
     e.preventDefault();
-
-    await updateUser({
-      variables: {
-        id: user.sub,
-        email: e.target.email.value,
-        name: e.target.name.value,
-      },
-    });
-
-    await addSkill({
-      variables: {
-        dev: user.sub,
-        skill: skill.id,
-      },
-    });
   };
 
   const handlePasswordChange = (e) => {
@@ -55,16 +31,6 @@ export default function Profile() {
 
   const handleSkills = (skill) => {
     setSkill(skill);
-  };
-
-  const getSkill = () => {
-    return (
-      getUser.data &&
-      getUser.data.users_by_pk &&
-      getUser.data.users_by_pk.userskills &&
-      getUser.data.users_by_pk.userskills.length > 0 &&
-      getUser.data.users_by_pk.userskills[0].userSkills.skill
-    );
   };
 
   if (!user) return null;
@@ -111,7 +77,7 @@ export default function Profile() {
               margin-top: 16px;
             `}
           />
-          {!skills.loading && !skills.error && (
+          {/* {!skills.loading && !skills.error && (
             <Select
               styles={css`
                 margin-top: 16px;
@@ -126,7 +92,7 @@ export default function Profile() {
             className="submit-btn"
           >
             Submit
-          </Button>
+          </Button> */}
         </form>
       </div>
       <Divider
