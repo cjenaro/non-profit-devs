@@ -51,6 +51,8 @@ export function useCreateProject() {
         id
         name
         description
+        status
+        slug
       }
     }
   `);

@@ -38,6 +38,8 @@ const StyledButton = styled.button`
   }
 
   &.loading {
+    padding-left: 17px;
+
     &::before {
       width: 10px;
       height: 10px;

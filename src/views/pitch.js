@@ -3,8 +3,36 @@ import { jsx, css } from "@emotion/core";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
+import { useCreateProject } from "../hooks/use-projects";
+import { useEffect } from "react";
+import { navigate } from "@reach/router";
 
 export default function Pitch() {
+  const [createProject, { data, loading, error }] = useCreateProject();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newProjectInput = {
+      name: e.target.ongName.value,
+      contactEmail: e.target.contactEmail.value,
+      description: e.target.description.value,
+      status: "PENDING_REVIEW",
+    };
+
+    await createProject({
+      variables: {
+        input: newProjectInput,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      navigate(`/projects/${data.createProject.slug}`);
+    }
+  }, [data]);
+
   return (
     <section
       css={css`
@@ -30,11 +58,18 @@ export default function Pitch() {
           We are glad you decided to pitch your project to us, please fill in
           the form below
         </p>
-        <form>
+        <form
+          onSubmit={handleSubmit}
+          css={css`
+            margin-top: 4rem;
+            margin-bottom: 1rem;
+          `}
+        >
           <Input
             styles={css`
               margin: 1rem 0;
             `}
+            inverted
             label="ong name:"
             name="ongName"
             id="ongName"
@@ -43,6 +78,7 @@ export default function Pitch() {
             styles={css`
               margin: 1rem 0;
             `}
+            inverted
             label="contact email:"
             name="contactEmail"
             id="contactEmail"
@@ -94,8 +130,9 @@ export default function Pitch() {
               rows="10"
             ></textarea>
           </label>
-          <Button>Submit Pitch</Button>
+          <Button loading={loading}>Submit Pitch</Button>
         </form>
+        <ErrorMessage error={error} />
       </div>
     </section>
   );
