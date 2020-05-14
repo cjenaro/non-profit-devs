@@ -11,6 +11,8 @@ const PROJECTS_QUERY = gql`
       contactEmail
       createdAt
       updatedAt
+      slug
+      status
       users {
         name
         email
