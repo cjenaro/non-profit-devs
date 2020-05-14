@@ -41,10 +41,13 @@ export default function Signup() {
   };
 
   const getSkillOptions = () => {
-    return skillsData.__type.enumValues.map((enumValue) => ({
-      label: getSkillLabel(enumValue.name),
-      value: enumValue.name,
-    }));
+    return (
+      skillsData &&
+      skillsData.__type.enumValues.map((enumValue) => ({
+        label: getSkillLabel(enumValue.name),
+        value: enumValue.name,
+      }))
+    );
   };
 
   const handleFormSubmit = async (e) => {

@@ -1,6 +1,6 @@
 //* @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { navigate } from "@reach/router";
 import { useLogin } from "../hooks/use-devs";
@@ -23,15 +23,14 @@ export default function Login() {
         },
       },
     });
+  };
 
+  useEffect(() => {
     if (data) {
       setUser({ ...user, jwt: data.token });
-    }
-
-    if (!error) {
       navigate("/profile");
     }
-  };
+  }, [data, user, setUser]);
 
   return (
     <section

@@ -1,4 +1,5 @@
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
+import useMutation from "./use-mutation";
 import gql from "graphql-tag";
 
 export function useAddProjectToUser() {

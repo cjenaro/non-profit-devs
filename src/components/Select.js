@@ -32,7 +32,7 @@ function Select({
     getItemProps,
     selectItem,
   } = useSelect({
-    items: options,
+    items: options || [],
     onStateChange: ({ type, selectedItem }) => {
       switch (type) {
         case useSelect.stateChangeTypes.MenuKeyDownEnter:
@@ -102,6 +102,7 @@ function Select({
         `}
       >
         {isOpen &&
+          options &&
           options.map((option, index) =>
             !selectedItems.map((item) => item.value).includes(option.value) ? (
               <li

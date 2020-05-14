@@ -7,14 +7,14 @@ export default function ErrorMessage({ error }) {
   return (
     <pre
       css={css`
-        background-color: var(--lavender);
-        color: var(--ember);
+        background-color: #c6542f;
+        color: var(--lavender);
         padding: 10px 10px 10px 14px;
         border-radius: 6px;
-        border-left: 4px solid var(--ember);
+        border-left: 4px solid var(--lavender);
       `}
     >
-      {JSON.stringify(error.message, null, 2)}
+      {JSON.stringify(error.message.replace("GraphQL error: ", ""), null, 2)}
     </pre>
   );
 }
