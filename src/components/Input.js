@@ -1,7 +1,15 @@
 //* @jsx jsx /*
 import { jsx, css } from "@emotion/core";
 
-export default function Input({ placeholder, label, name, id, type, styles }) {
+export default function Input({
+  placeholder,
+  label,
+  name,
+  id,
+  type,
+  inverted,
+  styles,
+}) {
   return (
     <label
       css={css`
@@ -15,7 +23,7 @@ export default function Input({ placeholder, label, name, id, type, styles }) {
           content: "";
           width: 5px;
           height: 100%;
-          background-color: var(--ember);
+          background-color: ${!inverted ? "var(--lavender)" : "var(--ember)"};
           position: absolute;
           top: 0;
           left: -15px;
@@ -33,11 +41,11 @@ export default function Input({ placeholder, label, name, id, type, styles }) {
         input {
           margin-top: 4px;
           font-size: 16px;
-          border: 1px solid var(--lavender);
-          background-color: var(--ember);
+          border: 1px solid ${!inverted ? "var(--ember)" : "var(--lavender)"};
+          background-color: ${!inverted ? "var(--lavender)" : "var(--ember)"};
           width: calc(100% - 32px);
           padding: 10px 16px;
-          color: var(--lavender);
+          color: ${!inverted ? "var(--ember)" : "var(--lavender)"};
         }
 
         ${styles}

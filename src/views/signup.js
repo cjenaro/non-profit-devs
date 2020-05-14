@@ -1,14 +1,15 @@
 //* @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import { useContext } from "react";
-import Input from "../components/Input";
-import { useSignup, useLogin } from "../hooks/use-devs";
-import Button from "../components/Button";
-import { UserContext } from "../context/UserContext";
-import ErrorMessage from "../components/ErrorMessage";
 import { navigate } from "@reach/router";
-import Select from "../components/Select";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { useSignup, useLogin } from "../hooks/use-devs";
 import { useGetSkills } from "../hooks/use-skills";
+import Input from "../components/Input";
+import Title from "../components/Title";
+import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
+import Select from "../components/Select";
 
 export default function Signup() {
   const [skills, setSkills] = useState();
@@ -32,19 +33,33 @@ export default function Signup() {
     setSkills(skill);
   };
 
+  const getSkillLabel = (value) => {
+    return value
+      .split("_")
+      .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
+      .join(" ");
+  };
+
+  const getSkillOptions = () => {
+    return skillsData.__type.enumValues.map((enumValue) => ({
+      label: getSkillLabel(enumValue.name),
+      value: enumValue.name,
+    }));
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const signupInput = {
-      email: e.taget.email.value,
-      password: e.taget.password.value,
-      name: e.taget.name.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      name: e.target.name.value,
       skills: skills,
     };
 
     const loginInput = {
-      email: e.taget.email.value,
-      password: e.taget.password.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
     };
 
     await signup({
@@ -78,30 +93,58 @@ export default function Signup() {
 
         @media (min-width: 768px) {
           padding-bottom: 50px;
+          min-height: calc(100vh - 228px);
         }
       `}
     >
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
-          Login.
+          Sign Up.
         </Title>
 
-        <form onSubmit={handleFormSubmit}>
-          <Input label="Email:" name="email" id="email" />
-          <Input label="Name:" name="name" id="name" />
-          <Input label="Password:" name="password" id="password" />
+        <form
+          onSubmit={handleFormSubmit}
+          css={css`
+            margin-top: 4rem;
+            margin-bottom: 16px;
+          `}
+        >
+          <Input
+            styles={css`
+              margin-bottom: 16px;
+            `}
+            label="Email:"
+            name="email"
+            id="email"
+          />
+          <Input
+            styles={css`
+              margin-bottom: 16px;
+            `}
+            label="Name:"
+            name="name"
+            id="name"
+          />
+          <Input
+            styles={css`
+              margin-bottom: 16px;
+            `}
+            label="Password:"
+            name="password"
+            id="password"
+          />
           {!skillsLoading && (
-            <>
+            <React.Fragment>
               <Select
+                label="Skills"
                 styles={css`
-                  margin-top: 16px;
+                  margin-bottom: 16px;
                 `}
                 placeholder={"Skills"}
                 onChange={handleSkills}
-                options={[]}
+                options={getSkillOptions()}
               />
-              <pre>{JSON.stringify(skillsData, null, 2)}</pre>
-            </>
+            </React.Fragment>
           )}
           <Button loading={signupLoading || loginLoading || skillsLoading}>
             Submit

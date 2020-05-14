@@ -7,7 +7,7 @@ import Profile from "./views/profile";
 import Pitch from "./views/pitch";
 import Projects from "./views/projects";
 import Project from "./views/project";
-import Project from "./views/login";
+import Login from "./views/login";
 import Signup from "./views/signup";
 import NotFound from "./views/not-found";
 import { UserProvider } from "./context/UserContext";
