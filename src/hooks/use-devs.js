@@ -30,6 +30,7 @@ export function useSignup() {
         id
         email
         skills
+        token
       }
     }
   `);

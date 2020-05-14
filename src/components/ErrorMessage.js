@@ -12,6 +12,7 @@ export default function ErrorMessage({ error }) {
         padding: 10px 10px 10px 14px;
         border-radius: 6px;
         border-left: 4px solid var(--lavender);
+        white-space: pre-wrap;
       `}
     >
       {JSON.stringify(error.message.replace("GraphQL error: ", ""), null, 2)}

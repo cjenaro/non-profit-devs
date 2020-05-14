@@ -1,9 +1,9 @@
 //* @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { navigate } from "@reach/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
-import { useSignup, useLogin } from "../hooks/use-devs";
+import { useSignup } from "../hooks/use-devs";
 import { useGetSkills } from "../hooks/use-skills";
 import Input from "../components/Input";
 import Title from "../components/Title";
@@ -12,17 +12,16 @@ import ErrorMessage from "../components/ErrorMessage";
 import Select from "../components/Select";
 
 export default function Signup() {
-  const [skills, setSkills] = useState();
+  const [error, setError] = useState(null);
+  const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+  const [skills, setSkills] = useState([]);
   const [user, setUser] = useContext(UserContext);
 
   const [
     signup,
     { data: signupData, loading: signupLoading, error: signupError },
   ] = useSignup();
-  const [
-    login,
-    { data: loginData, loading: loginLoading, error: loginError },
-  ] = useLogin();
+
   const {
     data: skillsData,
     loading: skillsLoading,
@@ -30,7 +29,7 @@ export default function Signup() {
   } = useGetSkills();
 
   const handleSkills = (skill) => {
-    setSkills(skill);
+    setSkills(skill.map((s) => s.value));
   };
 
   const getSkillLabel = (value) => {
@@ -53,6 +52,11 @@ export default function Signup() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    if (e.target.password.value !== e.target.confirmPassword.value) {
+      setError({ message: "Passwords do not match" });
+      return;
+    }
+
     const signupInput = {
       email: e.target.email.value,
       password: e.target.password.value,
@@ -60,32 +64,27 @@ export default function Signup() {
       skills: skills,
     };
 
-    const loginInput = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-
     await signup({
       variables: {
         input: signupInput,
       },
     });
+  };
 
-    if (signupError) return;
-
-    await login({
-      variables: {
-        input: loginInput,
-      },
-    });
-
-    if (loginError) return;
-
-    if (signupData && loginData) {
-      setUser({ ...user, ...signupData, jwt: loginData.token });
+  useEffect(() => {
+    if (signupData && signupData.signup) {
+      setUser({ ...signupData.signup });
     }
+  }, [signupData, setUser]);
 
-    navigate("/profile");
+  useEffect(() => {
+    if (user && user.token) {
+      navigate("/profile");
+    }
+  }, [user]);
+
+  const handleLoginInput = (e) => {
+    setLoginInput({ ...loginInput, [e.target.name]: e.target.value });
   };
 
   return (
@@ -119,6 +118,8 @@ export default function Signup() {
             label="Email:"
             name="email"
             id="email"
+            value={loginInput.email}
+            onChange={handleLoginInput}
           />
           <Input
             styles={css`
@@ -135,6 +136,18 @@ export default function Signup() {
             label="Password:"
             name="password"
             id="password"
+            type="password"
+            value={loginInput.password}
+            onChange={handleLoginInput}
+          />
+          <Input
+            styles={css`
+              margin-bottom: 16px;
+            `}
+            label="Confirm Password:"
+            name="confirmPassword"
+            id="confirmPassword"
+            type="password"
           />
           {!skillsLoading && (
             <React.Fragment>
@@ -149,11 +162,9 @@ export default function Signup() {
               />
             </React.Fragment>
           )}
-          <Button loading={signupLoading || loginLoading || skillsLoading}>
-            Submit
-          </Button>
+          <Button loading={signupLoading || skillsLoading}>Submit</Button>
         </form>
-        <ErrorMessage error={signupError || loginError || skillsError} />
+        <ErrorMessage error={signupError || skillsError || error} />
       </div>
     </section>
   );

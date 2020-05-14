@@ -20,7 +20,7 @@ function Select({
   } = useMultipleSelection({
     initialSelectedItems: initialSelectedItems || [],
     onSelectedItemsChange: (changes) => {
-      onChange(changes);
+      onChange(changes.selectedItems);
     },
   });
   const {
