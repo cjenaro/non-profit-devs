@@ -102,7 +102,7 @@ export default function HowItWorks() {
               flex-direction: row;
               > div {
                 flex: 1;
-                &:first-child {
+                &:first-of-type {
                   margin-right: 20px;
                 }
               }

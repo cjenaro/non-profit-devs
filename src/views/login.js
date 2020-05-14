@@ -18,8 +18,8 @@ export default function Login() {
     await login({
       variables: {
         input: {
-          email: e.taget.email.value,
-          password: e.taget.password.value,
+          email: e.target.email.value,
+          password: e.target.password.value,
         },
       },
     });
