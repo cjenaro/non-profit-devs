@@ -16,10 +16,10 @@ export const ApolloWrapper = ({ children }) => {
   });
 
   const authLink = new ApolloLink((operation, forward) => {
-    if (user && user.jwt) {
+    if (user && user.token) {
       operation.setContext({
         headers: {
-          Authorization: `Bearer ${user.jwt}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
     }

@@ -1,39 +1,81 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 //* @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { UserContext } from "../context/UserContext";
+import { useGetUserProjects, useUpdateUser } from "../hooks/use-devs";
+import { useGetSkills } from "../hooks/use-skills";
 
-import useMount from "../hooks/use-mount";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import Divider from "../components/Divider";
 import ProjectItem from "../components/ProjectItem";
-import { useGetUser } from "../hooks/use-devs";
+import { redirectTo, Link } from "@reach/router";
 
 export default function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState();
-  const getUser = useGetUser(user);
+  const { data: userProjectsData } = useGetUserProjects(user && user.id);
+
+  const [
+    updateUser,
+    { data: updateUserData, loading: updateUserLoading },
+  ] = useUpdateUser();
+
+  const { data: skillsData } = useGetSkills();
+
+  // useEffect(() => {
+  //   if (updateUserData && updateUserData.updateUser) {
+  //     setUser({ ...user, ...updateUserData.updateUser });
+  //   }
+  // }, [setUser, updateUserData, user]);
 
   const handleUserUpdate = async (e) => {
     e.preventDefault();
+
+    const updateInput = {
+      name: e.target.name.value,
+      skills: skill,
+      email: e.target.email.value,
+    };
+
+    await updateUser({ variables: { id: user.id, input: updateInput } });
   };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
   };
 
-  useMount(() => {
-    setUser({ ...user });
-  });
-
   const handleSkills = (skill) => {
-    setSkill(skill);
+    setSkill(skill.map((s) => s.value));
   };
 
-  if (!user) return null;
+  const getSkillLabel = (value) => {
+    return value
+      .split("_")
+      .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
+      .join(" ");
+  };
+
+  const getSkillOptions = () => {
+    return (
+      skillsData &&
+      skillsData.__type.enumValues.map((enumValue) => ({
+        label: getSkillLabel(enumValue.name),
+        value: enumValue.name,
+      }))
+    );
+  };
+
+  const getInitialSkills = () => {
+    return (
+      user &&
+      user.skills.map((value) => ({ label: getSkillLabel(value), value }))
+    );
+  };
+
+  if (!user) return redirectTo("/login");
 
   return (
     <section
@@ -46,7 +88,12 @@ export default function Profile() {
           width: 100%;
           border: 1px solid var(--lavender);
           color: var(--lavender);
-          background-color: var(--emberr);
+          background-color: var(--ember);
+          &.loading {
+            &::before {
+              color: var(--lavender);
+            }
+          }
         }
 
         @media (min-width: 768px) {
@@ -59,40 +106,37 @@ export default function Profile() {
           {user.name}.
         </Title>
 
-        <pre>{getUser.data && JSON.stringify(getUser.data, null, 2)}</pre>
-
         <form onSubmit={handleUserUpdate}>
           <Input
             label="Email:"
-            placeholder={getUser.data && getUser.data.users_by_pk.email}
+            placeholder={user.email}
             name="email"
             id="email"
           />
           <Input
             label="Name:"
             name="name"
-            placeholder={getUser.data && getUser.data.users_by_pk.name}
+            placeholder={user.name}
             id="name"
             styles={css`
               margin-top: 16px;
             `}
           />
-          {/* {!skills.loading && !skills.error && (
+          {skillsData && (
             <Select
               styles={css`
                 margin-top: 16px;
               `}
-              placeholder={getSkill() || "Skills"}
+              initialSelectedItems={getInitialSkills()}
+              placeholder="Skills"
+              label="Skills"
               onChange={handleSkills}
-              options={skills.data.skills}
+              options={getSkillOptions()}
             />
           )}
-          <Button
-            loading={addSkillRes.loading || loading}
-            className="submit-btn"
-          >
+          <Button loading={updateUserLoading} className="submit-btn">
             Submit
-          </Button> */}
+          </Button>
         </form>
       </div>
       <Divider
@@ -147,10 +191,9 @@ export default function Profile() {
       />
       <div className="container">
         <ul>
-          {!getUser.loading &&
-            getUser.data &&
-            getUser.data.users_by_pk.userProjects.map(
-              ({ userProjects: project }) => (
+          {userProjectsData &&
+            (userProjectsData.user.projects.length > 0 ? (
+              userProjectsData.user.projects.map((project) => (
                 <li
                   css={css`
                     margin-bottom: 45px;
@@ -161,8 +204,20 @@ export default function Profile() {
                 >
                   <ProjectItem project={project} />
                 </li>
-              )
-            )}
+              ))
+            ) : (
+              <h1>
+                This looks really empty...{" "}
+                <Link
+                  css={css`
+                    color: currentColor;
+                  `}
+                  to="/projects"
+                >
+                  go to projects &rarr;
+                </Link>
+              </h1>
+            ))}
         </ul>
       </div>
     </section>

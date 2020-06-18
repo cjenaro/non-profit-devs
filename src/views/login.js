@@ -26,12 +26,16 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (data) {
-      setUser({ ...user, jwt: data.token });
+    if (data && data.login) {
+      setUser({ ...data.login });
+    }
+  }, [data, setUser]);
+
+  useEffect(() => {
+    if (user && user.token) {
       navigate("/profile");
     }
-  }, [data, user, setUser]);
-
+  }, [user]);
   return (
     <section
       css={css`
@@ -70,6 +74,7 @@ export default function Login() {
             `}
             label="Password:"
             name="password"
+            type="password"
             id="password"
           />
           <Button loading={loading}>Submit</Button>

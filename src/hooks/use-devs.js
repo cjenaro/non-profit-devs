@@ -36,10 +36,27 @@ export function useSignup() {
   `);
 }
 
+export function useUpdateUser() {
+  return useMutation(gql`
+    mutation UPDATE_USER($id: ID!, $input: UpdateUserInput!) {
+      updateUser(id: $id, input: $input) {
+        id
+        name
+        email
+        skills
+      }
+    }
+  `);
+}
+
 export function useLogin() {
   return useMutation(gql`
     mutation LOGIN($input: LoginInput!) {
       login(input: $input) {
+        name
+        id
+        email
+        skills
         token
       }
     }
@@ -57,6 +74,24 @@ export function useGetUser(id) {
           skills
           createdAt
           updatedAt
+          projects {
+            id
+            name
+            description
+            contactEmail
+          }
+        }
+      }
+    `,
+    { variables: { id } }
+  );
+}
+
+export function useGetUserProjects(id) {
+  return useQuery(
+    gql`
+      query USER($id: ID!) {
+        user(id: $id) {
           projects {
             id
             name

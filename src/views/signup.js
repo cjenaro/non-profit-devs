@@ -1,7 +1,7 @@
 //* @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { navigate } from "@reach/router";
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { useSignup } from "../hooks/use-devs";
 import { useGetSkills } from "../hooks/use-skills";
@@ -150,17 +150,15 @@ export default function Signup() {
             type="password"
           />
           {!skillsLoading && (
-            <React.Fragment>
-              <Select
-                label="Skills"
-                styles={css`
-                  margin-bottom: 16px;
-                `}
-                placeholder={"Skills"}
-                onChange={handleSkills}
-                options={getSkillOptions()}
-              />
-            </React.Fragment>
+            <Select
+              label="Skills"
+              styles={css`
+                margin-bottom: 16px;
+              `}
+              placeholder={"Skills"}
+              onChange={handleSkills}
+              options={getSkillOptions()}
+            />
           )}
           <Button loading={signupLoading || skillsLoading}>Submit</Button>
         </form>
