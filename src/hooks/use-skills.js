@@ -1,5 +1,5 @@
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 export function useGetSkills() {
   return useQuery(gql`

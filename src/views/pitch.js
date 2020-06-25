@@ -1,12 +1,12 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import Title from "../components/Title";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import ErrorMessage from "../components/ErrorMessage";
-import { useCreateProject } from "../hooks/use-projects";
-import { useEffect } from "react";
-import { navigate } from "@reach/router";
+import { jsx, css } from '@emotion/core';
+import Title from '../components/Title';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import ErrorMessage from '../components/ErrorMessage';
+import { useCreateProject } from '../hooks/use-projects';
+import { useEffect } from 'react';
+import { navigate } from '@reach/router';
 
 export default function Pitch() {
   const [createProject, { data, loading, error }] = useCreateProject();
@@ -17,7 +17,7 @@ export default function Pitch() {
       name: e.target.ongName.value,
       contactEmail: e.target.contactEmail.value,
       description: e.target.description.value,
-      status: "PENDING_REVIEW",
+      status: 'PENDING_REVIEW',
     };
 
     await createProject({
@@ -94,7 +94,7 @@ export default function Pitch() {
               margin-bottom: 1rem;
 
               &::before {
-                content: "";
+                content: '';
                 width: 5px;
                 height: 100%;
                 background-color: var(--ember);
@@ -119,7 +119,7 @@ export default function Pitch() {
                 padding: 16px;
                 width: calc(100% - 32px);
                 color: var(--lavender);
-                font-family: "Hind Madurai", sans-serif;
+                font-family: 'Hind Madurai', sans-serif;
                 margin-top: 4px;
                 background-color: var(--ember);
                 border: 1px solid var(--lavender);

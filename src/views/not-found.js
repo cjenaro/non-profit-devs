@@ -1,6 +1,6 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import Button from "../components/Button";
+import { jsx, css } from '@emotion/core';
+import Button from '../components/Button';
 
 export default function NotFound() {
   return (

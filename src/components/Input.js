@@ -1,5 +1,5 @@
 //* @jsx jsx /*
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from '@emotion/core';
 
 export default function Input({
   placeholder,
@@ -20,10 +20,10 @@ export default function Input({
         position: relative;
 
         &::before {
-          content: "";
+          content: '';
           width: 5px;
           height: 100%;
-          background-color: ${!inverted ? "var(--lavender)" : "var(--ember)"};
+          background-color: ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
           position: absolute;
           top: 0;
           left: -15px;
@@ -41,11 +41,11 @@ export default function Input({
         input {
           margin-top: 4px;
           font-size: 16px;
-          border: 1px solid ${!inverted ? "var(--ember)" : "var(--lavender)"};
-          background-color: ${!inverted ? "var(--lavender)" : "var(--ember)"};
+          border: 1px solid ${!inverted ? 'var(--ember)' : 'var(--lavender)'};
+          background-color: ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
           width: calc(100% - 32px);
           padding: 10px 16px;
-          color: ${!inverted ? "var(--ember)" : "var(--lavender)"};
+          color: ${!inverted ? 'var(--ember)' : 'var(--lavender)'};
         }
 
         ${styles}
@@ -53,7 +53,7 @@ export default function Input({
     >
       {label}
       <input
-        type={type ? type : "text"}
+        type={type ? type : 'text'}
         name={name}
         id={id}
         placeholder={placeholder}

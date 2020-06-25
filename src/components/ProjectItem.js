@@ -1,11 +1,14 @@
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import { Link } from "@reach/router";
+import { css, jsx } from '@emotion/core';
+import { Link } from '@reach/router';
 
 export default function ProjectItem({ project }) {
+  if (!project) return null;
+  console.log(project);
   return (
     <Link
-      to={`/projects/${project.slug}`}
+      to={`/projects/${project.id}`}
+      state={{ ...project }}
       css={css`
         text-decoration: none;
         display: flex;
@@ -48,7 +51,7 @@ export default function ProjectItem({ project }) {
               `}
             >
               created:
-            </span>{" "}
+            </span>{' '}
             {new Date(project.createdAt).toLocaleDateString()}
           </p>
           <p
@@ -71,49 +74,59 @@ export default function ProjectItem({ project }) {
               `}
             >
               status:
-            </span>{" "}
+            </span>{' '}
             {project.status
-              .split("_")
+              .split('_')
               .map((word) => word.toLowerCase())
-              .join(" ")}
+              .join(' ')}
           </p>
         </div>
-        <ul>
-          {project.users.map((user) => (
-            <li key={user.id}>
-              <div
+        <ul
+          css={css`
+            display: flex;
+          `}
+        >
+          {project.users &&
+            project.users.map((user) => (
+              <li
+                key={user.id}
                 css={css`
-                  width: 25px;
-                  height: 25px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background-color: var(--lavender);
-                  color: var(--ember);
-                  border-radius: 50%;
-                  font-weight: bold;
-                  text-decoration: none;
+                  margin-right: 5px;
                 `}
               >
-                {user.gravatar ? (
-                  <img
-                    src={user.gravatar}
-                    alt={user.name}
-                    css={css`
-                      height: 100%;
-                      width: 100%;
-                      object-fit: cover;
-                    `}
-                  />
-                ) : (
-                  user.name
-                    .split(" ")
-                    .map((word) => word[0])
-                    .join("")
-                )}
-              </div>
-            </li>
-          ))}
+                <div
+                  css={css`
+                    width: 25px;
+                    height: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: var(--lavender);
+                    color: var(--ember);
+                    border-radius: 50%;
+                    font-weight: bold;
+                    text-decoration: none;
+                  `}
+                >
+                  {user.gravatar ? (
+                    <img
+                      src={user.gravatar}
+                      alt={user.name}
+                      css={css`
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                      `}
+                    />
+                  ) : (
+                    user.name
+                      .split(' ')
+                      .map((word) => word[0])
+                      .join('')
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
       <p

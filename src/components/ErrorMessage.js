@@ -1,8 +1,12 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from '@emotion/core';
 
 export default function ErrorMessage({ error }) {
-  if (!error) return null;
+  let actualError = error;
+  if (error && typeof error !== 'string' && error.length) {
+    actualError = error[0];
+  }
+  if (!actualError) return null;
 
   return (
     <pre
@@ -15,7 +19,13 @@ export default function ErrorMessage({ error }) {
         white-space: pre-wrap;
       `}
     >
-      {JSON.stringify(error.message.replace("GraphQL error: ", ""), null, 2)}
+      {typeof actualError === 'string'
+        ? actualError
+        : JSON.stringify(
+            actualError.message.replace('GraphQL error: ', ''),
+            null,
+            2
+          )}
     </pre>
   );
 }

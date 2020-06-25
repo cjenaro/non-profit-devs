@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import useMutation from "./use-mutation";
-import gql from "graphql-tag";
+import { useQuery } from '@apollo/react-hooks';
+import useMutation from './use-mutation';
+import gql from 'graphql-tag';
 
 const PROJECTS_QUERY = gql`
   query ALL_PROJECTS {
@@ -24,6 +24,33 @@ const PROJECTS_QUERY = gql`
 
 export default function useProjects() {
   return useQuery(PROJECTS_QUERY);
+}
+
+export function useGetProject(id) {
+  return useQuery(
+    gql`
+      query PROJECT($id: ID!) {
+        project(id: $id) {
+          id
+          name
+          description
+          contactEmail
+          createdAt
+          updatedAt
+          slug
+          status
+          users {
+            name
+            email
+            id
+          }
+        }
+      }
+    `,
+    {
+      variables: { id },
+    }
+  );
 }
 
 export function useAddUserToProject() {

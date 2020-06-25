@@ -1,6 +1,6 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import { useSelect, useMultipleSelection } from "downshift";
+import { jsx, css } from '@emotion/core';
+import { useSelect, useMultipleSelection } from 'downshift';
 
 function Select({
   onChange,
@@ -79,11 +79,11 @@ function Select({
         type="button"
         css={css`
           font-size: 16px;
-          border: 1px solid ${inverted ? "var(--lavender)" : "var(--ember)"};
-          background-color: ${inverted ? "var(--ember)" : "var(--lavender)"};
+          border: 1px solid ${inverted ? 'var(--lavender)' : 'var(--ember)'};
+          background-color: ${inverted ? 'var(--ember)' : 'var(--lavender)'};
           width: 100%;
           padding: 10px 16px;
-          color: ${inverted ? "var(--lavender)" : "var(--ember)"};
+          color: ${inverted ? 'var(--lavender)' : 'var(--ember)'};
         `}
       >
         {selectedItems.length > 0
@@ -98,7 +98,7 @@ function Select({
           position: absolute;
           width: 100%;
           z-index: 2;
-          background-color: ${inverted ? "var(--lavender)" : "var(--ember)"};
+          background-color: ${inverted ? 'var(--lavender)' : 'var(--ember)'};
         `}
       >
         {isOpen &&
@@ -108,17 +108,17 @@ function Select({
               <li
                 style={
                   highlightedIndex === index
-                    ? { backgroundColor: "#c6542f" }
+                    ? { backgroundColor: '#c6542f' }
                     : {}
                 }
                 css={css`
                   padding: 7px;
                   border-bottom: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                   border-left: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                   border-right: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                 `}
                 key={`${option.value}-${index}`}
                 {...getItemProps({ option, index })}
@@ -130,11 +130,11 @@ function Select({
                 css={css`
                   padding: 7px;
                   border-bottom: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                   border-left: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                   border-right: 1px solid
-                    ${!inverted ? "var(--lavender)" : "var(--ember)"};
+                    ${!inverted ? 'var(--lavender)' : 'var(--ember)'};
                   background-color: #c6542f;
                   display: flex;
                   align-items: center;

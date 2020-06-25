@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import Title from "../../components/Title";
-import Steps from "../../components/Steps";
+import { jsx, css } from '@emotion/core';
+import Title from '../../components/Title';
+import Steps from '../../components/Steps';
 
 export default function HowItWorks() {
   return (

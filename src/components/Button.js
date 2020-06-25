@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { navigate } from "@reach/router";
+import React from 'react';
+import styled from '@emotion/styled';
+import { navigate } from '@reach/router';
 
 const StyledButton = styled.button`
   padding: 5px 7px;
@@ -27,7 +27,7 @@ const StyledButton = styled.button`
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -68,7 +68,7 @@ const StyledButton = styled.button`
     border: 0;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       height: 2px;
       background-color: #efdfdf;
@@ -86,7 +86,7 @@ export default function Button({ onClick, to, children, className, loading }) {
 
   return (
     <StyledButton
-      className={`${className} ${loading ? "loading" : ""}`}
+      className={`${className} ${loading ? 'loading' : ''}`}
       onClick={to ? handleTo : onClick}
     >
       {children}

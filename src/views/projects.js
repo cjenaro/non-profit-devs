@@ -1,17 +1,19 @@
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import ProjectItem from "../components/ProjectItem";
-import useProjects from "../hooks/use-projects";
-import { useState } from "react";
-import { FiSearch } from "react-icons/fi";
+import { css, jsx } from '@emotion/core';
+import ProjectItem from '../components/ProjectItem';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
+import useProjects from '../hooks/use-projects';
+import { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 export default function Projects() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { data, loading, error } = useProjects();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
 
-  if (error) return <p>Error!</p>;
+  if (error) return <ErrorMessage error={error} />;
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -48,6 +50,9 @@ export default function Projects() {
             onChange={handleSearch}
             placeholder="Filter projects by name..."
             css={css`
+              &::placeholder {
+                color: currentColor;
+              }
               font-size: 1rem;
               padding: 0.875rem 1rem;
               border: 0;

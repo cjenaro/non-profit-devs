@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 //* @jsx jsx */
-import { jsx, Global, css } from "@emotion/core";
-import Header from "./Header";
+import { jsx, Global, css } from '@emotion/core';
+import Header from './Header';
 
 const Layout = ({ children }) => {
   return (
     <React.Fragment>
       <Global
         styles={css`
-          @import url("https://fonts.googleapis.com/css2?family=Hind+Madurai&family=Montserrat:wght@700&display=swap");
+          @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai&family=Montserrat:wght@700&display=swap');
 
           body {
             margin: 0;
             padding: 0;
-            font-family: "Hind Madurai", sans-serif;
+            font-family: 'Hind Madurai', sans-serif;
             color: var(--lavender);
             background-color: var(--ember);
           }
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
           h3,
           h4,
           h5 {
-            font-family: "Montserrat", sans-serif;
+            font-family: 'Montserrat', sans-serif;
           }
 
           .container {

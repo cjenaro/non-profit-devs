@@ -1,5 +1,5 @@
-import { useMutation } from "@apollo/react-hooks";
-import { useState } from "react";
+import { useMutation } from '@apollo/react-hooks';
+import { useState } from 'react';
 
 export default function useMyMutation(query) {
   const [mutate, { data, loading, error }] = useMutation(query);

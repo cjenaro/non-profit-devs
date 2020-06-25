@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { css, jsx } from '@emotion/core';
 
 export default function Darr({ centered }) {
   return (
@@ -12,7 +12,7 @@ export default function Darr({ centered }) {
         display: flex;
         align-items: center;
         justify-content: center;
-        ${centered && "margin: 0 auto;"}
+        ${centered && 'margin: 0 auto;'}
       `}
     >
       &darr;

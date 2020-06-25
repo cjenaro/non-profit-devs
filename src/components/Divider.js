@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from '@emotion/core';
 
 export default function Divider({ color, backgroundColor, label, styles }) {
   return (

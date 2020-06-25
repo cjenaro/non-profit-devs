@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import Darr from "./Darr";
+import { css, jsx } from '@emotion/core';
+import Darr from './Darr';
 
 export default function Steps({ children, id, styles }) {
   return (

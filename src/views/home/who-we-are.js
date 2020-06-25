@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import Title from "../../components/Title";
-import Button from "../../components/Button";
+import { jsx, css } from '@emotion/core';
+import Title from '../../components/Title';
+import Button from '../../components/Button';
 
 export default function WhoWeAre() {
   return (

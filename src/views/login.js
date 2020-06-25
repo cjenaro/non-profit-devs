@@ -1,13 +1,13 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
-import { navigate } from "@reach/router";
-import { useLogin } from "../hooks/use-devs";
-import Title from "../components/Title";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import ErrorMessage from "../components/ErrorMessage";
+import { jsx, css } from '@emotion/core';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../context/UserContext';
+import { navigate } from '@reach/router';
+import { useLogin } from '../hooks/use-devs';
+import Title from '../components/Title';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Login() {
   const [login, { data, loading, error }] = useLogin();
@@ -27,13 +27,13 @@ export default function Login() {
 
   useEffect(() => {
     if (data && data.login) {
-      setUser({ ...data.login });
+      setUser({ ...data.login.token, ...data.login.user });
     }
   }, [data, setUser]);
 
   useEffect(() => {
     if (user && user.token) {
-      navigate("/profile");
+      navigate('/profile');
     }
   }, [user]);
   return (
@@ -41,6 +41,7 @@ export default function Login() {
       css={css`
         padding-top: 50px;
         padding-bottom: 100px;
+        min-height: calc(100vh - 278px);
 
         @media (min-width: 768px) {
           padding-bottom: 50px;

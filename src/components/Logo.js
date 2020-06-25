@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import styled from "@emotion/styled";
-import { Link } from "@reach/router";
+import { jsx, css } from '@emotion/core';
+import styled from '@emotion/styled';
+import { Link } from '@reach/router';
 
 const StyledLink = styled(Link)`
   text-decoration: none;

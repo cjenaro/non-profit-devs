@@ -1,19 +1,19 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import { navigate } from "@reach/router";
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
-import { useSignup } from "../hooks/use-devs";
-import { useGetSkills } from "../hooks/use-skills";
-import Input from "../components/Input";
-import Title from "../components/Title";
-import Button from "../components/Button";
-import ErrorMessage from "../components/ErrorMessage";
-import Select from "../components/Select";
+import { jsx, css } from '@emotion/core';
+import { navigate } from '@reach/router';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../context/UserContext';
+import { useSignup } from '../hooks/use-devs';
+import { useGetSkills } from '../hooks/use-skills';
+import Input from '../components/Input';
+import Title from '../components/Title';
+import Button from '../components/Button';
+import ErrorMessage from '../components/ErrorMessage';
+import Select from '../components/Select';
 
 export default function Signup() {
   const [error, setError] = useState(null);
-  const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+  const [loginInput, setLoginInput] = useState({ email: '', password: '' });
   const [skills, setSkills] = useState([]);
   const [user, setUser] = useContext(UserContext);
 
@@ -34,9 +34,9 @@ export default function Signup() {
 
   const getSkillLabel = (value) => {
     return value
-      .split("_")
+      .split('_')
       .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
-      .join(" ");
+      .join(' ');
   };
 
   const getSkillOptions = () => {
@@ -53,7 +53,7 @@ export default function Signup() {
     e.preventDefault();
 
     if (e.target.password.value !== e.target.confirmPassword.value) {
-      setError({ message: "Passwords do not match" });
+      setError({ message: 'Passwords do not match' });
       return;
     }
 
@@ -69,6 +69,8 @@ export default function Signup() {
         input: signupInput,
       },
     });
+
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (user && user.token) {
-      navigate("/profile");
+      navigate('/profile');
     }
   }, [user]);
 
@@ -155,7 +157,7 @@ export default function Signup() {
               styles={css`
                 margin-bottom: 16px;
               `}
-              placeholder={"Skills"}
+              placeholder={'Skills'}
               onChange={handleSkills}
               options={getSkillOptions()}
             />

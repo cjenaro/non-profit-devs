@@ -1,50 +1,69 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from 'react';
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import { UserContext } from "../context/UserContext";
-import { useGetUserProjects, useUpdateUser } from "../hooks/use-devs";
-import { useGetSkills } from "../hooks/use-skills";
+import { css, jsx } from '@emotion/core';
+import { redirectTo, Link } from '@reach/router';
 
-import Title from "../components/Title";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Select from "../components/Select";
-import Divider from "../components/Divider";
-import ProjectItem from "../components/ProjectItem";
-import { redirectTo, Link } from "@reach/router";
+import { UserContext } from '../context/UserContext';
+import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
+import { useGetSkills } from '../hooks/use-skills';
+
+import Title from '../components/Title';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import Select from '../components/Select';
+import Divider from '../components/Divider';
+import ProjectItem from '../components/ProjectItem';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Profile() {
+  const [passwordError, setPasswordError] = useState('');
   const [user, setUser] = useContext(UserContext);
-  const [skill, setSkill] = useState();
-  const { data: userProjectsData } = useGetUserProjects(user && user.id);
+  const [skill, setSkill] = useState(
+    user && user.skills && user.skills.map((s) => s.value)
+  );
 
   const [
     updateUser,
-    { data: updateUserData, loading: updateUserLoading },
+    { error: updateUserError, loading: updateUserLoading },
   ] = useUpdateUser();
 
-  const { data: skillsData } = useGetSkills();
+  const [
+    changePassword,
+    { error: changePasswordError, loading: changePasswordLoading },
+  ] = useChangePassword();
 
-  // useEffect(() => {
-  //   if (updateUserData && updateUserData.updateUser) {
-  //     setUser({ ...user, ...updateUserData.updateUser });
-  //   }
-  // }, [setUser, updateUserData, user]);
+  const { data: skillsData } = useGetSkills();
 
   const handleUserUpdate = async (e) => {
     e.preventDefault();
 
     const updateInput = {
-      name: e.target.name.value,
+      name: e.target.name.value || user.name,
       skills: skill,
-      email: e.target.email.value,
+      email: e.target.email.value || user.email,
     };
 
     await updateUser({ variables: { id: user.id, input: updateInput } });
+    if (!updateUserError && !updateUserLoading) {
+      setUser({ ...user, ...updateInput });
+    }
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
+    setPasswordError('');
+
+    if (e.target.confirmPassword.value !== e.target.newPassword.value) {
+      setPasswordError('Passwords do not match!');
+      return;
+    }
+
+    const updateInput = {
+      oldPassword: e.target.oldPassword.value,
+      newPassword: e.target.newPassword.value,
+    };
+
+    await changePassword({ variables: { id: user.id, input: updateInput } });
   };
 
   const handleSkills = (skill) => {
@@ -53,9 +72,9 @@ export default function Profile() {
 
   const getSkillLabel = (value) => {
     return value
-      .split("_")
+      .split('_')
       .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
-      .join(" ");
+      .join(' ');
   };
 
   const getSkillOptions = () => {
@@ -71,11 +90,13 @@ export default function Profile() {
   const getInitialSkills = () => {
     return (
       user &&
+      user.skills &&
+      user.skills.length &&
       user.skills.map((value) => ({ label: getSkillLabel(value), value }))
     );
   };
 
-  if (!user) return redirectTo("/login");
+  if (!user) return redirectTo('/login');
 
   return (
     <section
@@ -177,7 +198,10 @@ export default function Profile() {
             name="confirmPassword"
             id="confirmPassword"
           />
-          <Button className="submit-btn">Change password</Button>
+          <Button loading={changePasswordLoading} className="submit-btn">
+            Change password
+          </Button>
+          <ErrorMessage error={passwordError || changePasswordError} />
         </form>
       </div>
       <Divider
@@ -191,33 +215,32 @@ export default function Profile() {
       />
       <div className="container">
         <ul>
-          {userProjectsData &&
-            (userProjectsData.user.projects.length > 0 ? (
-              userProjectsData.user.projects.map((project) => (
-                <li
-                  css={css`
-                    margin-bottom: 45px;
-                    min-height: 17px;
-                    border: 3px solid var(--lavender);
-                  `}
-                  key={project.id}
-                >
-                  <ProjectItem project={project} />
-                </li>
-              ))
-            ) : (
-              <h1>
-                This looks really empty...{" "}
-                <Link
-                  css={css`
-                    color: currentColor;
-                  `}
-                  to="/projects"
-                >
-                  go to projects &rarr;
-                </Link>
-              </h1>
-            ))}
+          {user.projects.length > 0 ? (
+            user.projects.map((project) => (
+              <li
+                css={css`
+                  margin-bottom: 45px;
+                  min-height: 17px;
+                  border: 3px solid var(--lavender);
+                `}
+                key={project.id}
+              >
+                <ProjectItem project={project} />
+              </li>
+            ))
+          ) : (
+            <h1>
+              This looks really empty...{' '}
+              <Link
+                css={css`
+                  color: currentColor;
+                `}
+                to="/projects"
+              >
+                go to projects &rarr;
+              </Link>
+            </h1>
+          )}
         </ul>
       </div>
     </section>

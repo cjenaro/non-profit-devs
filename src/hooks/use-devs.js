@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import useMutation from "./use-mutation";
-import gql from "graphql-tag";
+import { useQuery } from '@apollo/react-hooks';
+import useMutation from './use-mutation';
+import gql from 'graphql-tag';
 
 export function useAddProjectToUser() {
   return useMutation(
@@ -30,7 +30,6 @@ export function useSignup() {
         id
         email
         skills
-        token
       }
     }
   `);
@@ -49,15 +48,37 @@ export function useUpdateUser() {
   `);
 }
 
+export function useChangePassword() {
+  return useMutation(gql`
+    mutation CHANGE_PASSWORD($id: ID!, $input: ChangePasswordInput!) {
+      changePassword(id: $id, input: $input) {
+        id
+      }
+    }
+  `);
+}
+
 export function useLogin() {
   return useMutation(gql`
     mutation LOGIN($input: LoginInput!) {
       login(input: $input) {
-        name
-        id
-        email
-        skills
-        token
+        token {
+          token
+        }
+        user {
+          id
+          email
+          name
+          projects {
+            id
+            name
+            description
+            contactEmail
+            status
+            createdAt
+          }
+          skills
+        }
       }
     }
   `);
@@ -79,6 +100,7 @@ export function useGetUser(id) {
             name
             description
             contactEmail
+            createdAt
           }
         }
       }

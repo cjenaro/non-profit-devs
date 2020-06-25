@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { css, jsx } from '@emotion/core';
 
 export default function Title({ color, borderColor, children, styles }) {
   return (
@@ -14,7 +14,7 @@ export default function Title({ color, borderColor, children, styles }) {
         margin: 0 auto;
 
         &::after {
-          content: "";
+          content: '';
           width: 100%;
           height: 7px;
           background-color: ${borderColor};
