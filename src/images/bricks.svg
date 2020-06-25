@@ -1,0 +1,7 @@
+<svg id="BRICKS" xmlns="http://www.w3.org/2000/svg" width="610" height="268" viewBox="0 0 610 268">
+  <rect id="_5" data-name="5" width="230" height="74" rx="5" transform="translate(252 194)" fill="rgba(249,232,232,0.1)"/>
+  <rect id="_4" data-name="4" width="230" height="74" rx="5" transform="translate(0 194)" fill="rgba(249,232,232,0.1)"/>
+  <rect id="_3" data-name="3" width="230" height="76" rx="5" transform="translate(380 96)" fill="rgba(249,232,232,0.1)"/>
+  <rect id="_2" data-name="2" width="232" height="76" rx="5" transform="translate(126 96)" fill="rgba(249,232,232,0.1)"/>
+  <rect id="_1" data-name="1" width="230" height="74" rx="5" fill="rgba(249,232,232,0.1)"/>
+</svg>

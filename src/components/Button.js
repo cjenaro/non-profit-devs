@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { navigate } from "@reach/router";
+import React from 'react';
+import styled from '@emotion/styled';
+import { navigate } from '@reach/router';
 
 const StyledButton = styled.button`
   padding: 5px 7px;
@@ -9,14 +9,25 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   border: 1px solid var(--ember);
   color: var(--ember);
-  background-color: transparent;
+  background-color: var(--lavender);
   cursor: pointer;
   position: relative;
   text-decoration: none;
   width: max-content;
 
+  @keyframes load {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -24,6 +35,21 @@ const StyledButton = styled.button`
     height: 100%;
     background-color: transparent;
     transition: background-color 0.2s ease-in-out;
+  }
+
+  &.loading {
+    padding-left: 17px;
+
+    &::before {
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      margin-top: -5px;
+      left: 5px;
+      background-color: var(--ember);
+      border-radius: 50%;
+      animation: load 0.7s ease-in-out infinite;
+    }
   }
 
   &:hover {
@@ -42,7 +68,7 @@ const StyledButton = styled.button`
     border: 0;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       height: 2px;
       background-color: #efdfdf;
@@ -53,13 +79,16 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function Button({ onClick, to, children, className }) {
+export default function Button({ onClick, to, children, className, loading }) {
   const handleTo = () => {
     navigate(to);
   };
 
   return (
-    <StyledButton className={className} onClick={to ? handleTo : onClick}>
+    <StyledButton
+      className={`${className} ${loading ? 'loading' : ''}`}
+      onClick={to ? handleTo : onClick}
+    >
       {children}
     </StyledButton>
   );

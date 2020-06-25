@@ -1,12 +1,9 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import Title from "../../components/Title";
-import Button from "../../components/Button";
-import { useAuth } from "react-use-auth";
+import { jsx, css } from '@emotion/core';
+import Title from '../../components/Title';
+import Button from '../../components/Button';
 
 export default function WhoWeAre() {
-  const { login } = useAuth();
-
   return (
     <section
       css={css`
@@ -36,12 +33,22 @@ export default function WhoWeAre() {
           We are a team of developers working for free for non-profit
           organizations
         </p>
-        <Button to="/pitch" className="big-button">
-          Pitch ONG Website
-        </Button>
-        <Button onClick={login} className="big-button">
-          Join as developer
-        </Button>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            @media (min-width: 768px) {
+              flex-direction: row;
+            }
+          `}
+        >
+          <Button to="/pitch" className="big-button">
+            Pitch ONG Website
+          </Button>
+          <Button to="/login" className="big-button">
+            Join as developer
+          </Button>
+        </div>
       </div>
     </section>
   );

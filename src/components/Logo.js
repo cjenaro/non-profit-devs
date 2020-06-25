@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import styled from "@emotion/styled";
-import { Link } from "@reach/router";
+import { jsx, css } from '@emotion/core';
+import styled from '@emotion/styled';
+import { Link } from '@reach/router';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -19,6 +19,7 @@ const Logo = ({ to }) => (
         font-size: 14px;
         color: var(--ember);
         text-transform: uppercase;
+        letter-spacing: 0.5px;
       `}
     >
       Non Profit Devs

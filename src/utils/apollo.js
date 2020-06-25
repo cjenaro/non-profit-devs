@@ -1,18 +1,36 @@
-import React from "react";
-import ApolloClient from "apollo-boost";
-import fetch from "isomorphic-fetch";
-import { ApolloProvider } from "react-apollo";
-import { useAuth } from "react-use-auth";
+import React, { useContext } from 'react';
+import {
+  ApolloClient,
+  HttpLink,
+  ApolloLink,
+  InMemoryCache,
+} from 'apollo-boost';
+import fetch from 'isomorphic-fetch';
+import { ApolloProvider } from 'react-apollo';
+import { UserContext } from '../context/UserContext';
 
 export const ApolloWrapper = ({ children }) => {
-  const { authResult } = useAuth();
+  const [user] = useContext(UserContext);
+  const httpLink = new HttpLink({
+    uri: process.env.REACT_APP_BACKEND_URL,
+  });
+
+  const authLink = new ApolloLink((operation, forward) => {
+    if (user && user.token) {
+      operation.setContext({
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    }
+
+    return forward(operation);
+  });
 
   const client = new ApolloClient({
-    uri: "https://non-profit-devs.herokuapp.com/v1/graphql",
-    headers: {
-      Authorization: `Bearer ${authResult && authResult.idToken}`
-    },
-    fetch
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+    fetch,
   });
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
