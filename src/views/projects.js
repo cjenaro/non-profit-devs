@@ -67,27 +67,31 @@ export default function Projects() {
           />
         </div>
         <ul>
-          {projects
-            .filter((project) =>
-              project.name.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((project) => (
-              <li
-                key={project.id}
-                css={css`
-                  border: 2px solid var(--lavender);
-                  margin-bottom: 1rem;
-                  transform: scale(1);
-                  transition: transform 0.1s ease-in-out;
+          {projects.length < 0 ? (
+            projects
+              .filter((project) =>
+                project.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((project) => (
+                <li
+                  key={project.id}
+                  css={css`
+                    border: 2px solid var(--lavender);
+                    margin-bottom: 1rem;
+                    transform: scale(1);
+                    transition: transform 0.1s ease-in-out;
 
-                  &:hover {
-                    transform: scale(1.01);
-                  }
-                `}
-              >
-                <ProjectItem project={project} />
-              </li>
-            ))}
+                    &:hover {
+                      transform: scale(1.01);
+                    }
+                  `}
+                >
+                  <ProjectItem project={project} />
+                </li>
+              ))
+          ) : (
+            <h1>Looks like there are no projects here... yet!</h1>
+          )}
         </ul>
       </div>
     </section>
