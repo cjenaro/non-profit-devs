@@ -20,13 +20,13 @@ For anyone going deep into this, that needs access to the backend, it lives [her
 
 Un sitio web donde pueden reunirse desarrolladores sin fines de lucro y organizaciones sin fines de lucro.
 
-Este proyecto se inició con [Create React App] (https://github.com/facebook/create-react-app) bla bla bla ...
+Este proyecto se inició con [Create React App](https://github.com/facebook/create-react-app) bla bla bla ...
 
 ## Colaboración
 
 Si desea ayudar a mejorar este sitio web, sea mi invitado, puede elegir cualquier issue de github, para bugs estoy creando una nueva rama bug/\<número del issue \> y para mejoras estoy creando una rama feat/\<número del problema\> y una vez que se resuelve, se fusiona en dev y se elimina la rama.
 
-Si desea ayudar pero no sabe cómo contribuir a un proyecto de código abierto, puede leer [esto](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open -source-4fen) o [esto](https://opensource.guide/how-to-contribute/) o incluso presentar un error / mejora ya ayuda muchísimo!
+Si desea ayudar pero no sabe cómo contribuir a un proyecto de código abierto, puede leer [esto](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) o [esto](https://opensource.guide/how-to-contribute/) o incluso presentar un error / mejora ya ayuda muchísimo!
 
 Nota al pie: antes de confirmar cualquier cambio, ejecute `yarn format`, mantengamos esto ordenado y limpio :smile:
 
