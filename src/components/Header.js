@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import { useLocation } from '@reach/router';
 import Logo from './Logo';
 import Button from './Button';
 import { UserContext } from '../context/UserContext';
 
 const Header = ({ fixed }) => {
-  const isProfile = window.location.pathname.includes('profile');
+  const location = useLocation();
+  const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
 
   const logout = () => {
@@ -55,12 +57,12 @@ const Header = ({ fixed }) => {
         ) : (
           <React.Fragment>
             <Button
-              to="/projects"
+              to={!isProfile ? '/profile' : '/projects'}
               css={css`
                 margin-right: 10px;
               `}
             >
-              {isProfile ? 'Profile' : 'Projects'}
+              {!isProfile ? 'Profile' : 'Projects'}
             </Button>
             <Button onClick={logout}>Sign Out</Button>
           </React.Fragment>
