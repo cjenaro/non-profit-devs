@@ -33,7 +33,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user && user.token) {
-      navigate('/profile');
+      navigate('/projects');
     }
   }, [user]);
   return (
