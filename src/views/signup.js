@@ -70,12 +70,12 @@ export default function Signup() {
       },
     });
 
-    navigate('/login');
   };
 
   useEffect(() => {
     if (signupData && signupData.signup) {
       setUser({ ...signupData.signup });
+      navigate('/login');
     }
   }, [signupData, setUser]);
 
