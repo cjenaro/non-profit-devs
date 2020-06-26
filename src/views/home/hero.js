@@ -5,6 +5,7 @@ export default function Hero() {
   return (
     <section
       css={css`
+        overflow: hidden;
         padding-top: 40px;
         padding-bottom: 40px;
       `}
