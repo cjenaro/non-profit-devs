@@ -2,13 +2,13 @@
 
 A website where non profit developers and non profit organizations can meet.
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) bla bla bla...
+
 ## Collaboration
 
-If you want to help improve this website, be my guest, you can pick any issue from github, for bugs I'm creating a new branch bug/<number of the issue> and for enhancements I'm creating a branch feat/<number of the issue> and once that is solved merged into dev and branch deleted.
+If you want to help improve this website, be my guest, you can pick any issue from github, for bugs I'm creating a new branch bug/\<number of the issue\> and for enhancements I'm creating a branch feat/\<number of the issue\> and once that is solved merged into dev and branch deleted.
 
 If you want to help but don't know how to contribute to an open source project you can read [this](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) or [this](https://opensource.guide/how-to-contribute/) or even filing a bug/enhancement already helps a ton! 
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) bla bla bla...
 
 Footnote: before commiting any changes run `yarn format`, let's keep this tidy and clean :smile:
 
