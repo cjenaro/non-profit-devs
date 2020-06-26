@@ -127,6 +127,19 @@ export default function Profile() {
           {user.name}.
         </Title>
 
+        <p>
+          If you haven't joined our slack yet,{' '}
+          <a
+            rel="noopener noreferrer"
+            css={css`
+              color: currentColor;
+            `}
+            href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
+            target="_blank"
+          >
+            here's the link!
+          </a>
+        </p>
         <form onSubmit={handleUserUpdate}>
           <Input
             label="Email:"
