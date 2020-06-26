@@ -45,7 +45,7 @@ export default function WhoWeAre() {
           <Button to="/pitch" className="big-button">
             Pitch ONG Website
           </Button>
-          <Button to="/login" className="big-button">
+          <Button to="/signup" className="big-button">
             Join as developer
           </Button>
         </div>
