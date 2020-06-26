@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useLocation } from '@reach/router';
+import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
 import Button from './Button';
 import { UserContext } from '../context/UserContext';
@@ -10,7 +11,7 @@ const Header = ({ fixed }) => {
   const location = useLocation();
   const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
-
+  const { t } = useTranslation()
   const logout = () => {
     setUser(null);
   };
@@ -51,7 +52,7 @@ const Header = ({ fixed }) => {
               Log In
             </Button>
             <Button className="contained" to="/signup">
-              Sign Up
+              {t('SIGNUP')}
             </Button>
           </React.Fragment>
         ) : (
