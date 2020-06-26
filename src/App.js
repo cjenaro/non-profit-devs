@@ -35,8 +35,8 @@ function App() {
     <div className="App">
       <UserProvider>
         <ApolloWrapper>
-          <Layout>
-            <PosedRouter>
+          <PosedRouter>
+            <Layout path="/">
               <Home path="/" />
               <Profile path="/profile" />
               <Pitch path="/pitch" />
@@ -45,8 +45,8 @@ function App() {
               <Login path="/login" />
               <Signup path="/signup" />
               <NotFound path="/*" />
-            </PosedRouter>
-          </Layout>
+            </Layout>
+          </PosedRouter>
         </ApolloWrapper>
       </UserProvider>
     </div>
