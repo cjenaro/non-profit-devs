@@ -6,8 +6,10 @@ import ErrorMessage from '../components/ErrorMessage';
 import useProjects from '../hooks/use-projects';
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 export default function Projects() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data, loading, error } = useProjects();
 
@@ -48,7 +50,7 @@ export default function Projects() {
             type="text"
             value={search}
             onChange={handleSearch}
-            placeholder="Filter projects by name..."
+            placeholder={t('FILTER_PROJECTS_BY_NAME')}
             css={css`
               &::placeholder {
                 color: currentColor;
@@ -90,7 +92,7 @@ export default function Projects() {
                 </li>
               ))
           ) : (
-            <h1>Looks like there are no projects here... yet!</h1>
+            <h1>{t('LOOKS_LIKE_THERE_ARE_NO_PROJECTS_HERE_YET')}</h1>
           )}
         </ul>
       </div>

@@ -1,8 +1,11 @@
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import Button from '../components/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function NotFound() {
+  const { t } = useTranslation();
+
   return (
     <section
       css={css`
@@ -21,9 +24,9 @@ export default function NotFound() {
             font-size: 40px;
           `}
         >
-          Oops! The page you are trying to access does not exist!
+          {t('OOPS_THE_PAGE_YOU_ARE_TRYING_TO_ACCESS_DOES_NOT_EXIST')}
         </h1>
-        <Button to="/">&larr; Go back to home</Button>
+        <Button to="/">&larr; {t('GO_BACK_TO_HOME')}</Button>
       </div>
     </section>
   );

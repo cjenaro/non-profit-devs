@@ -14,8 +14,10 @@ import Select from '../components/Select';
 import Divider from '../components/Divider';
 import ProjectItem from '../components/ProjectItem';
 import ErrorMessage from '../components/ErrorMessage';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
+  const { t } = useTranslation();
   const [passwordError, setPasswordError] = useState('');
   const [user, setUser] = useContext(UserContext);
   const [skill, setSkill] = useState(
@@ -54,7 +56,7 @@ export default function Profile() {
     setPasswordError('');
 
     if (e.target.confirmPassword.value !== e.target.newPassword.value) {
-      setPasswordError('Passwords do not match!');
+      setPasswordError(t('PASSWORDS_DO_NOT_MATCH'));
       return;
     }
 
@@ -128,7 +130,7 @@ export default function Profile() {
         </Title>
 
         <p>
-          If you haven't joined our slack yet,{' '}
+          {t('IF_YOU_HAVE_NOT_JOINED_OUR_SLACK_WORKSPACE_YET')}{' '}
           <a
             rel="noopener noreferrer"
             css={css`
@@ -137,18 +139,18 @@ export default function Profile() {
             href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
             target="_blank"
           >
-            here's the link!
+            {t('HERE_IS_THE_LINK')}
           </a>
         </p>
         <form onSubmit={handleUserUpdate}>
           <Input
-            label="Email:"
+            label={`${t('PROFILE_EMAIL')}:`}
             placeholder={user.email}
             name="email"
             id="email"
           />
           <Input
-            label="Name:"
+            label={`${t('PROFILE_NAME')}:`}
             name="name"
             placeholder={user.name}
             id="name"
@@ -162,21 +164,21 @@ export default function Profile() {
                 margin-top: 16px;
               `}
               initialSelectedItems={getInitialSkills()}
-              placeholder="Skills"
-              label="Skills"
+              placeholder={`${t('PROFILE_SKILLS')}:`}
+              label={`${t('PROFILE_SKILLS')}:`}
               onChange={handleSkills}
               options={getSkillOptions()}
             />
           )}
           <Button loading={updateUserLoading} className="submit-btn">
-            Submit
+            {t('PROFILE_SUBMIT')}
           </Button>
         </form>
       </div>
       <Divider
         color="var(--ember)"
         backgroundColor="var(--lavender)"
-        label="password change"
+        label={t('PROFILE_CHANGE_PASSWORD')}
         styles={css`
           margin-top: 50px;
           margin-bottom: 30px;
@@ -189,7 +191,7 @@ export default function Profile() {
               margin-top: 16px;
             `}
             type="password"
-            label="Old password:"
+            label={`${t('PROFILE_OLD_PASSWORD')}:`}
             name="oldPassword"
             id="oldPassword"
           />
@@ -198,7 +200,7 @@ export default function Profile() {
               margin-top: 16px;
             `}
             type="password"
-            label="New password:"
+            label={`${t('PROFILE_NEW_PASSWORD')}:`}
             name="newPassword"
             id="newPassword"
           />
@@ -207,12 +209,12 @@ export default function Profile() {
               margin-top: 16px;
             `}
             type="password"
-            label="Confirm password:"
+            label={`${t('PROFILE_CONFIRM_PASSWORD')}:`}
             name="confirmPassword"
             id="confirmPassword"
           />
           <Button loading={changePasswordLoading} className="submit-btn">
-            Change password
+            {t('PROFILE_CHANGE_PASSWORD')}
           </Button>
           <ErrorMessage error={passwordError || changePasswordError} />
         </form>
@@ -220,7 +222,7 @@ export default function Profile() {
       <Divider
         color="var(--ember)"
         backgroundColor="var(--lavender)"
-        label="your projects"
+        label={t('YOUR_PROJECTS')}
         styles={css`
           margin-top: 50px;
           margin-bottom: 30px;
@@ -243,14 +245,14 @@ export default function Profile() {
             ))
           ) : (
             <h1>
-              This looks really empty...{' '}
+              {t('THIS_LOOKS_REALLY_EMPTY')}{' '}
               <Link
                 css={css`
                   color: currentColor;
                 `}
                 to="/projects"
               >
-                go to projects &rarr;
+                {t('GO_TO_PROJECTS')} &rarr;
               </Link>
             </h1>
           )}

@@ -2,6 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import { navigate } from '@reach/router';
 import { useContext, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { UserContext } from '../context/UserContext';
 import { useSignup } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
@@ -12,6 +13,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import Select from '../components/Select';
 
 export default function Signup() {
+  const { t } = useTranslation();
   const [error, setError] = useState(null);
   const [loginInput, setLoginInput] = useState({ email: '', password: '' });
   const [skills, setSkills] = useState([]);
@@ -53,7 +55,7 @@ export default function Signup() {
     e.preventDefault();
 
     if (e.target.password.value !== e.target.confirmPassword.value) {
-      setError({ message: 'Passwords do not match' });
+      setError({ message: t('PASSWORDS_DO_NOT_MATCH') });
       return;
     }
 
@@ -103,7 +105,7 @@ export default function Signup() {
     >
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
-          Sign Up.
+          {t('SIGNUP')}
         </Title>
 
         <form
@@ -117,7 +119,7 @@ export default function Signup() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Email:"
+            label={`${t('SIGNUP_EMAIL')}:`}
             name="email"
             id="email"
             value={loginInput.email}
@@ -127,7 +129,7 @@ export default function Signup() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Name:"
+            label={`${t('SIGNUP_NAME')}:`}
             name="name"
             id="name"
           />
@@ -135,7 +137,7 @@ export default function Signup() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Password:"
+            label={`${t('SIGNUP_PASSWORD')}:`}
             name="password"
             id="password"
             type="password"
@@ -146,23 +148,23 @@ export default function Signup() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Confirm Password:"
+            label={`${t('SIGNUP_CONFIRM_PASSWORD')}:`}
             name="confirmPassword"
             id="confirmPassword"
             type="password"
           />
           {!skillsLoading && (
             <Select
-              label="Skills"
+              label={t('SIGNUP_SKILLS')}
               styles={css`
                 margin-bottom: 16px;
               `}
-              placeholder={'Skills'}
+              placeholder={t('SIGNUP_SKILLS')}
               onChange={handleSkills}
               options={getSkillOptions()}
             />
           )}
-          <Button loading={signupLoading || skillsLoading}>Submit</Button>
+          <Button loading={signupLoading || skillsLoading}>{t('SIGNUP_SUBMIT')}</Button>
         </form>
         <ErrorMessage error={signupError || skillsError || error} />
       </div>

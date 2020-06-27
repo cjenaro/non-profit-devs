@@ -49,10 +49,10 @@ const Header = ({ fixed }) => {
               `}
               to="/login"
             >
-              Log In
+              {t('HEADEER_LOGIN')}
             </Button>
             <Button className="contained" to="/signup">
-              {t('SIGNUP')}
+              {t('HEADEER_SIGNUP')}
             </Button>
           </React.Fragment>
         ) : (
@@ -63,9 +63,9 @@ const Header = ({ fixed }) => {
                 margin-right: 10px;
               `}
             >
-              {!isProfile ? 'Profile' : 'Projects'}
+              {!isProfile ? t('HEADER_PROFILE') : t('HEADER_PROJECTS')}
             </Button>
-            <Button onClick={logout}>Sign Out</Button>
+        <Button onClick={logout}>{t('HEADER_SIGN_OUT')}</Button>
           </React.Fragment>
         )}
       </nav>

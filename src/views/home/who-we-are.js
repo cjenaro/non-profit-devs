@@ -2,8 +2,11 @@
 import { jsx, css } from '@emotion/core';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function WhoWeAre() {
+  const { t } = useTranslation();
+
   return (
     <section
       css={css`
@@ -20,7 +23,7 @@ export default function WhoWeAre() {
     >
       <div className="container">
         <Title color="var(--lavender)" borderColor="var(--ember)">
-          Who we are.
+          {t('WHO_WE_ARE')}
         </Title>
         <p
           css={css`
@@ -30,8 +33,7 @@ export default function WhoWeAre() {
             margin: 25px 0;
           `}
         >
-          We are a team of developers working for free for non-profit
-          organizations
+          {t('WE_ARE_A_TEAM_OF_DEVELOPERS_AND_DESIGNERS_WORKING_FOR_FREE_FOR_NON_PROFIT_ORGANIZATIONS')}
         </p>
         <div
           css={css`
@@ -43,10 +45,10 @@ export default function WhoWeAre() {
           `}
         >
           <Button to="/pitch" className="big-button">
-            Pitch ONG Website
+            {t('PITCH_YOUR_NGOS_WEBSITE')}
           </Button>
           <Button to="/signup" className="big-button">
-            Join as developer
+            {t('JOIN_AS_A_DEVELOPER_DESIGNER')}
           </Button>
         </div>
       </div>
