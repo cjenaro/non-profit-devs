@@ -3,7 +3,7 @@
   "NON_PROFITS": "Non-profits",
   "PITCH_YOUR_PROJECT": "Pitch your project/website",
   "WE_LL_CONTACT_YOU_AS_FAST_AS_WE_CAN": "We'll contact you as fast as we can",
-  "PLEASE_KEEP_IN_MIND_MOST_OF_US_HABE_OTHER_JOBS_TO_TAKE_CARE_OF": "Please keep in mind most of us have other jobs to take care of.",
+  "PLEASE_KEEP_IN_MIND_MOST_OF_US_HAVE_OTHER_JOBS_TO_TAKE_CARE_OF": "Please keep in mind most of us have other jobs to take care of.",
   "DEVELOPERS": "Developers",
   "DESIGNERS": "Designers",
   "AFTER_JOINING_BROWSE_ALL_PROJECTS": "After joining, browse all projects",
@@ -52,6 +52,7 @@
   "FILTER_PROJECTS_BY_NAME": "Filter projects by name...",
   "LOOKS_LIKE_THERE_ARE_NO_PROJECTS_HERE_YET": "Looks like there are no projects here... yet!",
 
+  "SIGNUP": "Sign up",
   "SIGNUP_EMAIL": "Email",
   "SIGNUP_NAME": "Name",
   "SIGNUP_PASSWORD": "Password",

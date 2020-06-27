@@ -3,7 +3,7 @@
     "NON_PROFITS": "Organizaciones sin fines de lucro",
     "PITCH_YOUR_PROJECT": "Postula tu proyecto o sitio web",
     "WE_LL_CONTACT_YOU_AS_FAST_AS_WE_CAN": "Nos pondremos en contacto tan pronto como sea posible",
-    "PLEASE_KEEP_IN_MIND_MOST_OF_US_HABE_OTHER_JOBS_TO_TAKE_CARE_OF": "Por favor ten en cuenta que tenemos otros trabajos y responsabilidades que atender",
+    "PLEASE_KEEP_IN_MIND_MOST_OF_US_HAVE_OTHER_JOBS_TO_TAKE_CARE_OF": "Por favor ten en cuenta que tenemos otros trabajos y responsabilidades que atender.",
     "DEVELOPERS": "Desarrolladores",
     "DESIGNERS": "Diseñadores",
     "AFTER_JOINING_BROWSE_ALL_PROJECTS": "Luego de registrarte, explora los proyectos disponibles",
@@ -45,13 +45,14 @@
     "THIS_LOOKS_REALLY_EMPTY": "Parece que no hay nada por aquí...",
     "GO_TO_PROJECTS": "ir a proyectos",
   
-    "JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK": "Únete al canal {{channel}} en nuestro Slack",
+    "JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK": "Únete al canal {{channel}} en nuestro {{slackLink}}",
     "VOLUNTEERS_ON_THIS_PROJECT": "Quiénes están en este proyecto",
     "JOIN_THIS_PROJECT": "Únete al proyecto",
   
-    "FILTER_PROJECTS_BY_NAME": "Buscar proyectos pornombre...",
+    "FILTER_PROJECTS_BY_NAME": "Buscar proyectos por nombre...",
     "LOOKS_LIKE_THERE_ARE_NO_PROJECTS_HERE_YET": "Parece que no hay proyectos aquí... ¡por ahora!",
   
+    "SIGNUP": "Registrarme",
     "SIGNUP_EMAIL": "Correo electrónico",
     "SIGNUP_NAME": "Nombre",
     "SIGNUP_PASSWORD": "Contraseña",
