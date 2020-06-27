@@ -31,7 +31,7 @@ export default function Pitch() {
 
   useEffect(() => {
     if (data) {
-      navigate(`/projects/${data.createProject.slug}`);
+      navigate(`/projects/${data.createProject.id}`);
     }
   }, [data]);
 

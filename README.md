@@ -1,6 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Non Profit Devs
 
-## Adding translations
+A website where non profit developers and non profit organizations can meet.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) bla bla bla...
+
+## Collaboration
+
+If you want to help improve this website, be my guest, you can pick any issue from github, for bugs I'm creating a new branch bug/\<number of the issue\> and for enhancements I'm creating a branch feat/\<number of the issue\> and once that is solved merged into dev and branch deleted.
+
+If you want to help but don't know how to contribute to an open source project you can read [this](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) or [this](https://opensource.guide/how-to-contribute/) or even filing a bug/enhancement already helps a ton! 
+
+Footnote: before commiting any changes run `yarn format`, let's keep this tidy and clean :smile:
+
+For anyone going deep into this, that needs access to the backend, it lives [here](https://github.com/jenaro94/non-profit-devs-back) for more information, our [slack](https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw)
+
+## Translations
 
 Translations are managed with [`react-i18next`](https://react.i18next.com/). Key catalogs live in the `src/translations` directory, as JSON files named as the language they offer translations for.
 
@@ -34,69 +48,54 @@ const ALL_LANGUAGES = [
 ];
 ```
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# Non Profit Devs
 
-### `yarn start`
+Un sitio web donde pueden reunirse desarrolladores sin fines de lucro y organizaciones sin fines de lucro.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Este proyecto se inició con [Create React App](https://github.com/facebook/create-react-app) bla bla bla ...
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Colaboración
 
-### `yarn test`
+Si desea ayudar a mejorar este sitio web, sea mi invitado, puede elegir cualquier issue de github, para bugs estoy creando una nueva rama bug/\<número del issue \> y para mejoras estoy creando una rama feat/\<número del problema\> y una vez que se resuelve, se fusiona en dev y se elimina la rama.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Si desea ayudar pero no sabe cómo contribuir a un proyecto de código abierto, puede leer [esto](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) o [esto](https://opensource.guide/how-to-contribute/) o incluso presentar un error / mejora ya ayuda muchísimo!
 
-### `yarn build`
+Nota al pie: antes de confirmar cualquier cambio, ejecute `yarn format`, mantengamos esto ordenado y limpio :smile:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para cualquiera que profundice en esto, que necesita acceso al backend, vive [aquí](https://github.com/jenaro94/non-profit-devs-back) para mas informacion en nuestro [slack](https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Traducciones
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Las traducciones se gestionan utilizando [`react-i18next`](https://react.i18next.com/). Los catálogos de texto están en el directorio `src/translations` en forma de archivos JSON nombrados por el código de cada idioma.
 
-### `yarn eject`
+```
+|__ src
+|   |__ translations
+|   |   |__ en.json
+|   |   |__ es.json
+|   |__ i18n.js
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Cuando una traducción está completa, se la debe registrar en el archivo `src/i18n.js` como un recurso:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+const resources = {
+  en: {
+    translation: en
+  },
+  es: {
+    translation: es
+  }
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Por último, para que las personas usuarias utilicen el idioma en el sitio, se debe registrar el idioma en `ALL_LANGUAGES`, en el componente `Language`:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```js
+const ALL_LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" }
+];
+```
