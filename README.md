@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 If you want to help improve this website, be my guest, you can pick any issue from github, for bugs I'm creating a new branch bug/\<number of the issue\> and for enhancements I'm creating a branch feat/\<number of the issue\> and once that is solved merged into dev and branch deleted.
 
-If you want to help but don't know how to contribute to an open source project you can read [this](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) or [this](https://opensource.guide/how-to-contribute/) or even filing a bug/enhancement already helps a ton! 
+If you want to help but don't know how to contribute to an open source project you can read [this](https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen) or [this](https://opensource.guide/how-to-contribute/) or even filing a bug/enhancement already helps a ton!
 
 Footnote: before commiting any changes run `yarn format`, let's keep this tidy and clean :smile:
 
@@ -83,11 +83,11 @@ Cuando una traducción está completa, se la debe registrar en el archivo `src/i
 ```js
 const resources = {
   en: {
-    translation: en
+    translation: en,
   },
   es: {
-    translation: es
-  }
+    translation: es,
+  },
 };
 ```
 
@@ -95,7 +95,7 @@ Por último, para que las personas usuarias utilicen el idioma en el sitio, se d
 
 ```js
 const ALL_LANGUAGES = [
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" }
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
 ];
 ```
