@@ -5,6 +5,7 @@ import { useLocation } from '@reach/router';
 import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
 import Button from './Button';
+import Language from './Language';
 import { UserContext } from '../context/UserContext';
 
 const Header = ({ fixed }) => {
@@ -12,6 +13,7 @@ const Header = ({ fixed }) => {
   const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
   const { t } = useTranslation()
+  
   const logout = () => {
     setUser(null);
   };
@@ -41,6 +43,7 @@ const Header = ({ fixed }) => {
       <Logo to="/" />
 
       <nav>
+        <Language />
         {!user ? (
           <React.Fragment>
             <Button
