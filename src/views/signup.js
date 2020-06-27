@@ -69,7 +69,6 @@ export default function Signup() {
         input: signupInput,
       },
     });
-
   };
 
   useEffect(() => {
