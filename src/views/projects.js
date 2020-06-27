@@ -67,7 +67,7 @@ export default function Projects() {
           />
         </div>
         <ul>
-          {projects.length < 0 ? (
+          {projects.length > 0 ? (
             projects
               .filter((project) =>
                 project.name.toLowerCase().includes(search.toLowerCase())
