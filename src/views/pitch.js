@@ -57,7 +57,9 @@ export default function Pitch() {
           {t('NEW_PROJECT')}
         </Title>
         <p>
-          {t('WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW')}
+          {t(
+            'WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW'
+          )}
         </p>
         <form
           onSubmit={handleSubmit}

@@ -132,7 +132,9 @@ export default function HowItWorks() {
                 {t('WE_LL_CONTACT_YOU_AS_FAST_AS_WE_CAN')}
               </p>
               <small className="text-center block">
-                {t('PLEASE_KEEP_IN_MIND_MOST_OF_US_HAVE_OTHER_JOBS_TO_TAKE_CARE_OF')}
+                {t(
+                  'PLEASE_KEEP_IN_MIND_MOST_OF_US_HAVE_OTHER_JOBS_TO_TAKE_CARE_OF'
+                )}
               </small>
             </div>
           </Steps>
@@ -152,7 +154,9 @@ export default function HowItWorks() {
             >
               {t('DEVELOPERS')}/{t('DESIGNERS')}
             </p>
-            <p className="text-center">{t('AFTER_JOINING_BROWSE_ALL_PROJECTS')}</p>
+            <p className="text-center">
+              {t('AFTER_JOINING_BROWSE_ALL_PROJECTS')}
+            </p>
             <p className="text-center">{t('PICK_ONE_YOU_FIND_INTERESTING')}</p>
             <p className="text-center">{t('SIGNUP_FOR_IT')}</p>
           </Steps>

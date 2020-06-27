@@ -12,8 +12,8 @@ const Header = ({ fixed }) => {
   const location = useLocation();
   const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
-  const { t } = useTranslation()
-  
+  const { t } = useTranslation();
+
   const logout = () => {
     setUser(null);
   };
@@ -68,7 +68,7 @@ const Header = ({ fixed }) => {
             >
               {!isProfile ? t('HEADER_PROFILE') : t('HEADER_PROJECTS')}
             </Button>
-        <Button onClick={logout}>{t('HEADER_SIGN_OUT')}</Button>
+            <Button onClick={logout}>{t('HEADER_SIGN_OUT')}</Button>
           </React.Fragment>
         )}
       </nav>

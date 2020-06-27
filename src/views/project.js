@@ -59,23 +59,28 @@ export default function Project({ navigate, id }) {
         {user && (
           <p>
             {t('JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK', {
-              channel: <span
-                css={css`
-                  text-transform: lowercase;
-                `}
-              >
-                #non-profit-{project.name.split(' ').join('-').replace(/'/g, '')}
-              </span>,
-              slackLink: <a
-                rel="noopener noreferrer"
-                css={css`
-                  color: currentColor;
-                `}
-                href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
-                target="_blank"
-              >
-                Slack
-              </a>
+              channel: (
+                <span
+                  css={css`
+                    text-transform: lowercase;
+                  `}
+                >
+                  #non-profit-
+                  {project.name.split(' ').join('-').replace(/'/g, '')}
+                </span>
+              ),
+              slackLink: (
+                <a
+                  rel="noopener noreferrer"
+                  css={css`
+                    color: currentColor;
+                  `}
+                  href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
+                  target="_blank"
+                >
+                  Slack
+                </a>
+              ),
             })}
           </p>
         )}

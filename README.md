@@ -17,11 +17,11 @@ Once a translation is complete, it must be registered in the `src/i18n.js` file 
 ```js
 const resources = {
   en: {
-    translation: en
+    translation: en,
   },
   es: {
-    translation: es
-  }
+    translation: es,
+  },
 };
 ```
 
@@ -29,8 +29,8 @@ Finally, for a user to be able to switch languages, the new language must be add
 
 ```js
 const ALL_LANGUAGES = [
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" }
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
 ];
 ```
 

@@ -33,7 +33,9 @@ export default function WhoWeAre() {
             margin: 25px 0;
           `}
         >
-          {t('WE_ARE_A_TEAM_OF_DEVELOPERS_AND_DESIGNERS_WORKING_FOR_FREE_FOR_NON_PROFIT_ORGANIZATIONS')}
+          {t(
+            'WE_ARE_A_TEAM_OF_DEVELOPERS_AND_DESIGNERS_WORKING_FOR_FREE_FOR_NON_PROFIT_ORGANIZATIONS'
+          )}
         </p>
         <div
           css={css`

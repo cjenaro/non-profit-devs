@@ -71,7 +71,6 @@ export default function Signup() {
         input: signupInput,
       },
     });
-
   };
 
   useEffect(() => {
@@ -164,7 +163,9 @@ export default function Signup() {
               options={getSkillOptions()}
             />
           )}
-          <Button loading={signupLoading || skillsLoading}>{t('SIGNUP_SUBMIT')}</Button>
+          <Button loading={signupLoading || skillsLoading}>
+            {t('SIGNUP_SUBMIT')}
+          </Button>
         </form>
         <ErrorMessage error={signupError || skillsError || error} />
       </div>
