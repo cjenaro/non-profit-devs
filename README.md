@@ -1,5 +1,39 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Adding translations
+
+Translations are managed with [`react-i18next`](https://react.i18next.com/). Key catalogs live in the `src/translations` directory, as JSON files named as the language they offer translations for.
+
+```
+|__ src
+|   |__ translations
+|   |   |__ en.json
+|   |   |__ es.json
+|   |__ i18n.js
+```
+
+Once a translation is complete, it must be registered in the `src/i18n.js` file as a resource:
+
+```js
+const resources = {
+  en: {
+    translation: en
+  },
+  es: {
+    translation: es
+  }
+};
+```
+
+Finally, for a user to be able to switch languages, the new language must be added to the `ALL_LANGUAGES` definition in the `Language` UI component:
+
+```js
+const ALL_LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" }
+];
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
