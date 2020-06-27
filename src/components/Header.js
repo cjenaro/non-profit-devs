@@ -49,10 +49,10 @@ const Header = ({ fixed }) => {
               `}
               to="/login"
             >
-              {t('HEADEER_LOGIN')}
+              {t('HEADER_LOGIN')}
             </Button>
             <Button className="contained" to="/signup">
-              {t('HEADEER_SIGNUP')}
+              {t('HEADER_SIGNUP')}
             </Button>
           </React.Fragment>
         ) : (
