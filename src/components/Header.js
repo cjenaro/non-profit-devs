@@ -22,7 +22,7 @@ const Header = ({ fixed }) => {
     <header
       css={css`
         background-color: var(--lavender);
-        height: 64px;
+        min-height: 64px;
         padding: 0 16px;
         display: flex;
         align-items: center;
@@ -42,7 +42,11 @@ const Header = ({ fixed }) => {
     >
       <Logo to="/" />
 
-      <nav>
+      <nav
+        css={css`
+          padding: 10px 0;
+        `}
+      >
         <Language />
         {!user ? (
           <React.Fragment>

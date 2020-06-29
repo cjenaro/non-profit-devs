@@ -18,6 +18,13 @@ export default function WhoWeAre() {
           font-size: 20px;
           display: block;
           margin: 16px auto;
+          max-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+          & .big-button {
+            max-width: 45%;
+          }
         }
       `}
     >

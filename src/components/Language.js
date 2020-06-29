@@ -27,6 +27,12 @@ const Language = () => {
         &:focus {
           outline-style: dotted;
         }
+
+        @media (max-width: 420px) {
+          display: block;
+          width: 100%;
+          margin-bottom: 8px;
+        }
       `}
       onClick={() => i18n.changeLanguage(availableLanguage.code)}
     >
