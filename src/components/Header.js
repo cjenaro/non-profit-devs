@@ -2,14 +2,17 @@ import React, { useContext } from 'react';
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useLocation } from '@reach/router';
+import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
 import Button from './Button';
+import Language from './Language';
 import { UserContext } from '../context/UserContext';
 
 const Header = ({ fixed }) => {
   const location = useLocation();
   const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
+  const { t } = useTranslation();
 
   const logout = () => {
     setUser(null);
@@ -40,6 +43,7 @@ const Header = ({ fixed }) => {
       <Logo to="/" />
 
       <nav>
+        <Language />
         {!user ? (
           <React.Fragment>
             <Button
@@ -48,10 +52,10 @@ const Header = ({ fixed }) => {
               `}
               to="/login"
             >
-              Log In
+              {t('HEADER_LOGIN')}
             </Button>
             <Button className="contained" to="/signup">
-              Sign Up
+              {t('HEADER_SIGNUP')}
             </Button>
           </React.Fragment>
         ) : (
@@ -62,9 +66,9 @@ const Header = ({ fixed }) => {
                 margin-right: 10px;
               `}
             >
-              {!isProfile ? 'Profile' : 'Projects'}
+              {!isProfile ? t('HEADER_PROFILE') : t('HEADER_PROJECTS')}
             </Button>
-            <Button onClick={logout}>Sign Out</Button>
+            <Button onClick={logout}>{t('HEADER_SIGN_OUT')}</Button>
           </React.Fragment>
         )}
       </nav>
