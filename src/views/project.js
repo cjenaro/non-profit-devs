@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 //* @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
@@ -9,6 +10,7 @@ import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 
 export default function Project({ navigate, id }) {
+  const { t } = useTranslation();
   const [user] = useContext(UserContext);
   const {
     data: projectData,
@@ -56,25 +58,30 @@ export default function Project({ navigate, id }) {
         <p>{project.description}</p>
         {user && (
           <p>
-            Join the{' '}
-            <span
-              css={css`
-                text-transform: lowercase;
-              `}
-            >
-              #non-profit-{project.name.split(' ').join('-').replace(/'/g, '')}
-            </span>{' '}
-            channel on our{' '}
-            <a
-              rel="noopener noreferrer"
-              css={css`
-                color: currentColor;
-              `}
-              href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
-              target="_blank"
-            >
-              slack!
-            </a>
+            {t('JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK', {
+              channel: (
+                <span
+                  css={css`
+                    text-transform: lowercase;
+                  `}
+                >
+                  #non-profit-
+                  {project.name.split(' ').join('-').replace(/'/g, '')}
+                </span>
+              ),
+              slackLink: (
+                <a
+                  rel="noopener noreferrer"
+                  css={css`
+                    color: currentColor;
+                  `}
+                  href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
+                  target="_blank"
+                >
+                  Slack
+                </a>
+              ),
+            })}
           </p>
         )}
         <ul
@@ -92,13 +99,13 @@ export default function Project({ navigate, id }) {
             }
           `}
         >
-          <li>Devs on this project:</li>
+          <li>{t('VOLUNTEERS_ON_THIS_PROJECT')}:</li>
           {project.users.map((user) => (
             <li key={user.id}>{user.name}</li>
           ))}
         </ul>
         <Button loading={loading} onClick={handleJoinProject} className="join">
-          Join this project
+          {t('JOIN_THIS_PROJECT')}
         </Button>
       </div>
     </section>

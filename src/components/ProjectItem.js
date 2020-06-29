@@ -1,8 +1,10 @@
 //* @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Link } from '@reach/router';
+import { useTranslation } from 'react-i18next';
 
 export default function ProjectItem({ project }) {
+  const { t } = useTranslation();
   if (!project) return null;
   console.log(project);
   return (
@@ -50,7 +52,7 @@ export default function ProjectItem({ project }) {
                 letter-spacing: 0.1rem;
               `}
             >
-              created:
+              {t('PROJECT_ITEM_CREATED')}:
             </span>{' '}
             {new Date(project.createdAt).toLocaleDateString()}
           </p>
@@ -73,7 +75,7 @@ export default function ProjectItem({ project }) {
                 text-transform: uppercase;
               `}
             >
-              status:
+              {t('PROJECT_ITEM_STATUS')}:
             </span>{' '}
             {project.status
               .split('_')

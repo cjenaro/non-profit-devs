@@ -1,0 +1,71 @@
+{
+  "HOW_IT_WORKS": "How it works",
+  "NON_PROFITS": "Non-profits",
+  "PITCH_YOUR_PROJECT": "Pitch your project/website",
+  "WE_LL_CONTACT_YOU_AS_FAST_AS_WE_CAN": "We'll contact you as fast as we can",
+  "PLEASE_KEEP_IN_MIND_MOST_OF_US_HAVE_OTHER_JOBS_TO_TAKE_CARE_OF": "Please keep in mind most of us have other jobs to take care of.",
+  "DEVELOPERS": "Developers",
+  "DESIGNERS": "Designers",
+  "AFTER_JOINING_BROWSE_ALL_PROJECTS": "After joining, browse all projects",
+  "PICK_ONE_YOU_FIND_INTERESTING": "Pick one you find interesting",
+  "SIGNUP_FOR_IT": "Sign up for it",
+
+  "WHO_WE_ARE": "Who we are",
+  "WE_ARE_A_TEAM_OF_DEVELOPERS_AND_DESIGNERS_WORKING_FOR_FREE_FOR_NON_PROFIT_ORGANIZATIONS": "We are a team of developers and designers working for free for non-profit organizations",
+  "PITCH_YOUR_NGOS_WEBSITE": "Pitch your NGO's website",
+  "JOIN_AS_A_DEVELOPER_DESIGNER": "Join as a developer/designer",
+
+  "LOGIN": "Login",
+  "LOGIN_EMAIL": "Email",
+  "LOGIN_PASSWORD": "Password",
+  "LOGIN_SUBMIT": "Submit",
+
+  "OOPS_THE_PAGE_YOU_ARE_TRYING_TO_ACCESS_DOES_NOT_EXIST": "Oops! The page you are trying to access does not exist!",
+  "GO_BACK_TO_HOME": "Go back to the homepage",
+
+  "NEW_PROJECT": "New project",
+  "WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW": "We are glad you've decided to pitch your project to us! Please fill in the form below",
+  "THE_NAME_OF_YOUR_NGO": "The name of your NGO",
+  "CONTACT_EMAIL": "Contact email",
+  "BRIEF_DESCRIPTION_OF_WEBSITE": "Brief description of the website",
+  "SUBMIT_PITCH": "Submit pitch",
+
+  "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+  "IF_YOU_HAVE_NOT_JOINED_OUR_SLACK_WORKSPACE_YET": "If you haven't joined our Slack workspace,",
+  "HERE_IS_THE_LINK": "here's the link!",
+  "PROFILE_EMAIL": "Email",
+  "PROFILE_NAME": "Name",
+  "PROFILE_SKILLS": "Skills",
+  "PROFILE_SUBMIT": "Update profile",
+  "PROFILE_OLD_PASSWORD": "Old password",
+  "PROFILE_NEW_PASSWORD": "New password",
+  "PROFILE_CONFIRM_PASSWORD": "Confirm password",
+  "PROFILE_CHANGE_PASSWORD": "Change password",
+  "YOUR_PROJECTS": "your projects",
+  "THIS_LOOKS_REALLY_EMPTY": "This looks really empty...",
+  "GO_TO_PROJECTS": "go to projects",
+
+  "JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK": "Join the {{channel}} channel on our Slack",
+  "VOLUNTEERS_ON_THIS_PROJECT": "Volunteers on this project",
+  "JOIN_THIS_PROJECT": "Join this project",
+
+  "FILTER_PROJECTS_BY_NAME": "Filter projects by name...",
+  "LOOKS_LIKE_THERE_ARE_NO_PROJECTS_HERE_YET": "Looks like there are no projects here... yet!",
+
+  "SIGNUP": "Sign up",
+  "SIGNUP_EMAIL": "Email",
+  "SIGNUP_NAME": "Name",
+  "SIGNUP_PASSWORD": "Password",
+  "SIGNUP_CONFIRM_PASSWORD": "Confirm password",
+  "SIGNUP_SKILLS": "Skills",
+  "SIGNUP_SUBMIT": "Sign up",
+
+  "HEADER_LOGIN": "Log in",
+  "HEADER_SIGNUP": "Sign up",
+  "HEADER_PROFILE": "Profile",
+  "HEADER_PROJECTS": "Projects",
+  "HEADER_SIGN_OUT": "Sign out",
+
+  "PROJECT_ITEM_CREATED": "date created",
+  "PROJECT_ITEM_STATUS": "status"
+}

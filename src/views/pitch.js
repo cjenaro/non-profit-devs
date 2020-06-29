@@ -7,9 +7,11 @@ import ErrorMessage from '../components/ErrorMessage';
 import { useCreateProject } from '../hooks/use-projects';
 import { useEffect } from 'react';
 import { navigate } from '@reach/router';
+import { useTranslation } from 'react-i18next';
 
 export default function Pitch() {
   const [createProject, { data, loading, error }] = useCreateProject();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,11 +54,12 @@ export default function Pitch() {
     >
       <div className="container">
         <Title color="var(--lavender)" borderColor="var(--ember)">
-          New Project.
+          {t('NEW_PROJECT')}
         </Title>
         <p>
-          We are glad you decided to pitch your project to us, please fill in
-          the form below
+          {t(
+            'WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW'
+          )}
         </p>
         <form
           onSubmit={handleSubmit}
@@ -70,7 +73,7 @@ export default function Pitch() {
               margin: 1rem 0;
             `}
             inverted
-            label="ong name:"
+            label={`${t('THE_NAME_OF_YOUR_NGO')}:`}
             name="ongName"
             id="ongName"
           />
@@ -79,7 +82,7 @@ export default function Pitch() {
               margin: 1rem 0;
             `}
             inverted
-            label="contact email:"
+            label={`${t('CONTACT_EMAIL')}:`}
             name="contactEmail"
             id="contactEmail"
           />
@@ -113,7 +116,7 @@ export default function Pitch() {
               }
             `}
           >
-            Brief description of website:
+            {t('BRIEF_DESCRIPTION_OF_WEBSITE')}:
             <textarea
               css={css`
                 padding: 16px;
@@ -130,7 +133,7 @@ export default function Pitch() {
               rows="10"
             ></textarea>
           </label>
-          <Button loading={loading}>Submit Pitch</Button>
+          <Button loading={loading}>{t('SUBMIT_PITCH')}</Button>
         </form>
         <ErrorMessage error={error} />
       </div>

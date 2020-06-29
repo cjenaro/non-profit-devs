@@ -8,10 +8,12 @@ import Title from '../components/Title';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import ErrorMessage from '../components/ErrorMessage';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
   const [login, { data, loading, error }] = useLogin();
   const [user, setUser] = useContext(UserContext);
+  const { t } = useTranslation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +53,7 @@ export default function Login() {
     >
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
-          Login.
+          {t('LOGIN')}
         </Title>
 
         <form
@@ -65,7 +67,7 @@ export default function Login() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Email:"
+            label={`${t('LOGIN_EMAIL')}:`}
             name="email"
             id="email"
           />
@@ -73,12 +75,12 @@ export default function Login() {
             styles={css`
               margin-bottom: 16px;
             `}
-            label="Password:"
+            label={`${t('LOGIN_PASSWORD')}:`}
             name="password"
             type="password"
             id="password"
           />
-          <Button loading={loading}>Submit</Button>
+          <Button loading={loading}>{t('LOGIN_SUBMIT')}</Button>
         </form>
         <ErrorMessage error={error} />
       </div>
