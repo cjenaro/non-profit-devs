@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export default function ProjectItem({ project }) {
   const { t } = useTranslation();
   if (!project) return null;
-  console.log(project);
+
   return (
     <Link
       to={`/projects/${project.id}`}

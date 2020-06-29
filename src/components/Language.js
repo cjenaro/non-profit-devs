@@ -15,6 +15,7 @@ const Language = () => {
 
   return availableLanguages.map((availableLanguage) => (
     <button
+      key={availableLanguage.code}
       css={css`
         border: none;
         background: none;
