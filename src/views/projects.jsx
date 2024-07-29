@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import ProjectItem from '../components/ProjectItem.jsx';
 import Spinner from '../components/Spinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';

@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { Link } from '@reach/router';
 import { useTranslation } from 'react-i18next';
 

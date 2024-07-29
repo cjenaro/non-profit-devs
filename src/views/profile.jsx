@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 //* @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { redirectTo, Link } from '@reach/router';
 
 import { UserContext } from '../context/UserContext.jsx';

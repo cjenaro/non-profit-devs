@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 //* @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
 import { UserContext } from '../context/UserContext.jsx';

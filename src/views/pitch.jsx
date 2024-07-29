@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 import Title from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
