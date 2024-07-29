@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+const gql = (...a) => String.toString(a)
 
 export function useGetSkills() {
   return useQuery(gql`

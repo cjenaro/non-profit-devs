@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
 import useMutation from './use-mutation';
-import gql from 'graphql-tag';
+const gql = (...a) => String.toString(a)
 
 export function useAddProjectToUser() {
   return useMutation(
