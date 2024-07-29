@@ -1,15 +1,16 @@
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import Title from '../components/Title';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import ErrorMessage from '../components/ErrorMessage';
+import { jsx, css } from '@emotion/react';
+import Title from '../components/Title.jsx';
+import Input from '../components/Input.jsx';
+import Button from '../components/Button.jsx';
+import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useCreateProject } from '../hooks/use-projects';
 import { useEffect } from 'react';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 export default function Pitch() {
+  const navigate = useNavigate();
   const [createProject, { data, loading, error }] = useCreateProject();
   const { t } = useTranslation();
 

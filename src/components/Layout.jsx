@@ -1,7 +1,8 @@
 import React from 'react';
 //* @jsx jsx */
-import { jsx, Global, css } from '@emotion/core';
-import Header from './Header';
+import { jsx, Global, css } from '@emotion/react';
+import { Outlet } from 'react-router-dom';
+import Header from './Header.jsx';
 
 const Layout = ({ children }) => {
   return (
@@ -58,7 +59,9 @@ const Layout = ({ children }) => {
         `}
       />
       <Header />
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <Header fixed />
     </React.Fragment>
   );

@@ -1,5 +1,5 @@
 //* @jsx jsx */
-import { keyframes, css, jsx } from '@emotion/core';
+import { keyframes, css, jsx } from '@emotion/react';
 
 const spin = keyframes`
   0% {

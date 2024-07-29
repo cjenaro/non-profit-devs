@@ -1,16 +1,17 @@
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../context/UserContext';
-import { navigate } from '@reach/router';
+import { UserContext } from '../context/UserContext.jsx';
+import { useNavigate } from 'react-router';
 import { useLogin } from '../hooks/use-devs';
-import Title from '../components/Title';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import ErrorMessage from '../components/ErrorMessage';
+import Title from '../components/Title.jsx';
+import Input from '../components/Input.jsx';
+import Button from '../components/Button.jsx';
+import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [login, { data, loading, error }] = useLogin();
   const [user, setUser] = useContext(UserContext);
   const { t } = useTranslation();

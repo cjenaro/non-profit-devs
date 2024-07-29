@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import Title from '../../components/Title';
-import Button from '../../components/Button';
+import { jsx, css } from '@emotion/react';
+import Title from '../../components/Title.jsx';
+import Button from '../../components/Button.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function WhoWeAre() {
