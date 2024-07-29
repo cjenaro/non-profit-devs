@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router';
 
 const StyledButton = styled.button`
   padding: 5px 7px;
@@ -80,6 +80,7 @@ const StyledButton = styled.button`
 `;
 
 export default function Button({ onClick, to, children, className, loading }) {
+  const navigate = useNavigate();
   const handleTo = () => {
     navigate(to);
   };

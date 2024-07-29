@@ -1,8 +1,8 @@
 //* @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import ProjectItem from '../components/ProjectItem';
-import Spinner from '../components/Spinner';
-import ErrorMessage from '../components/ErrorMessage';
+import { css, jsx } from '@emotion/react';
+import ProjectItem from '../components/ProjectItem.jsx';
+import Spinner from '../components/Spinner.jsx';
+import ErrorMessage from '../components/ErrorMessage.jsx';
 import useProjects from '../hooks/use-projects';
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';

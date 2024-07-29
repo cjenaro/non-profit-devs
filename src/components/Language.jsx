@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 
 const ALL_LANGUAGES = [
   { code: 'en', label: 'English' },

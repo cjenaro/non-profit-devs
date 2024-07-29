@@ -1,7 +1,7 @@
 //* @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import Title from '../../components/Title';
-import Steps from '../../components/Steps';
+import { jsx, css } from '@emotion/react';
+import Title from '../../components/Title.jsx';
+import Steps from '../../components/Steps.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks() {
