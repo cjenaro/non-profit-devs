@@ -7,7 +7,7 @@ import {
 } from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
 import { ApolloProvider } from 'react-apollo';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserContext.jsx';
 
 export const ApolloWrapper = ({ children }) => {
   const [user] = useContext(UserContext);

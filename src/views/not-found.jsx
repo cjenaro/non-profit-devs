@@ -1,6 +1,6 @@
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import Button from '../components/Button';
+import Button from '../components/Button.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function NotFound() {

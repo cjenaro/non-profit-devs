@@ -1,16 +1,15 @@
 import React from 'react';
-import Layout from './components/Layout';
+import Layout from './components/Layout.jsx';
 import { Router, Location } from '@reach/router';
-import { ApolloWrapper } from './utils/apollo';
-import Home from './views/home/index';
-import Profile from './views/profile';
-import Pitch from './views/pitch';
-import Projects from './views/projects';
-import Project from './views/project';
-import Login from './views/login';
-import Signup from './views/signup';
-import NotFound from './views/not-found';
-import { UserProvider } from './context/UserContext';
+import Home from './views/home/index.jsx';
+import Profile from './views/profile.jsx';
+import Pitch from './views/pitch.jsx';
+import Projects from './views/projects.jsx';
+import Project from './views/project.jsx';
+import Login from './views/login.jsx';
+import Signup from './views/signup.jsx';
+import NotFound from './views/not-found.jsx';
+import { UserProvider } from './context/UserContext.jsx';
 import posed, { PoseGroup } from 'react-pose';
 
 const RouteContainer = posed.div({
@@ -34,20 +33,18 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-        <ApolloWrapper>
-          <PosedRouter>
-            <Layout path="/">
-              <Home path="/" />
-              <Profile path="/profile" />
-              <Pitch path="/pitch" />
-              <Projects path="/projects" />
-              <Project path="/projects/:id" />
-              <Login path="/login" />
-              <Signup path="/signup" />
-              <NotFound path="/*" />
-            </Layout>
-          </PosedRouter>
-        </ApolloWrapper>
+        <PosedRouter>
+          <Layout path="/">
+            <Home path="/" />
+            <Profile path="/profile" />
+            <Pitch path="/pitch" />
+            <Projects path="/projects" />
+            <Project path="/projects/:id" />
+            <Login path="/login" />
+            <Signup path="/signup" />
+            <NotFound path="/*" />
+          </Layout>
+        </PosedRouter>
       </UserProvider>
     </div>
   );

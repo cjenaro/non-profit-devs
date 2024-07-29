@@ -1,7 +1,7 @@
 import React from 'react';
 //* @jsx jsx */
 import { jsx, Global, css } from '@emotion/core';
-import Header from './Header';
+import Header from './Header.jsx';
 
 const Layout = ({ children }) => {
   return (

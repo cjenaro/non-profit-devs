@@ -3,17 +3,17 @@ import { useContext, useState } from 'react';
 import { css, jsx } from '@emotion/core';
 import { redirectTo, Link } from '@reach/router';
 
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserContext.jsx';
 import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
 
-import Title from '../components/Title';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import Select from '../components/Select';
-import Divider from '../components/Divider';
-import ProjectItem from '../components/ProjectItem';
-import ErrorMessage from '../components/ErrorMessage';
+import Title from '../components/Title.jsx';
+import Input from '../components/Input.jsx';
+import Button from '../components/Button.jsx';
+import Select from '../components/Select.jsx';
+import Divider from '../components/Divider.jsx';
+import ProjectItem from '../components/ProjectItem.jsx';
+import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function Profile() {

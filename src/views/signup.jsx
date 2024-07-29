@@ -3,14 +3,14 @@ import { jsx, css } from '@emotion/core';
 import { navigate } from '@reach/router';
 import { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserContext.jsx';
 import { useSignup } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
-import Input from '../components/Input';
-import Title from '../components/Title';
-import Button from '../components/Button';
-import ErrorMessage from '../components/ErrorMessage';
-import Select from '../components/Select';
+import Input from '../components/Input.jsx';
+import Title from '../components/Title.jsx';
+import Button from '../components/Button.jsx';
+import ErrorMessage from '../components/ErrorMessage.jsx';
+import Select from '../components/Select.jsx';
 
 export default function Signup() {
   const { t } = useTranslation();

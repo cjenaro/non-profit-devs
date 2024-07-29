@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { css, jsx } from '@emotion/core';
 
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
-import { UserContext } from '../context/UserContext';
-import Title from '../components/Title';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
+import { UserContext } from '../context/UserContext.jsx';
+import Title from '../components/Title.jsx';
+import Button from '../components/Button.jsx';
+import Spinner from '../components/Spinner.jsx';
 
 export default function Project({ navigate, id }) {
   const { t } = useTranslation();
