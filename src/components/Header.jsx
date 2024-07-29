@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 //* @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { useLocation } from '@reach/router';
+import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Logo from './Logo.jsx';
 import Button from './Button.jsx';

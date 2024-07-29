@@ -6,10 +6,11 @@ import Button from '../components/Button.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useCreateProject } from '../hooks/use-projects';
 import { useEffect } from 'react';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 export default function Pitch() {
+  const navigate = useNavigate();
   const [createProject, { data, loading, error }] = useCreateProject();
   const { t } = useTranslation();
 

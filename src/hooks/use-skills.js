@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-const gql = (...a) => String.toString(a)
+const gql = (...a) => String.toString(a);
+function useQuery() {}
 
 export function useGetSkills() {
   return useQuery(gql`

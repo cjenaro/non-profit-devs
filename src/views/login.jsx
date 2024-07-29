@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/react';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router';
 import { useLogin } from '../hooks/use-devs';
 import Title from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
@@ -11,6 +11,7 @@ import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [login, { data, loading, error }] = useLogin();
   const [user, setUser] = useContext(UserContext);
   const { t } = useTranslation();

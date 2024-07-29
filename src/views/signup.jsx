@@ -1,6 +1,6 @@
 //* @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router';
 import { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { UserContext } from '../context/UserContext.jsx';
@@ -13,6 +13,7 @@ import ErrorMessage from '../components/ErrorMessage.jsx';
 import Select from '../components/Select.jsx';
 
 export default function Signup() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [error, setError] = useState(null);
   const [loginInput, setLoginInput] = useState({ email: '', password: '' });

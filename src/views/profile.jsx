@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
 //* @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { redirectTo, Link } from '@reach/router';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { UserContext } from '../context/UserContext.jsx';
 import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
@@ -17,6 +18,7 @@ import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [passwordError, setPasswordError] = useState('');
   const [user, setUser] = useContext(UserContext);
@@ -98,7 +100,10 @@ export default function Profile() {
     );
   };
 
-  if (!user) return redirectTo('/login');
+  if (!user) {
+    navigate('/login');
+    return null;
+  }
 
   return (
     <section
