@@ -7,8 +7,8 @@ Rails API with GraphQL for the Non Profit Devs platform.
 Use this checklist to track implementation progress:
 
 - [x] **Step 1: Initial Rails Setup** (Foundation) ✅ COMPLETED
-- [ ] **Step 2: Add Core Dependencies** (Gems)
-- [ ] **Step 3: Install GraphQL** (GraphQL setup)
+- [x] **Step 2: Add Core Dependencies** (Gems) ✅ COMPLETED
+- [x] **Step 3: Install GraphQL** (GraphQL setup) ✅ COMPLETED
 - [ ] **Step 4: Configure CORS** (Frontend integration)
 - [ ] **Step 5: Create Database Models** (User & Project)
 - [ ] **Step 6: Setup GraphQL Types** (Type definitions)
@@ -21,7 +21,7 @@ Use this checklist to track implementation progress:
 - [ ] **Step 13: Testing Setup** (RSpec)
 - [ ] **Step 14: Documentation** (GraphiQL & schema export)
 
-**Current Status:** Step 1 completed - Ready for Step 2
+**Current Status:** Step 3 completed - Ready for Step 4
 
 ---
 
@@ -68,17 +68,37 @@ This step has been completed. The Rails API application has been created with:
 
 ---
 
-## Step 2: Add Core Dependencies
+## Step 2: Add Core Dependencies ✅ COMPLETED
 
 **Goal:** Add required gems to Gemfile
 
-**Status:** ⬜ Not Started
+**Status:** ✅ Completed
 
 **Depends on:** Step 1 ✅
 
-### Edit `Gemfile`:
+### Using `bundle add` (recommended):
 
-Add these gems after the existing gems:
+```bash
+cd backend
+
+# Core gems
+bundle add graphql --version "~> 2.3"
+bundle add jwt --version "~> 2.8"
+bundle add bcrypt --version "~> 3.1.7"
+bundle add rack-cors --version "~> 2.0"
+
+# Development only
+bundle add graphiql-rails --version "~> 1.10" --group development
+
+# Testing (optional - can be added later)
+bundle add rspec-rails --version "~> 6.1" --group "development,test"
+bundle add factory_bot_rails --version "~> 6.4" --group "development,test"
+bundle add faker --version "~> 3.2" --group "development,test"
+```
+
+**OR manually edit Gemfile and run `bundle install`:**
+
+Add these gems:
 
 ```ruby
 # GraphQL
@@ -96,12 +116,18 @@ gem 'bcrypt', '~> 3.1.7'
 # CORS
 gem 'rack-cors', '~> 2.0'
 
-# Testing (optional but recommended)
+# Testing (optional)
 group :development, :test do
   gem 'rspec-rails', '~> 6.1'
   gem 'factory_bot_rails', '~> 6.4'
   gem 'faker', '~> 3.2'
 end
+```
+
+**Verify:**
+```bash
+bundle list | grep graphql
+# Should show: graphql, graphiql-rails
 ```
 
 ### Install gems:
@@ -125,25 +151,53 @@ bundle list | grep graphql
 
 ---
 
-## Step 3: Install GraphQL
+## Step 3: Install GraphQL ✅ COMPLETED
 
 **Goal:** Generate GraphQL boilerplate and configure
 
-**Status:** ⬜ Not Started
+**Status:** ✅ Completed
 
-**Depends on:** Step 2
+**Depends on:** Step 2 ✅
 
-### Commands:
+This step has been completed. The following was created:
 
+- ✅ `app/graphql/types/` - GraphQL type definitions
+- ✅ `app/graphql/mutations/` - GraphQL mutations
+- ✅ `app/graphql/backend_schema.rb` - Main GraphQL schema
+- ✅ `app/controllers/graphql_controller.rb` - GraphQL endpoint controller
+- ✅ GraphiQL route configured in `config/routes.rb`
+
+**What was done:**
+
+1. Ran `rails generate graphql:install`
+2. Manually added GraphiQL route to `config/routes.rb`:
+
+```ruby
+if Rails.env.development?
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+end
+```
+
+**Verify:**
 ```bash
-# Generate GraphQL installation
-rails generate graphql:install
+# Start Rails server
+rails server -p 3000
 
-# This creates:
-# - app/graphql/types/
-# - app/graphql/mutations/
-# - app/graphql/non_profit_devs_schema.rb (or similar)
-# - app/controllers/graphql_controller.rb
+# Visit in browser:
+# http://localhost:3000/graphiql
+
+# You should see GraphiQL interface
+```
+
+**Test Query:**
+```graphql
+{
+  __schema {
+    types {
+      name
+    }
+  }
+}
 ```
 
 ### Configure GraphiQL (development only):
