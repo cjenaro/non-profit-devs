@@ -21,11 +21,46 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    # Field: user(id: ID!)
+    field :user, Types::UserType, null: true do
+      description "Find a user by ID"
+      argument :id, ID, required: true
+    end
+
+    def user(id:)
+      User.find(id)
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+
+    # Field: users
+    field :users, [Types::UserType], null: false do
+      description "List all users"
+    end
+
+    def users
+      User.all
+    end
+
+    # Field: project(id: ID!)
+    field :project, Types::ProjectType, null: true do
+      description "Find a project by ID"
+      argument :id, ID, required: true
+    end
+
+    def project(id:)
+      Project.find(id)
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+
+    # Field: projects
+    field :projects, [Types::ProjectType], null: false do
+      description "List all projects"
+    end
+
+    def projects
+      Project.all
     end
   end
 end
