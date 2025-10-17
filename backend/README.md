@@ -21,7 +21,7 @@ Use this checklist to track implementation progress:
 - [ ] **Step 13: Testing Setup** (RSpec)
 - [ ] **Step 14: Documentation** (GraphiQL & schema export)
 
-**Current Status:** Step 3 completed - Ready for Step 4
+**Current Status:** Step 4 completed - Ready for Step 5
 
 ---
 
@@ -246,20 +246,26 @@ rails server -p 3000
 
 ---
 
-## Step 4: Configure CORS
+## Step 4: Configure CORS ✅ COMPLETED
 
 **Goal:** Allow frontend (http://localhost:5173) to make requests
 
-**Status:** ⬜ Not Started
+**Status:** ✅ Completed
 
-**Depends on:** Step 2
+**Depends on:** Step 2 ✅
 
-### Create `config/initializers/cors.rb`:
+This step has been completed. CORS is now configured to allow requests from the frontend.
+
+**What was done:**
+
+1. Enabled CORS in `config/initializers/cors.rb`:
 
 ```ruby
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # Allow requests from frontend
+    # In development: http://localhost:5173
+    # In production: will be same domain, so CORS won't be needed
     origins ENV.fetch('FRONTEND_URL', 'http://localhost:5173')
 
     resource '/graphql',
@@ -271,24 +277,21 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 end
 ```
 
-### Optional: Create `.env` file:
+2. Created `.env` file for environment variables:
 
 ```bash
 # backend/.env
 FRONTEND_URL=http://localhost:5173
-SECRET_KEY_BASE=<generate with: rails secret>
 ```
 
-Add `dotenv-rails` gem if using `.env`:
+**Note:** When deployed on the same domain, CORS won't be needed. The configuration uses `ENV.fetch('FRONTEND_URL', 'http://localhost:5173')` which defaults to localhost for development.
 
-```ruby
-# Gemfile
-gem 'dotenv-rails', groups: [:development, :test]
+**Important:** After making CORS changes, restart your Rails server:
+
+```bash
+# Stop current server (Ctrl+C), then:
+rails server -p 3000
 ```
-
-**Expected Result:**
-
-- CORS configured for frontend requests
 
 ---
 
