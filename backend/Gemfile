@@ -45,3 +45,16 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
+
+gem "graphql", "~> 2.5"
+
+gem "jwt", "~> 3.1"
+gem "bcrypt", "~> 3.1"
+
+gem "rack-cors", "~> 3.0"
+
+gem "graphiql-rails", "~> 1.10", :group => :development
+
+gem "faker", "~> 3.5", :group => :development
+
+gem "dotenv-rails", "~> 3.1", :group => :development
