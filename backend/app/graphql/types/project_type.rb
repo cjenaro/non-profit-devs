@@ -13,6 +13,10 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
-    field :users, [Types::UserType], null: false
+    field :users, [ Types::UserType ], null: false
+
+    def users
+      dataloader.with(Sources::AssociationLoader, Project, :users).load(object.id)
+    end
   end
 end
