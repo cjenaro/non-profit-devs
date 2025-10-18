@@ -1,39 +1,15 @@
 import { css } from '@emotion/react';
-import { Title } from '../../components/Title.jsx';
-import Steps from '../../components/Steps.jsx';
+import { Title } from '../../components/Title';
+import Steps from '../../components/Steps';
 import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks() {
   const { t } = useTranslation();
 
   return (
-    <section
-      css={css`
-        padding: 50px 0 100px;
-        position: relative;
-
-        .text-center {
-          text-align: center;
-        }
-
-        .block {
-          display: block;
-        }
-      `}
-    >
+    <section className="py-12.5 pb-25 relative">
       <svg
-        css={css`
-          display: none;
-          position: absolute;
-          opacity: 0.1;
-          top: 120px;
-          left: -10%;
-          transform: rotateY(180deg) scale(1.5);
-          color: var(--lavender);
-          @media (min-width: 768px) {
-            display: block;
-          }
-        `}
+        className="hidden absolute opacity-10 top-30 -left-[10%] rotate-y-180 scale-150 text-lavender md:block"
         id="BRICKS"
         xmlns="http://www.w3.org/2000/svg"
         width="610"
@@ -86,48 +62,17 @@ export default function HowItWorks() {
         />
       </svg>
       <div className="container">
-        <Title
-          styles={css`
-            margin-bottom: 50px;
-          `}
-          color="var(--ember)"
-          borderColor="var(--lavender)"
-        >
-          {t('HOW_IT_WORKS')}
-        </Title>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-
-            @media (min-width: 768px) {
-              flex-direction: row;
-              > div {
-                flex: 1;
-                &:first-of-type {
-                  margin-right: 20px;
-                }
-              }
-            }
-          `}
-        >
+        <div className="mb-12.5">
+          <Title color="var(--ember)" borderColor="var(--lavender)">
+            {t('HOW_IT_WORKS')}
+          </Title>
+        </div>
+        <div className="flex flex-col md:flex-row [&>div]:md:flex-1 [&>div]:md:first:mr-5">
           <Steps id="ONG-steps">
-            <p
-              className="text-center"
-              css={css`
-                margin-top: 0;
-              `}
-            >
-              {t('NON_PROFITS')}
-            </p>
+            <p className="text-center mt-0">{t('NON_PROFITS')}</p>
             <p className="text-center">{t('PITCH_YOUR_PROJECT')}</p>
             <div>
-              <p
-                css={css`
-                  margin-bottom: 2px;
-                  text-align: center;
-                `}
-              >
+              <p className="mb-0.5 text-center">
                 {t('WE_LL_CONTACT_YOU_AS_FAST_AS_WE_CAN')}
               </p>
               <small className="text-center block">
@@ -137,20 +82,8 @@ export default function HowItWorks() {
               </small>
             </div>
           </Steps>
-          <Steps
-            styles={css`
-              margin-top: 55px;
-              @media (min-width: 768px) {
-                margin-top: 0;
-              }
-            `}
-          >
-            <p
-              className="text-center"
-              css={css`
-                margin-top: 0px;
-              `}
-            >
+          <Steps id="dev-steps">
+            <p className="text-center mt-0">
               {t('DEVELOPERS')}/{t('DESIGNERS')}
             </p>
             <p className="text-center">
