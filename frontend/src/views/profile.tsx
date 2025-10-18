@@ -1,83 +1,83 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { UserContext } from '../context/UserContext';
-import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
-import { useGetSkills } from '../hooks/use-skills';
+import { UserContext } from '../context/UserContext'
+import { useUpdateUser, useChangePassword } from '../hooks/use-devs'
+import { useGetSkills } from '../hooks/use-skills'
 
-import { Title } from '../components/Title';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
-import Select from '../components/Select';
-import ProjectItem from '../components/ProjectItem';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { useTranslation } from 'react-i18next';
-import { Divider } from '../components/Divider';
+import { Title } from '../components/Title'
+import { Input } from '../components/Input'
+import { Button } from '../components/Button'
+import Select from '../components/Select'
+import ProjectItem from '../components/ProjectItem'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { useTranslation } from 'react-i18next'
+import { Divider } from '../components/Divider'
 
 export function Profile() {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-  const [passwordError, setPasswordError] = useState('');
-  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const [passwordError, setPasswordError] = useState('')
+  const [user, setUser] = useContext(UserContext)
   const [skill, setSkill] = useState<string[]>(
     user && user.skills && user.skills.map((s: any) => s.value)
-  );
+  )
 
   const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
-    useUpdateUser();
+    useUpdateUser()
 
   const [
     changePassword,
     { error: changePasswordError, loading: changePasswordLoading },
-  ] = useChangePassword();
+  ] = useChangePassword()
 
-  const { skills: skillsData } = useGetSkills();
+  const { skills: skillsData } = useGetSkills()
 
   const handleUserUpdate = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const updateInput = {
       id: user.id,
       name: e.target.name.value || user.name,
       skills: skill,
       email: e.target.email.value || user.email,
-    };
-
-    await updateUser({ variables: { input: updateInput } });
-    if (!updateUserError && !updateUserLoading) {
-      setUser({ ...user, ...updateInput });
     }
-  };
+
+    await updateUser({ variables: { input: updateInput } })
+    if (!updateUserError && !updateUserLoading) {
+      setUser({ ...user, ...updateInput })
+    }
+  }
 
   const handlePasswordChange = async (e: any) => {
-    e.preventDefault();
-    setPasswordError('');
+    e.preventDefault()
+    setPasswordError('')
 
     if (e.target.confirmPassword.value !== e.target.newPassword.value) {
-      setPasswordError(t('PASSWORDS_DO_NOT_MATCH'));
-      return;
+      setPasswordError(t('PASSWORDS_DO_NOT_MATCH'))
+      return
     }
 
     const updateInput = {
       id: user.id,
       currentPassword: e.target.oldPassword.value,
       newPassword: e.target.newPassword.value,
-    };
+    }
 
-    await changePassword({ variables: { input: updateInput } });
-  };
+    await changePassword({ variables: { input: updateInput } })
+  }
 
   const handleSkills = (skill: any[]) => {
-    setSkill(skill?.map((s) => s.value));
-  };
+    setSkill(skill?.map((s) => s.value))
+  }
 
   const getSkillLabel = (value: string) => {
     return value
       .split('_')
       .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
-      .join(' ');
-  };
+      .join(' ')
+  }
 
   const getInitialSkills = () => {
     return (
@@ -85,12 +85,12 @@ export function Profile() {
       user.skills &&
       user.skills.length &&
       user.skills.map((value: any) => ({ label: getSkillLabel(value), value }))
-    );
-  };
+    )
+  }
 
   if (!user) {
-    navigate('/login');
-    return null;
+    navigate('/login')
+    return null
   }
 
   return (
@@ -209,5 +209,5 @@ export function Profile() {
         </ul>
       </div>
     </section>
-  );
+  )
 }

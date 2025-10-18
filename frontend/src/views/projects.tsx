@@ -1,25 +1,25 @@
-import ProjectItem from '../components/ProjectItem';
-import Spinner from '../components/Spinner';
-import { ErrorMessage } from '../components/ErrorMessage';
-import useProjects from '../hooks/use-projects';
-import { useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
+import ProjectItem from '../components/ProjectItem'
+import Spinner from '../components/Spinner'
+import { ErrorMessage } from '../components/ErrorMessage'
+import useProjects from '../hooks/use-projects'
+import { useState } from 'react'
+import { FiSearch } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 
 export function Projects() {
-  const { t } = useTranslation();
-  const [search, setSearch] = useState('');
-  const { data, loading, error } = useProjects();
+  const { t } = useTranslation()
+  const [search, setSearch] = useState('')
+  const { data, loading, error } = useProjects()
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner />
 
-  if (error) return <ErrorMessage error={error} />;
+  if (error) return <ErrorMessage error={error} />
 
   const handleSearch = (e: any) => {
-    setSearch(e.target.value);
-  };
+    setSearch(e.target.value)
+  }
 
-  const { projects } = data;
+  const { projects } = data
 
   return (
     <section className="pt-[50px] pb-[100px] md:min-h-[calc(100vh-228px)] md:pb-[50px]">
@@ -54,6 +54,5 @@ export function Projects() {
         </ul>
       </div>
     </section>
-  );
+  )
 }
-

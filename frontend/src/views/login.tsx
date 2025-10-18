@@ -1,29 +1,29 @@
-import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-import { useLogin } from '../hooks/use-devs';
-import { Title } from '../components/Title';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect } from 'react'
+import { UserContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+import { useLogin } from '../hooks/use-devs'
+import { Title } from '../components/Title'
+import { Input } from '../components/Input'
+import { Button } from '../components/Button'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { useTranslation } from 'react-i18next'
 
 export function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [login, { loading, error }] = useLogin({
     onCompleted(data: any) {
       if (data.login.token) {
-        localStorage.setItem('authToken', data.login.token.token);
-        setUser({ ...data.login.token, ...data.login.user });
+        localStorage.setItem('authToken', data.login.token.token)
+        setUser({ ...data.login.token, ...data.login.user })
       }
     },
-  });
+  })
 
-  const [user, setUser] = useContext(UserContext);
-  const { t } = useTranslation();
+  const [user, setUser] = useContext(UserContext)
+  const { t } = useTranslation()
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     await login({
       variables: {
         input: {
@@ -31,14 +31,14 @@ export function Login() {
           password: (e.target as any).password.value,
         },
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (user && user.token) {
-      navigate('/projects');
+      navigate('/projects')
     }
-  }, [user]);
+  }, [user])
 
   return (
     <section className="pt-[50px] pb-[100px] min-h-[calc(100vh-278px)] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
@@ -66,6 +66,5 @@ export function Login() {
         <ErrorMessage error={error} />
       </div>
     </section>
-  );
+  )
 }
-

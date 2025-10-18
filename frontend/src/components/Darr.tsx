@@ -7,5 +7,5 @@ export function Darr({ className }: { className?: string }) {
     >
       &darr;
     </div>
-  );
+  )
 }

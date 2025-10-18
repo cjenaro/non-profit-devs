@@ -1,8 +1,8 @@
-import { Button } from '../components/Button';
-import { useTranslation } from 'react-i18next';
+import { Button } from '../components/Button'
+import { useTranslation } from 'react-i18next'
 
 export function NotFound() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <section className="h-[calc(100vh-32rem)] flex items-center justify-center flex-col">
@@ -13,6 +13,5 @@ export function NotFound() {
         <Button to="/">&larr; {t('GO_BACK_TO_HOME')}</Button>
       </div>
     </section>
-  );
+  )
 }
-

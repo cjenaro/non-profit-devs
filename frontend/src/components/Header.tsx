@@ -1,30 +1,30 @@
-import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Logo } from './Logo';
-import { Button } from './Button';
-import Language from './Language';
-import { UserContext } from '../context/UserContext';
+import React, { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Logo } from './Logo'
+import { Button } from './Button'
+import Language from './Language'
+import { UserContext } from '../context/UserContext'
 
 interface HeaderProps {
-  fixed?: boolean;
+  fixed?: boolean
 }
 
 export const Header = ({ fixed }: HeaderProps) => {
-  const location = useLocation();
-  const isProfile = location.pathname.includes('profile');
-  const [user, setUser] = useContext(UserContext);
-  const { t } = useTranslation();
+  const location = useLocation()
+  const isProfile = location.pathname.includes('profile')
+  const [user, setUser] = useContext(UserContext)
+  const { t } = useTranslation()
 
   const logout = () => {
-    setUser(null);
-  };
+    setUser(null)
+  }
 
   const headerClasses = `bg-lavender min-h-16 px-4 flex items-center justify-between ${
     fixed
       ? 'max-[420px]:fixed max-[420px]:bottom-0 max-[420px]:w-full max-[420px]:z-10 max-[420px]:shadow-lg max-[420px]:max-w-[calc(100vw-32px)]'
       : ''
-  }`;
+  }`
 
   return (
     <header className={headerClasses}>
@@ -56,5 +56,5 @@ export const Header = ({ fixed }: HeaderProps) => {
         )}
       </nav>
     </header>
-  );
-};
+  )
+}

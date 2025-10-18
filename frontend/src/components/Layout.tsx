@@ -1,6 +1,6 @@
-import React from 'react';
-import { Header } from './Header';
-import { Outlet } from 'react-router-dom';
+import React from 'react'
+import { Header } from './Header'
+import { Outlet } from 'react-router-dom'
 
 export function Layout() {
   return (
@@ -12,5 +12,5 @@ export function Layout() {
       </main>
       <Header fixed />
     </React.Fragment>
-  );
+  )
 }

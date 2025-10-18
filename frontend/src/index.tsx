@@ -1,23 +1,23 @@
-import React from 'react';
-import './main.css';
-import { ApolloProvider } from '@apollo/client/react';
-import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import * as serviceWorker from './serviceWorker';
-import './i18n';
-import { UserProvider } from './context/UserContext';
-import { Layout } from './components/Layout';
-import { Home } from './views/home/index';
-import { Profile } from './views/profile';
-import { Pitch } from './views/pitch';
-import { Projects } from './views/projects';
-import { Project } from './views/project';
-import { Login } from './views/login';
-import { Signup } from './views/signup';
-import { NotFound } from './views/not-found';
-import client from './apollo-client';
+import React from 'react'
+import './main.css'
+import { ApolloProvider } from '@apollo/client/react'
+import { createRoot } from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import * as serviceWorker from './serviceWorker'
+import './i18n'
+import { UserProvider } from './context/UserContext'
+import { Layout } from './components/Layout'
+import { Home } from './views/home/index'
+import { Profile } from './views/profile'
+import { Pitch } from './views/pitch'
+import { Projects } from './views/projects'
+import { Project } from './views/project'
+import { Login } from './views/login'
+import { Signup } from './views/signup'
+import { NotFound } from './views/not-found'
+import client from './apollo-client'
 
-const root = createRoot(document.getElementById('root')!);
+const root = createRoot(document.getElementById('root')!)
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
 
 root.render(
   <React.StrictMode>
@@ -67,9 +67,9 @@ root.render(
       </UserProvider>
     </ApolloProvider>
   </React.StrictMode>
-);
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.unregister()

@@ -1,40 +1,40 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Title } from '../components/Title';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { useCreateProject } from '../hooks/use-projects';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Title } from '../components/Title'
+import { Input } from '../components/Input'
+import { Button } from '../components/Button'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { useCreateProject } from '../hooks/use-projects'
 
 export function Pitch() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [createProject, { loading, error }] = useCreateProject({
     onCompleted(data) {
       if (data.createProject?.project?.id) {
-        navigate(`/projects/${data.createProject.project.id}`);
+        navigate(`/projects/${data.createProject.project.id}`)
       }
     },
-  });
+  })
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const target = e.currentTarget;
+    e.preventDefault()
+    const target = e.currentTarget
 
     const newProjectInput = {
       name: target.name.value,
       description: target.description.value,
       contactEmail: target.contactEmail.value,
       status: 'PENDING_REVIEW',
-    };
+    }
 
     await createProject({
       variables: {
         input: newProjectInput,
       },
-    });
+    })
   }
 
   return (
@@ -79,5 +79,5 @@ export function Pitch() {
         <ErrorMessage error={error} />
       </div>
     </section>
-  );
+  )
 }

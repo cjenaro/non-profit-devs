@@ -1,9 +1,9 @@
-import { Button } from '../../components/Button';
-import { useTranslation } from 'react-i18next';
-import { Title } from '../../components/Title';
+import { Button } from '../../components/Button'
+import { useTranslation } from 'react-i18next'
+import { Title } from '../../components/Title'
 
 export default function WhoWeAre() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <section className="bg-lavender text-ember py-10">
@@ -17,14 +17,20 @@ export default function WhoWeAre() {
           )}
         </p>
         <div className="flex flex-col md:flex-row">
-          <Button to="/pitch" className="text-xl block mx-auto my-4 max-w-full md:max-w-[45%] bg-transparent">
+          <Button
+            to="/pitch"
+            className="text-xl block mx-auto my-4 max-w-full md:max-w-[45%] bg-transparent"
+          >
             {t('PITCH_YOUR_NGOS_WEBSITE')}
           </Button>
-          <Button to="/signup" className="text-xl block mx-auto my-4 max-w-full md:max-w-[45%] bg-transparent">
+          <Button
+            to="/signup"
+            className="text-xl block mx-auto my-4 max-w-full md:max-w-[45%] bg-transparent"
+          >
             {t('JOIN_AS_A_DEVELOPER_DESIGNER')}
           </Button>
         </div>
       </div>
     </section>
-  );
+  )
 }

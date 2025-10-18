@@ -1,14 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface ButtonProps {
-  onClick?: () => void;
-  to?: string;
-  children: React.ReactNode;
-  className?: string;
-  loading?: boolean;
-  contained?: boolean;
-  text?: boolean;
+  onClick?: () => void
+  to?: string
+  children: React.ReactNode
+  className?: string
+  loading?: boolean
+  contained?: boolean
+  text?: boolean
 }
 
 export function Button({
@@ -20,17 +20,17 @@ export function Button({
   contained,
   text,
 }: ButtonProps) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleTo = () => {
-    if (to) navigate(to);
-  };
+    if (to) navigate(to)
+  }
 
   const baseClasses = `px-2 py-1 text-sm font-bold uppercase border border-ember text-ember bg-lavender cursor-pointer relative no-underline w-max group ${
     loading ? 'pl-4' : ''
-  }`;
+  }`
 
-  const containedClasses = contained ? 'bg-ember! text-lavender' : '';
-  const textClasses = text ? 'text-lavender border-0' : '';
+  const containedClasses = contained ? 'bg-ember! text-lavender' : ''
+  const textClasses = text ? 'text-lavender border-0' : ''
 
   return (
     <button
@@ -46,5 +46,5 @@ export function Button({
       <span className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-200"></span>
       <span className="relative z-10">{children}</span>
     </button>
-  );
+  )
 }

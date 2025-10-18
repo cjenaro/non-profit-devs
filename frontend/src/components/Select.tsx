@@ -1,19 +1,19 @@
-import React from 'react';
-import { useSelect, useMultipleSelection } from 'downshift';
+import React from 'react'
+import { useSelect, useMultipleSelection } from 'downshift'
 
 interface Option {
-  value: string;
-  label: string;
+  value: string
+  label: string
 }
 
 interface SelectProps {
-  onChange: (selectedItems: Option[]) => void;
-  styles?: string;
-  placeholder?: string;
-  options?: Option[];
-  label?: string;
-  inverted?: boolean;
-  initialSelectedItems?: Option[];
+  onChange: (selectedItems: Option[]) => void
+  styles?: string
+  placeholder?: string
+  options?: Option[]
+  label?: string
+  inverted?: boolean
+  initialSelectedItems?: Option[]
 }
 
 function Select({
@@ -34,9 +34,9 @@ function Select({
   } = useMultipleSelection<Option>({
     initialSelectedItems,
     onStateChange: (changes: any) => {
-      onChange(changes.selectedItems);
+      onChange(changes.selectedItems)
     },
-  });
+  })
 
   const {
     isOpen,
@@ -49,39 +49,39 @@ function Select({
   } = useSelect<Option | null>({
     items: options,
     onStateChange: (changes: any) => {
-      const { type, selectedItem } = changes;
+      const { type, selectedItem } = changes
       switch (type) {
         case 'MenuKeyDownEnter':
         case 'MenuKeyDownSpaceButton':
         case 'ItemClick':
         case 'MenuBlur':
           if (selectedItem) {
-            addSelectedItem(selectedItem);
-            selectItem(null);
+            addSelectedItem(selectedItem)
+            selectItem(null)
           }
-          break;
+          break
         default:
-          break;
+          break
       }
     },
-  });
+  })
 
   const handleRemoveItem = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as any;
-    const value = target.dataset.value;
+    const target = e.target as any
+    const value = target.dataset.value
     const item = (selectedItems as any).find(
       (item: any) => item.value === value
-    );
+    )
     if (item) {
-      removeSelectedItem(item);
+      removeSelectedItem(item)
     }
-  };
+  }
 
-  const baseBorderColor = inverted ? 'border-lavender' : 'border-ember';
-  const baseBgColor = inverted ? 'bg-ember' : 'bg-lavender';
-  const baseTextColor = inverted ? 'text-lavender' : 'text-ember';
-  const menuBgColor = inverted ? 'bg-lavender' : 'bg-ember';
-  const itemBorderColor = inverted ? 'border-ember' : 'border-lavender';
+  const baseBorderColor = inverted ? 'border-lavender' : 'border-ember'
+  const baseBgColor = inverted ? 'bg-ember' : 'bg-lavender'
+  const baseTextColor = inverted ? 'text-lavender' : 'text-ember'
+  const menuBgColor = inverted ? 'bg-lavender' : 'bg-ember'
+  const itemBorderColor = inverted ? 'border-ember' : 'border-lavender'
 
   return (
     <div className={`relative ${styles || ''}`}>
@@ -138,8 +138,7 @@ function Select({
           )}
       </ul>
     </div>
-  );
+  )
 }
 
-export default Select;
-
+export default Select

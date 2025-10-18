@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 interface TitleProps {
-  color: string;
-  borderColor: string;
-  children: React.ReactNode;
+  color: string
+  borderColor: string
+  children: React.ReactNode
 }
 
 export function Title({ color, borderColor, children }: TitleProps) {
@@ -23,7 +23,7 @@ export function Title({ color, borderColor, children }: TitleProps) {
       ></span>
       {children}
     </h3>
-  );
+  )
 }
 
-export default Title;
+export default Title

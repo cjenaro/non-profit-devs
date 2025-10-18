@@ -1,45 +1,45 @@
-import { useNavigate } from 'react-router-dom';
-import { useContext, useState, useEffect, ChangeEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { UserContext } from '../context/UserContext';
-import { useSignup } from '../hooks/use-devs';
-import { useGetSkills } from '../hooks/use-skills';
-import { Input } from '../components/Input';
-import { Title } from '../components/Title';
-import { Button } from '../components/Button';
-import { ErrorMessage } from '../components/ErrorMessage';
+import { useNavigate } from 'react-router-dom'
+import { useContext, useState, useEffect, ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { UserContext } from '../context/UserContext'
+import { useSignup } from '../hooks/use-devs'
+import { useGetSkills } from '../hooks/use-skills'
+import { Input } from '../components/Input'
+import { Title } from '../components/Title'
+import { Button } from '../components/Button'
+import { ErrorMessage } from '../components/ErrorMessage'
 
-import Select from '../components/Select';
+import Select from '../components/Select'
 
 export function Signup() {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-  const [error, setError] = useState<any>(null);
-  const [loginInput, setLoginInput] = useState({ email: '', password: '' });
-  const [skills, setSkills] = useState<string[]>([]);
-  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const [error, setError] = useState<any>(null)
+  const [loginInput, setLoginInput] = useState({ email: '', password: '' })
+  const [skills, setSkills] = useState<string[]>([])
+  const [user, setUser] = useContext(UserContext)
 
   const [
     signup,
     { data: signupData, loading: signupLoading, error: signupError },
-  ] = useSignup();
+  ] = useSignup()
 
   const {
     skills: skillsData,
     loading: skillsLoading,
     error: skillsError,
-  } = useGetSkills();
+  } = useGetSkills()
 
   const handleSkills = (skill: any[]) => {
-    setSkills(skill.map((s) => s.value));
-  };
+    setSkills(skill.map((s) => s.value))
+  }
 
   const handleFormSubmit = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (e.target.password.value !== e.target.confirmPassword.value) {
-      setError({ message: t('PASSWORDS_DO_NOT_MATCH') });
-      return;
+      setError({ message: t('PASSWORDS_DO_NOT_MATCH') })
+      return
     }
 
     const signupInput = {
@@ -47,31 +47,31 @@ export function Signup() {
       password: e.target.password.value,
       name: e.target.name.value,
       skills: skills,
-    };
+    }
 
     await signup({
       variables: {
         input: signupInput,
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (signupData && signupData.signup) {
-      setUser({ ...signupData.signup });
-      navigate('/login');
+      setUser({ ...signupData.signup })
+      navigate('/login')
     }
-  }, [signupData, setUser]);
+  }, [signupData, setUser])
 
   useEffect(() => {
     if (user && user.token) {
-      navigate('/profile');
+      navigate('/profile')
     }
-  }, [user]);
+  }, [user])
 
   const handleLoginInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginInput({ ...loginInput, [e.target.name]: e.target.value });
-  };
+    setLoginInput({ ...loginInput, [e.target.name]: e.target.value })
+  }
 
   return (
     <section className="pt-[50px] pb-[100px] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
@@ -127,5 +127,5 @@ export function Signup() {
         <ErrorMessage error={signupError || skillsError || error} />
       </div>
     </section>
-  );
+  )
 }

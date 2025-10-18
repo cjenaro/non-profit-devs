@@ -1,9 +1,9 @@
-import { Title } from '../../components/Title';
-import Steps from '../../components/Steps';
-import { useTranslation } from 'react-i18next';
+import { Title } from '../../components/Title'
+import Steps from '../../components/Steps'
+import { useTranslation } from 'react-i18next'
 
 export default function HowItWorks() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <section className="py-12.5 pb-25 relative">
@@ -94,5 +94,5 @@ export default function HowItWorks() {
         </div>
       </div>
     </section>
-  );
+  )
 }

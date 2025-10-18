@@ -62,5 +62,5 @@ export default function Hero() {
         </svg>
       </div>
     </section>
-  );
+  )
 }

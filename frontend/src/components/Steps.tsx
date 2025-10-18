@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
-import { Darr } from './Darr';
+import React, { ReactNode } from 'react'
+import { Darr } from './Darr'
 
 export default function Steps({
   children,
   id,
 }: {
-  children: ReactNode;
-  id: string;
+  children: ReactNode
+  id: string
 }) {
   return (
     <div className="border border-lavender space-y-2 p-4">
@@ -17,5 +17,5 @@ export default function Steps({
         </React.Fragment>
       ))}
     </div>
-  );
+  )
 }

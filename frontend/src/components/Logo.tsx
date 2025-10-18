@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface LogoProps {
-  to: string;
+  to: string
 }
 
 export const Logo: React.FC<LogoProps> = ({ to }) => (
@@ -14,4 +14,4 @@ export const Logo: React.FC<LogoProps> = ({ to }) => (
       Non Profit Devs
     </span>
   </Link>
-);
+)

@@ -1,15 +1,15 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react'
 
 interface InputProps {
-  placeholder?: string;
-  label?: string;
-  name?: string;
-  id?: string;
-  type?: string;
-  inverted?: boolean;
-  className?: string;
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string
+  label?: string
+  name?: string
+  id?: string
+  type?: string
+  inverted?: boolean
+  className?: string
+  value?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export function Input({
@@ -21,10 +21,10 @@ export function Input({
   inverted = false,
   className = '',
 }: InputProps) {
-  const beforeColor = inverted ? 'before:bg-ember' : 'before:bg-lavender';
-  const inputBorder = inverted ? 'border-lavender' : 'border-ember';
-  const inputBg = inverted ? 'bg-ember' : 'bg-lavender';
-  const inputText = inverted ? 'text-lavender' : 'text-ember';
+  const beforeColor = inverted ? 'before:bg-ember' : 'before:bg-lavender'
+  const inputBorder = inverted ? 'border-lavender' : 'border-ember'
+  const inputBg = inverted ? 'bg-ember' : 'bg-lavender'
+  const inputText = inverted ? 'text-lavender' : 'text-ember'
 
   return (
     <label
@@ -39,5 +39,5 @@ export function Input({
         className={`mt-1 text-base ${inputBorder} ${inputBg} w-[calc(100%-32px)] px-4 py-2.5 ${inputText} border`}
       />
     </label>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export default function useMount(effect) {
   useEffect(() => {
-    effect();
+    effect()
     //eslint-disable-next-line
-  }, []);
+  }, [])
 }

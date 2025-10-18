@@ -1,18 +1,18 @@
-import { gql, TypedDocumentNode } from '@apollo/client';
-import { useQuery } from '@apollo/client/react';
+import { gql, TypedDocumentNode } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
 
 // Type definitions for GraphQL operations
 type GetSkillsQuery = {
   __type: {
-    name: string;
+    name: string
     enumValues: {
-      name: string;
-      description: string | null;
-    }[];
-  } | null;
-};
+      name: string
+      description: string | null
+    }[]
+  } | null
+}
 
-type GetSkillsQueryVariables = {};
+type GetSkillsQueryVariables = {}
 
 // GraphQL Operations - Define outside hooks for reusability with TypedDocumentNode
 const GET_SKILLS_QUERY: TypedDocumentNode<
@@ -28,22 +28,24 @@ const GET_SKILLS_QUERY: TypedDocumentNode<
       }
     }
   }
-`;
+`
 
 // Custom hooks - Use the operations defined above
 export function useGetSkills() {
-  const { data, loading, error } = useQuery(GET_SKILLS_QUERY);
+  const { data, loading, error } = useQuery(GET_SKILLS_QUERY)
 
   // Transform the introspection data into a more usable format
   const skills =
-    data?.__type?.enumValues?.map((enumValue: { name: string; description: string | null }) => ({
-      value: enumValue.name,
-      label: enumValue.description || enumValue.name,
-    })) || [];
+    data?.__type?.enumValues?.map(
+      (enumValue: { name: string; description: string | null }) => ({
+        value: enumValue.name,
+        label: enumValue.description || enumValue.name,
+      })
+    ) || []
 
   return {
     skills,
     loading,
     error,
-  };
+  }
 }
