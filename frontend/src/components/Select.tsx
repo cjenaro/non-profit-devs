@@ -51,10 +51,10 @@ function Select({
     onStateChange: (changes: any) => {
       const { type, selectedItem } = changes;
       switch (type) {
-        case useSelect.stateChangeTypes.MenuKeyDownEnter:
-        case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
-        case useSelect.stateChangeTypes.ItemClick:
-        case useSelect.stateChangeTypes.MenuBlur:
+        case 'MenuKeyDownEnter':
+        case 'MenuKeyDownSpaceButton':
+        case 'ItemClick':
+        case 'MenuBlur':
           if (selectedItem) {
             addSelectedItem(selectedItem);
             selectItem(null);
