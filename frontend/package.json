@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^4.0.7",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@swc/plugin-emotion": "^3.0.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitejs/plugin-react-swc": "^3.11.0",
     "downshift": "^5.2.3",
-    "graphql": "^14.6.0",
+    "graphql": "^16.11.0",
     "i18next": "^19.5.1",
     "isomorphic-fetch": "^2.2.1",
     "prettier": "^2.0.5",
@@ -21,7 +22,8 @@
     "react-icons": "^3.10.0",
     "react-router": "^6.25.1",
     "react-router-dom": "^6.25.1",
-    "vite": "^5.3.5",
+    "rxjs": "^7.8.2",
+    "vite": "^7.1.10",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
@@ -46,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
     "typescript": "^5.5.4"
   }
 }
