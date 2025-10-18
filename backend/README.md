@@ -715,7 +715,7 @@ query {
 
 ```ruby
 module Types
-  class SignupInputType < Types::BaseInputObject
+  class SignupInput < Types::BaseInputObject
     description "Attributes for signing up a new user"
 
     argument :name, String, required: true
@@ -730,7 +730,7 @@ end
 
 ```ruby
 module Types
-  class LoginInputType < Types::BaseInputObject
+  class LoginInput < Types::BaseInputObject
     description "Attributes for logging in"
 
     argument :email, String, required: true
@@ -739,7 +739,7 @@ module Types
 end
 ```
 
-**Create other input types:** `UpdateUserInputType`, `ChangePasswordInputType`, `CreateProjectInputType`, `AddUserInputType`, `AddProjectInputType`
+**Create other input types:** `UpdateUserInput`, `ChangePasswordInput`, `CreateProjectInput`, `AddUserInput`, `AddProjectInput`
 
 ### Generate Mutations:
 
@@ -763,7 +763,7 @@ module Mutations
   class Signup < BaseMutation
     description "Create a new user account"
 
-    argument :input, Types::SignupInputType, required: true
+    argument :input, Types::SignupInput, required: true
 
     field :user, Types::UserType, null: true
     field :errors, [String], null: false
@@ -793,7 +793,7 @@ module Mutations
   class Login < BaseMutation
     description "Authenticate user and return JWT token"
 
-    argument :input, Types::LoginInputType, required: true
+    argument :input, Types::LoginInput, required: true
 
     field :token, Types::TokenType, null: true
     field :user, Types::UserType, null: true
