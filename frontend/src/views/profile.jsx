@@ -39,12 +39,13 @@ export default function Profile() {
     e.preventDefault();
 
     const updateInput = {
+      id: user.id,
       name: e.target.name.value || user.name,
       skills: skill,
       email: e.target.email.value || user.email,
     };
 
-    await updateUser({ variables: { id: user.id, input: updateInput } });
+    await updateUser({ variables: { input: updateInput } });
     if (!updateUserError && !updateUserLoading) {
       setUser({ ...user, ...updateInput });
     }
@@ -60,11 +61,12 @@ export default function Profile() {
     }
 
     const updateInput = {
-      oldPassword: e.target.oldPassword.value,
+      id: user.id,
+      currentPassword: e.target.oldPassword.value,
       newPassword: e.target.newPassword.value,
     };
 
-    await changePassword({ variables: { id: user.id, input: updateInput } });
+    await changePassword({ variables: { input: updateInput } });
   };
 
   const handleSkills = (skill) => {

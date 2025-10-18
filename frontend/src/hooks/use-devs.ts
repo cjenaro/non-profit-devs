@@ -55,10 +55,12 @@ type LoginMutationVariables = {
 
 type UpdateUserMutation = {
   updateUser: {
-    id: string;
-    name: string;
-    email: string;
-    skills: string[];
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      skills: string[];
+    };
   } | null;
 };
 
@@ -187,17 +189,15 @@ const UPDATE_USER_MUTATION: TypedDocumentNode<
   UpdateUserMutation,
   UpdateUserMutationVariables
 > = gql`
-  mutation UpdateUser(
-    $id: ID!
-    $name: String
-    $email: String
-    $skills: [SkillType]
-  ) {
-    updateUser(id: $id, name: $name, email: $email, skills: $skills) {
-      id
-      name
-      email
-      skills
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      user {
+        id
+        name
+        email
+        skills
+      }
+      errors
     }
   }
 `;
@@ -206,17 +206,15 @@ const CHANGE_PASSWORD_MUTATION: TypedDocumentNode<
   ChangePasswordMutation,
   ChangePasswordMutationVariables
 > = gql`
-  mutation ChangePassword(
-    $id: ID!
-    $currentPassword: String!
-    $newPassword: String!
-  ) {
-    changePassword(
-      id: $id
-      currentPassword: $currentPassword
-      newPassword: $newPassword
-    ) {
-      id
+  mutation ChangePassword($input: ChangePasswordInput!) {
+    changePassword(input: $input) {
+      user {
+        id
+        name
+        email
+        skills
+      }
+      errors
     }
   }
 `;
@@ -227,15 +225,18 @@ const ADD_PROJECT_TO_USER_MUTATION: TypedDocumentNode<
 > = gql`
   mutation AddProjectToUser($id: ID!, $projectId: ID!) {
     addProjectToUser(id: $id, projectId: $projectId) {
-      id
-      name
-      email
-      projects {
+      user {
         id
         name
-        description
-        contactEmail
+        email
+        projects {
+          id
+          name
+          description
+          contactEmail
+        }
       }
+      errors
     }
   }
 `;
