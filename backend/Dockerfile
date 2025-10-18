@@ -11,12 +11,12 @@
 ARG RUBY_VERSION=3.3.6
 
 # Build frontend
-FROM node:18 AS frontend-build
+FROM oven/bun:latest AS frontend-build
 WORKDIR /frontend
 COPY ../frontend/package*.json ./
-RUN npm ci
+RUN bun install
 COPY ../frontend/ .
-RUN npm run build
+RUN bun run build
 
 # Rails base stage
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
@@ -98,4 +98,4 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start both nginx and Rails server
 EXPOSE 80
-CMD service nginx start && ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 3000
+CMD ["sh", "-c", "service nginx start && ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 3000"]

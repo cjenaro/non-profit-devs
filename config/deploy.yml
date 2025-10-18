@@ -13,7 +13,7 @@ servers:
 proxy:
   ssl: true
   host: nonprofitdevs.com
-  app_port: 80  # Nginx serves on port 80
+  app_port: 80 # Nginx serves on port 80
 
 # Credentials for your image host.
 registry:
@@ -25,9 +25,9 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
-   clear:
-     RAILS_ENV: production
-     FRONTEND_URL: https://nonprofitdevs.com
+  clear:
+    RAILS_ENV: production
+    FRONTEND_URL: https://nonprofitdevs.com
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 aliases:
@@ -43,4 +43,5 @@ volumes:
 
 # Configure builder setup.
 builder:
+  dockerfile: backend/Dockerfile
   arch: amd64
