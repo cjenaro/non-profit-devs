@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/react';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Logo from './Logo.jsx';
-import Button from './Button.jsx';
+import { Button } from './Button';
 import Language from './Language.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 

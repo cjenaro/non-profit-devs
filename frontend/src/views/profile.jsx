@@ -7,9 +7,9 @@ import { UserContext } from '../context/UserContext.jsx';
 import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
 
-import Title from '../components/Title.jsx';
+import { Title } from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
-import Button from '../components/Button.jsx';
+import { Button } from '../components/Button.jsx';
 import Select from '../components/Select.jsx';
 import Divider from '../components/Divider.jsx';
 import ProjectItem from '../components/ProjectItem.jsx';

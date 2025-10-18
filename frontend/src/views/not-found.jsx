@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import Button from '../components/Button.jsx';
+import { Button } from '../components/Button.jsx';
 import { useTranslation } from 'react-i18next';
 
 export default function NotFound() {

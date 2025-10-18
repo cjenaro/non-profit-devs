@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
 import { UserContext } from '../context/UserContext.jsx';
-import Title from '../components/Title.jsx';
-import Button from '../components/Button.jsx';
+import { Title } from '../components/Title.jsx';
+import { Button } from '../components/Button.jsx';
 import Spinner from '../components/Spinner.jsx';
 import { useNavigate, useParams } from 'react-router';
 

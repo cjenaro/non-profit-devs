@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import Title from '../../components/Title.jsx';
+import { Title } from '../../components/Title.jsx';
 import Steps from '../../components/Steps.jsx';
 import { useTranslation } from 'react-i18next';
 

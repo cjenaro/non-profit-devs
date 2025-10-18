@@ -6,8 +6,8 @@ import { UserContext } from '../context/UserContext.jsx';
 import { useSignup } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
 import Input from '../components/Input.jsx';
-import Title from '../components/Title.jsx';
-import Button from '../components/Button.jsx';
+import { Title } from '../components/Title.jsx';
+import { Button } from '../components/Button.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import Select from '../components/Select.jsx';
 

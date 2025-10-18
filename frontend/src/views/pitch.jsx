@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import Title from '../components/Title.jsx';
+import { Title } from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
-import Button from '../components/Button.jsx';
+import { Button } from '../components/Button.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useCreateProject } from '../hooks/use-projects';
 import { useEffect } from 'react';

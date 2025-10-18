@@ -3,9 +3,9 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router';
 import { useLogin } from '../hooks/use-devs.js';
-import Title from '../components/Title.jsx';
+import { Title } from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
-import Button from '../components/Button.jsx';
+import { Button } from '../components/Button';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 
