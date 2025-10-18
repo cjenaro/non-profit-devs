@@ -1,5 +1,7 @@
 module Mutations
   class ChangePassword < BaseMutation
+    include Authentication
+
     description "Change user password"
 
     argument :id, ID, required: true
@@ -10,7 +12,14 @@ module Mutations
     field :errors, [ String ], null: false
 
     def resolve(id:, current_password:, new_password:)
+      authenticate_user!
+
       user = User.find(id)
+
+      # Authorization check
+      unless current_user.id == user.id
+        raise GraphQL::ExecutionError, "Not authorized to change this user's password"
+      end
 
       if user.authenticate(current_password)
         user.password = new_password

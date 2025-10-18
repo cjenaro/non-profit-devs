@@ -1,5 +1,7 @@
 module Mutations
   class AddProjectToUser < BaseMutation
+    include Authentication
+
     description "Add a project to a user"
 
     argument :id, ID, required: true
@@ -9,6 +11,8 @@ module Mutations
     field :errors, [ String ], null: false
 
     def resolve(id:, project_id:)
+      authenticate_user!
+
       user = User.find(id)
       project = Project.find(project_id)
 

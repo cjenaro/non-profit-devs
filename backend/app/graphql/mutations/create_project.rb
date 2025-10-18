@@ -1,5 +1,7 @@
 module Mutations
   class CreateProject < BaseMutation
+    include Authentication
+
     description "Create a new project"
 
     argument :name, String, required: true
@@ -11,11 +13,13 @@ module Mutations
     field :errors, [ String ], null: false
 
     def resolve(name:, description:, contact_email:, status:)
+      authenticate_user!
+
       project = Project.new(
-        name: input[:name],
-        description: input[:description],
-        contact_email: input[:contact_email],
-        status: input[:status]
+        name: name,
+        description: description,
+        contact_email: contact_email,
+        status: status
       )
 
       if project.save

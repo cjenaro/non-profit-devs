@@ -1,5 +1,7 @@
 module Mutations
   class UpdateUser < BaseMutation
+    include Authentication
+
     description "Update user profile"
 
     argument :id, ID, required: true
@@ -11,7 +13,14 @@ module Mutations
     field :errors, [ String ], null: false
 
     def resolve(id:, name: nil, email: nil, skills: nil)
+      authenticate_user!
+
       user = User.find(id)
+
+      # Authorization check
+      unless current_user.id == user.id
+        raise GraphQL::ExecutionError, "Not authorized to update this user"
+      end
 
       updates = {}
       updates[:name] = name if name

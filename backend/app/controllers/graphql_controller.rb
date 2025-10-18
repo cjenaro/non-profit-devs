@@ -10,10 +10,15 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+
+    # Extract token from Authorization header
+    token = request.headers["Authorization"]&.split(" ")&.last
+
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user(token),
+      token: token
     }
+
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
@@ -22,6 +27,21 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def current_user(token)
+    return nil unless token
+
+    decoded = JWT.decode(
+      token,
+      Rails.application.secret_key_base,
+      true,
+      algorithm: "HS256"
+    )
+
+    User.find_by(id: decoded[0]["user_id"])
+  rescue JWT::DecodeError, JWT::ExpiredSignature
+    nil
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
@@ -47,6 +67,6 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: { errors: [ { message: e.message, backtrace: e.backtrace } ], data: {} }, status: 500
   end
 end

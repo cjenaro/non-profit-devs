@@ -12,10 +12,10 @@ module Mutations
 
     def resolve(name:, email:, password:, skills:)
       user = User.new(
-        name: input[:name],
-        email: input[:email],
-        password: input[:password],
-        skills: input[:skills]
+        name: name,
+        email: email,
+        password: password,
+        skills: skills
       )
 
       if user.save
