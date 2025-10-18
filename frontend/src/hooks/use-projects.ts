@@ -46,11 +46,12 @@ type GetProjectQueryVariables = {
 
 type CreateProjectMutation = {
   createProject: {
-    id: string;
-    name: string;
-    description: string;
-    status: string;
-    slug: string;
+    project: {
+      name: string;
+      description: string;
+      status: string;
+      slug: string;
+    };
   } | null;
 };
 
@@ -131,23 +132,15 @@ const CREATE_PROJECT_MUTATION: TypedDocumentNode<
   CreateProjectMutation,
   CreateProjectMutationVariables
 > = gql`
-  mutation CreateProject(
-    $name: String!
-    $description: String!
-    $contactEmail: String!
-    $status: String!
-  ) {
-    createProject(
-      name: $name
-      description: $description
-      contactEmail: $contactEmail
-      status: $status
-    ) {
-      id
-      name
-      description
-      status
-      slug
+  mutation CreateProject($input: CreateProjectInput!) {
+    createProject(input: $input) {
+      project {
+        id
+        name
+        description
+        status
+        slug
+      }
     }
   }
 `;

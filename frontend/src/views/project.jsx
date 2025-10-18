@@ -7,8 +7,12 @@ import { UserContext } from '../context/UserContext.jsx';
 import Title from '../components/Title.jsx';
 import Button from '../components/Button.jsx';
 import Spinner from '../components/Spinner.jsx';
+import { useNavigate, useParams } from 'react-router';
 
-export default function Project({ navigate, id }) {
+export default function Project() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const id = params.id;
   const { t } = useTranslation();
   const [user] = useContext(UserContext);
   const {
@@ -31,6 +35,7 @@ export default function Project({ navigate, id }) {
   };
 
   if (projectLoading) return <Spinner fullscreen />;
+  if (!projectData) return null;
   const { project } = projectData;
 
   return (
