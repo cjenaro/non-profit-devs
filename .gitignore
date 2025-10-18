@@ -1,29 +1,59 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Frontend dependencies
 /node_modules
+/frontend/node_modules
 /.pnp
 .pnp.js
 
-# testing
+# Testing
 /coverage
 
-# production
-/build
-/dist
+# Production builds
+/frontend/build
+/frontend/dist
 
-# misc
-.DS_Store
+# Rails
+/backend/log/*
+/backend/tmp/*
+!/backend/log/.keep
+!/backend/tmp/.keep
+/backend/storage/*
+!/backend/storage/.keep
+/backend/public/uploads
+/backend/public/packs
+/backend/public/packs-test
+/backend/node_modules
+/backend/yarn-error.log
+/backend/.byebug_history
+/backend/config/master.key
+/backend/config/credentials/*.key
+
+# SQLite databases
+*.sqlite3
+*.sqlite3-*
+
+# Environment variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.env
 
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.vscode
 
-.swp
+# OS files
+.DS_Store
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+*.swo
 .swc
+
+# Bun
+.bun
