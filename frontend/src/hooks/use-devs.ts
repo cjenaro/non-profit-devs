@@ -284,7 +284,9 @@ export function useSignup() {
   return useMutation(SIGNUP_MUTATION);
 }
 
-export function useLogin(options?: any) {
+export function useLogin(
+  options?: useMutation.Options<LoginMutation, LoginMutationVariables>
+) {
   return useMutation(LOGIN_MUTATION, options);
 }
 
