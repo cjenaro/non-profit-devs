@@ -16,12 +16,11 @@ Use this checklist to track implementation progress:
 - [x] **Step 8: Implement Mutations** (Write operations) ✅ COMPLETED
 - [x] **Step 9: Add Authentication** (JWT auth) ✅ COMPLETED
 - [x] **Step 10: Setup Dataloader** (N+1 optimization) ✅ COMPLETED
-- [ ] **Step 11: Configure Apollo Client** (Frontend client)
-- [ ] **Step 12: Add Seeds** (Sample data)
-- [ ] **Step 13: Testing Setup** (RSpec)
-- [ ] **Step 14: Documentation** (GraphiQL & schema export)
+- [x] **Step 11: Configure Apollo Client** (Frontend client) ✅ COMPLETED
+- [x] **Step 12: Add Seeds** (Sample data) ✅ COMPLETED
+- [x] **Step 13: Documentation** (GraphiQL & schema export) ✅ COMPLETED
 
-**Current Status:** Step 10 completed - Ready for Step 11
+**Current Status:** All steps completed! 🎉
 
 ---
 
@@ -1318,17 +1317,50 @@ end
 
 ### Dump GraphQL schema:
 
-```bash
-# Generate schema.graphql file
-rails graphql:schema:dump
+The GraphQL schema is automatically generated from your Ruby type definitions. To export it:
 
-# This creates: schema.graphql in your Rails root
+```bash
+# Generate schema.graphql file in Rails root
+rails runner "File.write('schema.graphql', BackendSchema.to_definition)"
+
+# Copy to docs for frontend reference
+cp schema.graphql ../docs/api/schema.graphql
 ```
 
-### Copy schema to docs:
+### Schema Maintenance:
+
+**When to regenerate:** After any changes to GraphQL types, mutations, or queries.
+
+**Automated regeneration:** Use the provided rake task or npm script:
 
 ```bash
+# From backend directory
+bundle exec rake graphql:export_schema
+
+# From frontend directory
+npm run update-schema
+```
+
+**Manual export (alternative):**
+```bash
+# Generate schema.graphql file in Rails root
+rails runner "File.write('schema.graphql', BackendSchema.to_definition)"
+
+# Copy to docs for frontend reference
 cp schema.graphql ../docs/api/schema.graphql
+```
+
+**Rake task details:** Created `lib/tasks/graphql.rake` with:
+```ruby
+namespace :graphql do
+  desc "Export GraphQL schema to schema.graphql and docs"
+  task export_schema: :environment do
+    schema_definition = BackendSchema.to_definition
+    File.write('schema.graphql', schema_definition)
+    File.write('../docs/api/schema.graphql', schema_definition)
+    puts "Schema exported to schema.graphql and docs/api/schema.graphql"
+  end
+end
 ```
 
 ### Update documentation:

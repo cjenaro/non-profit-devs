@@ -6,6 +6,10 @@
     "@apollo/client": "^4.0.7",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@graphql-codegen/cli": "^6.0.0",
+    "@graphql-codegen/typescript": "^5.0.2",
+    "@graphql-codegen/typescript-operations": "^5.0.2",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.3",
     "@swc/plugin-emotion": "^3.0.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -28,6 +32,7 @@
     "vite-tsconfig-paths": "^4.3.2"
   },
   "scripts": {
+    "generate": "graphql-codegen",
     "start": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview"
