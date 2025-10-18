@@ -66,35 +66,7 @@ COPY --from=build /rails /rails
 COPY --from=frontend-build /frontend/dist /var/www/html
 
 # Configure nginx for SPA + API proxy
-RUN echo 'server { \
-  listen 80; \
-  server_name localhost; \
-  root /var/www/html; \
-  index index.html; \
-  \
-  # Health check \
-  location /up { \
-    proxy_pass http://localhost:3000; \
-    proxy_set_header Host $host; \
-    proxy_set_header X-Real-IP $remote_addr; \
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
-    proxy_set_header X-Forwarded-Proto $scheme; \
-  } \
-  \
-  # Proxy API requests to Rails \
-  location /graphql { \
-    proxy_pass http://localhost:3000; \
-    proxy_set_header Host $host; \
-    proxy_set_header X-Real-IP $remote_addr; \
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
-    proxy_set_header X-Forwarded-Proto $scheme; \
-  } \
-  \
-  # Handle React Router \
-  location / { \
-    try_files $uri $uri/ /index.html; \
-  } \
-}' > /etc/nginx/sites-available/default
+COPY backend/config/nginx.conf /etc/nginx/sites-available/default
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
