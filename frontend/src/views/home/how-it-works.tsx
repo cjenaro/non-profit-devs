@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { Title } from '../../components/Title';
 import Steps from '../../components/Steps';
 import { useTranslation } from 'react-i18next';

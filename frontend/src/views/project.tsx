@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContext';
 import { Title } from '../components/Title';
 import { Button } from '../components/Button';
 import Spinner from '../components/Spinner';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function Project() {
   const params = useParams();

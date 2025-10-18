@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next';
-//* @jsx jsx */
-import { jsx, css } from '@emotion/react';
 
-const ALL_LANGUAGES = [
+interface LanguageItem {
+  code: string;
+  label: string;
+}
+
+const ALL_LANGUAGES: LanguageItem[] = [
   { code: 'en', label: 'English' },
   { code: 'es', label: 'Español' },
 ];
@@ -10,31 +13,13 @@ const ALL_LANGUAGES = [
 const Language = () => {
   const { i18n } = useTranslation();
   const availableLanguages = ALL_LANGUAGES.filter(
-    (language) => language.code !== i18n.language
+    (language: LanguageItem) => language.code !== i18n.language
   );
 
-  return availableLanguages.map((availableLanguage) => (
+  return availableLanguages.map((availableLanguage: LanguageItem) => (
     <button
       key={availableLanguage.code}
-      css={css`
-        border: none;
-        background: none;
-        text-transform: uppercase;
-        color: #c00;
-        margin-right: 8px;
-        padding: 8px;
-        cursor: pointer;
-
-        &:focus {
-          outline-style: dotted;
-        }
-
-        @media (max-width: 420px) {
-          display: block;
-          width: 100%;
-          margin-bottom: 8px;
-        }
-      `}
+      className="border-none bg-none uppercase text-red-600 mr-2 p-2 cursor-pointer focus:outline-dotted block w-full mb-2 md:inline-block md:w-auto md:mb-0"
       onClick={() => i18n.changeLanguage(availableLanguage.code)}
     >
       {availableLanguage.label}

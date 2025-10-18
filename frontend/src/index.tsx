@@ -17,7 +17,7 @@ import { Signup } from './views/signup';
 import { NotFound } from './views/not-found';
 import client from './apollo-client';
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root')!);
 const router = createBrowserRouter([
   {
     element: <Layout />,

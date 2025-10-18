@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../hooks/use-devs';
 import { Title } from '../components/Title';
 import { Input } from '../components/Input';

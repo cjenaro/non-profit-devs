@@ -16,8 +16,8 @@ This plan outlines the steps to revamp the frontend by replacing Emotion with Ta
 ## Migration Steps
 
 ### 1. Update Existing Stack
-- Update package.json: remove @emotion/react, @emotion/styled, @swc/plugin-emotion
-- Add Tailwind CSS dependencies: tailwindcss, autoprefixer, postcss
+- [x] Update package.json: remove @emotion/react, @emotion/styled, @swc/plugin-emotion
+- [x] Add Tailwind CSS dependencies: tailwindcss, autoprefixer, postcss
 - Replace Prettier and ESLint with Biome: remove prettier, eslint, add @biomejs/biome
 - Update outdated packages to latest versions (e.g., @testing-library/*, i18next, etc.)
 - Run npm install to update lockfile
@@ -95,7 +95,7 @@ module.exports = {
 - [x] Header.jsx - Convert inline css to Tailwind classes
 - [x] Logo.jsx - Replace styled Link with Tailwind classes
 - [x] Input.jsx - Convert css template to Tailwind classes
-- [x] Language.jsx - Replace css with Tailwind classes
+- [x] Language.tsx - Replace css with Tailwind classes
 - [x] Title.jsx - Simplify css to Tailwind classes
 - [x] Layout.jsx - Move Global styles to main.css (already done)
 - [x] UserContext.jsx - Convert to TSX with proper types
@@ -109,25 +109,25 @@ module.exports = {
 
 ### Views
 - [x] login.jsx - Convert section/form css to Tailwind and TSX
-- [x] signup.jsx - Convert css to Tailwind (created signup.tsx)
-- [ ] profile.jsx - Convert css to Tailwind
-- [ ] projects.jsx - Convert css to Tailwind
-- [ ] project.jsx - Convert css to Tailwind
+- [x] signup.jsx - Convert css to Tailwind
+- [x] profile.jsx - Convert css to Tailwind
+- [x] projects.jsx - Convert css to Tailwind
+- [x] project.jsx - Convert css to Tailwind
 - [x] pitch.jsx - Convert css to Tailwind
-- [ ] home/index.jsx - Convert css to Tailwind
+- [x] home/index.jsx - Convert css to Tailwind
 - [x] home/hero.jsx - Convert css to Tailwind
 - [x] home/who-we-are.jsx - Convert css to Tailwind
 - [x] home/how-it-works.jsx - Convert css to Tailwind
-- [ ] not-found.jsx - Convert css to Tailwind
+- [x] not-found.jsx - Convert css to Tailwind
 
 ### Other
-- [ ] index.jsx - Update imports if needed
-- [ ] Convert all .jsx to .tsx and add TypeScript types
+- [x] index.jsx - Update imports if needed
+- [x] Convert all .jsx to .tsx and add TypeScript types
 - [ ] Test build and fix any issues
 
 ## Timeline
-- **Completed:** Package updates, Tailwind v4 setup with @font-face, Biome config, GraphQL codegen fix, core components migration, additional components (ErrorMessage, Select, ProjectItem, Spinner), signup view
-- **Remaining:** Complete remaining views migration (profile, projects, project, home/index, not-found), fix TypeScript errors (Downshift types, React Router types, GraphQL types), full testing
+- **Completed:** Package updates, Tailwind v4 setup with @font-face, Biome config, GraphQL codegen fix, all components and views migrated to TSX with Tailwind, old .jsx files removed
+- **Remaining:** Fix TypeScript errors (Downshift v5 types, React Router v5, GraphQL, etc.), update remaining imports, full testing
 
 ## Risks & Considerations
 - Ensure all custom styles are captured in Tailwind theme
