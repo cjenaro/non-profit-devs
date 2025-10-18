@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router';
-import { useLogin } from '../hooks/use-devs';
+import { useLogin } from '../hooks/use-devs.js';
 import Title from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
@@ -13,8 +13,10 @@ export default function Login() {
   const navigate = useNavigate();
   const [login, { loading, error }] = useLogin({
     onCompleted(data) {
-      localStorage.setItem('authToken', data.login.token.token);
-      setUser({ ...data.login.token.token, ...data.login.user });
+      if (data.login.token) {
+        localStorage.setItem('authToken', data.login.token.token);
+        setUser({ ...data.login.token, ...data.login.user });
+      }
     },
   });
 
