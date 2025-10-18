@@ -1,10 +1,10 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Title } from '../components/Title'
-import { Input } from '../components/Input'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/Button'
 import { ErrorMessage } from '../components/ErrorMessage'
+import { Input } from '../components/Input'
+import { Title } from '../components/Title'
 import { useCreateProject } from '../hooks/use-projects'
 
 export function Pitch() {

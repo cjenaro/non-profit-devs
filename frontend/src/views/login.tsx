@@ -1,12 +1,13 @@
-import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../context/UserContext'
+import type React from 'react'
+import { useContext, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { useLogin } from '../hooks/use-devs'
-import { Title } from '../components/Title'
-import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 import { ErrorMessage } from '../components/ErrorMessage'
-import { useTranslation } from 'react-i18next'
+import { Input } from '../components/Input'
+import { Title } from '../components/Title'
+import { UserContext } from '../context/UserContext'
+import { useLogin } from '../hooks/use-devs'
 
 export function Login() {
   const navigate = useNavigate()

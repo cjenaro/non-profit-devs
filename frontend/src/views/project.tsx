@@ -1,12 +1,11 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
-import { UserContext } from '../context/UserContext'
-import { Title } from '../components/Title'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '../components/Button'
 import Spinner from '../components/Spinner'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Title } from '../components/Title'
+import { UserContext } from '../context/UserContext'
+import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
 
 export function Project() {
   const params = useParams()

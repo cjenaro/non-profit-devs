@@ -1,15 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import { useContext, useState, useEffect, ChangeEvent } from 'react'
+import { type ChangeEvent, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '../components/Button'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { Input } from '../components/Input'
+import Select from '../components/Select'
+import { Title } from '../components/Title'
 import { UserContext } from '../context/UserContext'
 import { useSignup } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
-import { Input } from '../components/Input'
-import { Title } from '../components/Title'
-import { Button } from '../components/Button'
-import { ErrorMessage } from '../components/ErrorMessage'
-
-import Select from '../components/Select'
 
 export function Signup() {
   const navigate = useNavigate()

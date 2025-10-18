@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Logo } from './Logo'
+import { useLocation } from 'react-router-dom'
+import { UserContext } from '../context/UserContext'
 import { Button } from './Button'
 import Language from './Language'
-import { UserContext } from '../context/UserContext'
+import { Logo } from './Logo'
 
 interface HeaderProps {
   fixed?: boolean

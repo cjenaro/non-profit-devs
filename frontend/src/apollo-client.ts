@@ -5,9 +5,9 @@ declare const window: any
 
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloLink,
   HttpLink,
+  InMemoryCache,
 } from '@apollo/client'
 
 const httpLink = new HttpLink({

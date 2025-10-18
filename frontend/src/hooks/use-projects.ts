@@ -1,4 +1,4 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
+import { gql, type TypedDocumentNode } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
 
 // Type definitions for GraphQL operations

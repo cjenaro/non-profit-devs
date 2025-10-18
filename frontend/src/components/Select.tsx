@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelect, useMultipleSelection } from 'downshift'
+import { useMultipleSelection, useSelect } from 'downshift'
+import type React from 'react'
 
 interface Option {
   value: string

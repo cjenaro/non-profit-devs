@@ -1,19 +1,16 @@
 import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-
-import { UserContext } from '../context/UserContext'
-import { useUpdateUser, useChangePassword } from '../hooks/use-devs'
-import { useGetSkills } from '../hooks/use-skills'
-
-import { Title } from '../components/Title'
-import { Input } from '../components/Input'
-import { Button } from '../components/Button'
-import Select from '../components/Select'
-import ProjectItem from '../components/ProjectItem'
-import { ErrorMessage } from '../components/ErrorMessage'
 import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button } from '../components/Button'
 import { Divider } from '../components/Divider'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { Input } from '../components/Input'
+import ProjectItem from '../components/ProjectItem'
+import Select from '../components/Select'
+import { Title } from '../components/Title'
+import { UserContext } from '../context/UserContext'
+import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
+import { useGetSkills } from '../hooks/use-skills'
 
 export function Profile() {
   const navigate = useNavigate()

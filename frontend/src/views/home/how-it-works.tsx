@@ -1,6 +1,6 @@
-import { Title } from '../../components/Title'
-import Steps from '../../components/Steps'
 import { useTranslation } from 'react-i18next'
+import Steps from '../../components/Steps'
+import { Title } from '../../components/Title'
 
 export default function HowItWorks() {
   const { t } = useTranslation()

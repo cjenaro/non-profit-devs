@@ -1,10 +1,10 @@
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FiSearch } from 'react-icons/fi'
+import { ErrorMessage } from '../components/ErrorMessage'
 import ProjectItem from '../components/ProjectItem'
 import Spinner from '../components/Spinner'
-import { ErrorMessage } from '../components/ErrorMessage'
 import useProjects from '../hooks/use-projects'
-import { useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import { useTranslation } from 'react-i18next'
 
 export function Projects() {
   const { t } = useTranslation()
