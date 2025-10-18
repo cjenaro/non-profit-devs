@@ -72,9 +72,13 @@ RUN echo 'server { \
   root /var/www/html; \
   index index.html; \
   \
-  # Handle React Router \
-  location / { \
-    try_files $uri $uri/ /index.html; \
+  # Health check \
+  location /up { \
+    proxy_pass http://localhost:3000; \
+    proxy_set_header Host $host; \
+    proxy_set_header X-Real-IP $remote_addr; \
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+    proxy_set_header X-Forwarded-Proto $scheme; \
   } \
   \
   # Proxy API requests to Rails \
@@ -85,13 +89,17 @@ RUN echo 'server { \
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
     proxy_set_header X-Forwarded-Proto $scheme; \
   } \
+  \
+  # Handle React Router \
+  location / { \
+    try_files $uri $uri/ /index.html; \
+  } \
 }' > /etc/nginx/sites-available/default
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
-USER 1000:1000
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]

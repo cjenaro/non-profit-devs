@@ -1,3 +1,8 @@
+/// <reference types="vite/client" />
+
+declare const localStorage: any;
+declare const window: any;
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,7 +11,7 @@ import {
 } from '@apollo/client';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: import.meta.env.DEV ? 'http://localhost:3000/graphql' : '/graphql',
 });
 
 const authLink = new ApolloLink((operation, forward) => {
