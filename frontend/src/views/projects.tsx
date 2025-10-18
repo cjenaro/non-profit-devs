@@ -19,7 +19,7 @@ export function Projects() {
     setSearch(e.target.value)
   }
 
-  const { projects } = data
+  const { projects } = data || {}
 
   return (
     <section className="pt-[50px] pb-[100px] md:min-h-[calc(100vh-228px)] md:pb-[50px]">
@@ -35,7 +35,7 @@ export function Projects() {
           <FiSearch className="p-3.5 pr-4" />
         </div>
         <ul>
-          {projects.length > 0 ? (
+          {projects && projects.length > 0 ? (
             projects
               .filter((project: any) =>
                 project.name.toLowerCase().includes(search.toLowerCase())

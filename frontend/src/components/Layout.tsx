@@ -7,7 +7,6 @@ export function Layout() {
     <React.Fragment>
       <Header />
       <main>
-        {/* @ts-expect-error we need to update react router types */}
         <Outlet />
       </main>
       <Header fixed />

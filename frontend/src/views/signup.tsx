@@ -1,4 +1,4 @@
-import { type ChangeEvent, useContext, useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/Button'
@@ -6,9 +6,10 @@ import { ErrorMessage } from '../components/ErrorMessage'
 import { Input } from '../components/Input'
 import Select from '../components/Select'
 import { Title } from '../components/Title'
-import { UserContext } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
 import { useSignup } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
+import { Skill } from '../generated/graphql'
 
 export function Signup() {
   const navigate = useNavigate()
@@ -16,7 +17,7 @@ export function Signup() {
   const [error, setError] = useState<any>(null)
   const [loginInput, setLoginInput] = useState({ email: '', password: '' })
   const [skills, setSkills] = useState<string[]>([])
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useUserContext()
 
   const [
     signup,
@@ -56,8 +57,17 @@ export function Signup() {
   }
 
   useEffect(() => {
-    if (signupData && signupData.signup) {
-      setUser({ ...signupData.signup })
+    if (signupData?.signup?.user) {
+      setUser({
+        ...signupData.signup.user,
+        token: '',
+        createdAt: new Date().toISOString(),
+        projects: [],
+        updatedAt: new Date().toISOString(),
+        skills: signupData.signup.user.skills.map(
+          (skill) => Skill[skill as keyof typeof Skill] || Skill.Git
+        ),
+      })
       navigate('/login')
     }
   }, [signupData, setUser])

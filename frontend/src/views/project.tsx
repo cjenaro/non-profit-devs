@@ -1,10 +1,9 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '../components/Button'
 import Spinner from '../components/Spinner'
 import { Title } from '../components/Title'
-import { UserContext } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
 
 export function Project() {
@@ -12,12 +11,12 @@ export function Project() {
   const navigate = useNavigate()
   const id = params.id
   const { t } = useTranslation()
-  const [user] = useContext(UserContext)
+  const [user] = useUserContext()
   const {
     data: projectData,
     loading: projectLoading,
     refetch: fetchProject,
-  } = useGetProject(id)
+  } = useGetProject(id || '')
   const [join, { loading }] = useAddUserToProject()
   const project = projectData?.project
 
@@ -27,9 +26,9 @@ export function Project() {
 
     const addUserInput = { id: project.id, userId: user.id }
 
-    await join({ variables: { input: addUserInput } })
+    await join({ variables: addUserInput })
 
-    fetchProject({ variables: { id: project.id } })
+    fetchProject()
   }
 
   if (projectLoading) return <Spinner fullscreen />

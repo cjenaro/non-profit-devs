@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../components/Button'
@@ -8,7 +8,7 @@ import { Input } from '../components/Input'
 import ProjectItem from '../components/ProjectItem'
 import Select from '../components/Select'
 import { Title } from '../components/Title'
-import { UserContext } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
 import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
 
@@ -16,9 +16,9 @@ export function Profile() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [passwordError, setPasswordError] = useState('')
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useUserContext()
   const [skill, setSkill] = useState<string[]>(
-    user && user.skills && user.skills.map((s: any) => s.value)
+    user?.skills?.map((s: any) => s.value) || []
   )
 
   const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
@@ -34,6 +34,8 @@ export function Profile() {
   const handleUserUpdate = async (e: any) => {
     e.preventDefault()
 
+    if (!user) return
+
     const updateInput = {
       id: user.id,
       name: e.target.name.value || user.name,
@@ -41,9 +43,14 @@ export function Profile() {
       email: e.target.email.value || user.email,
     }
 
-    await updateUser({ variables: { input: updateInput } })
+    await updateUser({ variables: updateInput })
     if (!updateUserError && !updateUserLoading) {
-      setUser({ ...user, ...updateInput })
+      setUser({
+        ...user,
+        ...updateInput,
+        token: user.token,
+        skills: user.skills,
+      })
     }
   }
 
@@ -56,13 +63,15 @@ export function Profile() {
       return
     }
 
+    if (!user) return
+
     const updateInput = {
       id: user.id,
       currentPassword: e.target.oldPassword.value,
       newPassword: e.target.newPassword.value,
     }
 
-    await changePassword({ variables: { input: updateInput } })
+    await changePassword({ variables: updateInput })
   }
 
   const handleSkills = (skill: any[]) => {
@@ -77,12 +86,12 @@ export function Profile() {
   }
 
   const getInitialSkills = () => {
-    return (
-      user &&
-      user.skills &&
-      user.skills.length &&
-      user.skills.map((value: any) => ({ label: getSkillLabel(value), value }))
-    )
+    return user?.skills?.length
+      ? user.skills.map((value: any) => ({
+          label: getSkillLabel(value),
+          value,
+        }))
+      : []
   }
 
   if (!user) {
@@ -111,14 +120,14 @@ export function Profile() {
         <form onSubmit={handleUserUpdate}>
           <Input
             label={`${t('PROFILE_EMAIL')}:`}
-            placeholder={user.email}
+            placeholder={user?.email}
             name="email"
             id="email"
           />
           <Input
             label={`${t('PROFILE_NAME')}:`}
             name="name"
-            placeholder={user.name}
+            placeholder={user?.name}
             id="name"
             className="mt-4"
           />
@@ -149,21 +158,21 @@ export function Profile() {
       <div className="container">
         <form onSubmit={handlePasswordChange}>
           <Input
-            styles="mt-4"
+            className="mt-4"
             type="password"
             label={`${t('PROFILE_OLD_PASSWORD')}:`}
             name="oldPassword"
             id="oldPassword"
           />
           <Input
-            styles="mt-4"
+            className="mt-4"
             type="password"
             label={`${t('PROFILE_NEW_PASSWORD')}:`}
             name="newPassword"
             id="newPassword"
           />
           <Input
-            styles="mt-4"
+            className="mt-4"
             type="password"
             label={`${t('PROFILE_CONFIRM_PASSWORD')}:`}
             name="confirmPassword"
@@ -186,7 +195,7 @@ export function Profile() {
       />
       <div className="container">
         <ul>
-          {user.projects.length > 0 ? (
+          {user?.projects && user.projects.length > 0 ? (
             user.projects.map((project: any) => (
               <li
                 className="mb-[45px] min-h-[17px] border-4 border-lavender"

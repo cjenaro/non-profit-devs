@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
-import { UserContext } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
 import { Button } from './Button'
 import Language from './Language'
 import { Logo } from './Logo'
@@ -13,7 +13,7 @@ interface HeaderProps {
 export const Header = ({ fixed }: HeaderProps) => {
   const location = useLocation()
   const isProfile = location.pathname.includes('profile')
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useUserContext()
   const { t } = useTranslation()
 
   const logout = () => {

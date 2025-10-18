@@ -1,12 +1,12 @@
 import type React from 'react'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/Button'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { Input } from '../components/Input'
 import { Title } from '../components/Title'
-import { UserContext } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
 import { useLogin } from '../hooks/use-devs'
 
 export function Login() {
@@ -20,7 +20,7 @@ export function Login() {
     },
   })
 
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useUserContext()
   const { t } = useTranslation()
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

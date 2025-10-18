@@ -9,13 +9,7 @@ import { useCreateProject } from '../hooks/use-projects'
 
 export function Pitch() {
   const navigate = useNavigate()
-  const [createProject, { loading, error }] = useCreateProject({
-    onCompleted(data) {
-      if (data.createProject?.project?.id) {
-        navigate(`/projects/${data.createProject.project.id}`)
-      }
-    },
-  })
+  const [createProject, { loading, error }] = useCreateProject()
 
   const { t } = useTranslation()
 
@@ -23,18 +17,28 @@ export function Pitch() {
     e.preventDefault()
     const target = e.currentTarget
 
+    const nameInput = target.elements.namedItem('name') as HTMLInputElement
+    const descriptionInput = target.elements.namedItem(
+      'description'
+    ) as HTMLInputElement
+    const contactEmailInput = target.elements.namedItem(
+      'contactEmail'
+    ) as HTMLInputElement
+
     const newProjectInput = {
-      name: target.name.value,
-      description: target.description.value,
-      contactEmail: target.contactEmail.value,
+      name: nameInput.value,
+      description: descriptionInput.value,
+      contactEmail: contactEmailInput.value,
       status: 'PENDING_REVIEW',
     }
 
-    await createProject({
-      variables: {
-        input: newProjectInput,
-      },
+    const result = await createProject({
+      variables: newProjectInput,
     })
+
+    if (result.data?.createProject?.project?.slug) {
+      navigate(`/projects/${result.data.createProject.project.slug}`)
+    }
   }
 
   return (
