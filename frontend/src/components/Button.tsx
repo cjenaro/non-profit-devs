@@ -29,7 +29,7 @@ export function Button({
     loading ? 'pl-4' : ''
   }`;
 
-  const containedClasses = contained ? 'bg-ember text-lavender' : '';
+  const containedClasses = contained ? 'bg-ember! text-lavender' : '';
   const textClasses = text ? 'text-lavender border-0' : '';
 
   return (
