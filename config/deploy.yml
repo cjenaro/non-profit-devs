@@ -38,7 +38,7 @@ aliases:
 
 # Use a persistent storage volume for SQLite database and uploaded files.
 volumes:
-  - "/mnt/non-profit-devs/db:/rails/db"
+  - "/mnt/non-profit-devs/db:/rails/db/data"
   - "/mnt/non-profit-devs/storage:/rails/storage"
 
 # Configure builder setup.
