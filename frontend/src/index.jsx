@@ -1,4 +1,5 @@
 import React from 'react';
+import { ApolloProvider } from '@apollo/client/react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
@@ -13,6 +14,7 @@ import Project from './views/project';
 import Login from './views/login';
 import Signup from './views/signup';
 import NotFound from './views/not-found';
+import client from './apollo-client';
 
 const root = createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -58,9 +60,11 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
+    <ApolloProvider client={client}>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );
 

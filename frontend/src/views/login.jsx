@@ -12,7 +12,13 @@ import { useTranslation } from 'react-i18next';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [login, { data, loading, error }] = useLogin();
+  const [login, { loading, error }] = useLogin({
+    onCompleted(data) {
+      localStorage.setItem('authToken', data.login.token.token);
+      setUser({ ...data.login.token.token, ...data.login.user });
+    },
+  });
+
   const [user, setUser] = useContext(UserContext);
   const { t } = useTranslation();
 
@@ -29,16 +35,11 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (data && data.login) {
-      setUser({ ...data.login.token, ...data.login.user });
-    }
-  }, [data, setUser]);
-
-  useEffect(() => {
     if (user && user.token) {
       navigate('/projects');
     }
   }, [user]);
+
   return (
     <section
       css={css`
