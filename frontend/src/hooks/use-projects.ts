@@ -149,16 +149,18 @@ const ADD_USER_TO_PROJECT_MUTATION: TypedDocumentNode<
   AddUserToProjectMutation,
   AddUserToProjectMutationVariables
 > = gql`
-  mutation AddUserToProject($id: ID!, $userId: ID!) {
-    addUserToProject(id: $id, userId: $userId) {
-      id
-      name
-      description
-      contactEmail
-      users {
+  mutation AddUserToProject($input: AddUserToProjectInput!) {
+    addUserToProject(input: $input) {
+      project {
         id
         name
-        email
+        description
+        contactEmail
+        users {
+          id
+          name
+          email
+        }
       }
     }
   }

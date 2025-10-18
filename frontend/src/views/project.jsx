@@ -25,11 +25,9 @@ export default function Project() {
   const handleJoinProject = async () => {
     if (!user) return navigate('/login');
 
-    const addUserInput = {
-      user: user.id,
-    };
+    const addUserInput = { id: project.id, userId: user.id };
 
-    await join({ variables: { id: project.id, input: addUserInput } });
+    await join({ variables: { input: addUserInput } });
 
     fetchProject({ variables: { id: project.id } });
   };
