@@ -16,7 +16,7 @@ export function Signup() {
   const { t } = useTranslation()
   const [error, setError] = useState<any>(null)
   const [loginInput, setLoginInput] = useState({ email: '', password: '' })
-  const [skills, setSkills] = useState<string[]>([])
+  const [skills, setSkills] = useState<Skill[]>([])
   const [user, setUser] = useUserContext()
 
   const [
@@ -31,7 +31,7 @@ export function Signup() {
   } = useGetSkills()
 
   const handleSkills = (skill: any[]) => {
-    setSkills(skill.map((s) => s.value))
+    setSkills(skill.map((s) => s.value as Skill))
   }
 
   const handleFormSubmit = async (e: any) => {
@@ -64,9 +64,6 @@ export function Signup() {
         createdAt: new Date().toISOString(),
         projects: [],
         updatedAt: new Date().toISOString(),
-        skills: signupData.signup.user.skills.map(
-          (skill) => Skill[skill as keyof typeof Skill] || Skill.Git
-        ),
       })
       navigate('/login')
     }

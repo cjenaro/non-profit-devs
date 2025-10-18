@@ -1,43 +1,45 @@
-import type React from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
-import { Title } from '../components/Title'
-import { useCreateProject } from '../hooks/use-projects'
+import type React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../components/Button';
+import { ErrorMessage } from '../components/ErrorMessage';
+import { Input } from '../components/Input';
+import { Title } from '../components/Title';
+import { useCreateProject } from '../hooks/use-projects';
 
 export function Pitch() {
-  const navigate = useNavigate()
-  const [createProject, { loading, error }] = useCreateProject()
+  const navigate = useNavigate();
+  const [createProject, { loading, error }] = useCreateProject();
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const target = e.currentTarget
+    e.preventDefault();
+    const target = e.currentTarget;
 
-    const nameInput = target.elements.namedItem('name') as HTMLInputElement
+    const nameInput = target.elements.namedItem('name') as HTMLInputElement;
     const descriptionInput = target.elements.namedItem(
       'description'
-    ) as HTMLInputElement
+    ) as HTMLInputElement;
     const contactEmailInput = target.elements.namedItem(
       'contactEmail'
-    ) as HTMLInputElement
+    ) as HTMLInputElement;
 
     const newProjectInput = {
-      name: nameInput.value,
-      description: descriptionInput.value,
-      contactEmail: contactEmailInput.value,
-      status: 'PENDING_REVIEW',
-    }
+      input: {
+        name: nameInput.value,
+        description: descriptionInput.value,
+        contactEmail: contactEmailInput.value,
+        status: 'PENDING_REVIEW',
+      },
+    };
 
     const result = await createProject({
       variables: newProjectInput,
-    })
+    });
 
     if (result.data?.createProject?.project?.slug) {
-      navigate(`/projects/${result.data.createProject.project.slug}`)
+      navigate(`/projects/${result.data.createProject.project.slug}`);
     }
   }
 
@@ -83,5 +85,5 @@ export function Pitch() {
         <ErrorMessage error={error} />
       </div>
     </section>
-  )
+  );
 }

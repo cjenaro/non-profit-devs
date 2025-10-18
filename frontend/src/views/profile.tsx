@@ -11,15 +11,14 @@ import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
+import { Skill } from '../generated/graphql'
 
 export function Profile() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [passwordError, setPasswordError] = useState('')
   const [user, setUser] = useUserContext()
-  const [skill, setSkill] = useState<string[]>(
-    user?.skills?.map((s: any) => s.value) || []
-  )
+  const [skill, setSkill] = useState<Skill[]>(user?.skills || [])
 
   const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
     useUpdateUser()
@@ -43,13 +42,12 @@ export function Profile() {
       email: e.target.email.value || user.email,
     }
 
-    await updateUser({ variables: updateInput })
+    await updateUser({ variables: { input: updateInput } })
     if (!updateUserError && !updateUserLoading) {
       setUser({
         ...user,
         ...updateInput,
         token: user.token,
-        skills: user.skills,
       })
     }
   }
@@ -71,14 +69,14 @@ export function Profile() {
       newPassword: e.target.newPassword.value,
     }
 
-    await changePassword({ variables: updateInput })
+    await changePassword({ variables: { input: updateInput } })
   }
 
   const handleSkills = (skill: any[]) => {
-    setSkill(skill?.map((s) => s.value))
+    setSkill(skill?.map((s) => s.value as Skill))
   }
 
-  const getSkillLabel = (value: string) => {
+  const getSkillLabel = (value: Skill) => {
     return value
       .split('_')
       .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
@@ -87,7 +85,7 @@ export function Profile() {
 
   const getInitialSkills = () => {
     return user?.skills?.length
-      ? user.skills.map((value: any) => ({
+      ? user.skills.map((value: Skill) => ({
           label: getSkillLabel(value),
           value,
         }))
