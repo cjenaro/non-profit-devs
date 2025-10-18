@@ -43,6 +43,52 @@ See [backend/README.md](./backend/README.md) for setup instructions.
 
 API documentation is available in [docs/api/](./docs/api/).
 
+### TypeScript & GraphQL
+
+The frontend uses manual TypeScript types for GraphQL operations. GraphQL Codegen is configured but currently disabled due to Apollo Client version compatibility. To enable automatic type generation:
+
+```bash
+cd frontend
+npm install --save-dev @graphql-codegen/cli @graphql-codegen/typescript @graphql-codegen/typescript-operations @graphql-codegen/typescript-react-apollo
+npm run generate  # Generate types from schema
+```
+
+Configuration is in `frontend/codegen.ts`.
+
+## 🚀 Deployment
+
+This application is configured for production deployment using [Kamal](https://kamal-deploy.org/).
+
+### Quick Deploy
+
+1. **Set up 1Password** (if not already done):
+   ```bash
+   # Install 1Password CLI if needed
+   op signin  # Authenticate with 1Password
+
+   # Create vault item "Non-Profit Devs" with:
+   # - KAMAL_REGISTRY_PASSWORD: your Docker registry password
+   # - RAILS_MASTER_KEY: copy from backend/config/master.key
+   ```
+
+2. **Configure Deployment**:
+   Edit `config/deploy.yml` with your server IP and domain.
+
+3. **Deploy**:
+   ```bash
+   ./deploy.sh  # Automated deployment script
+   ```
+
+### Manual Deployment
+
+See [backend/README.md](./backend/README.md#deployment-with-kamal) for detailed deployment instructions.
+
+### Requirements
+
+- Linux server with Docker
+- Domain name pointing to server IP
+- Docker Hub account (or other registry)
+
 ## Collaboration
 
 If you want to help improve this website, be my guest, you can pick any issue from github, for bugs I'm creating a new branch bug/\<number of the issue\> and for enhancements I'm creating a branch feat/\<number of the issue\> and once that is solved merged into dev and branch deleted.

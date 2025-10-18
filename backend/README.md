@@ -1374,6 +1374,160 @@ Mark this README with ✅ for completed steps
 
 ---
 
+## 🚀 Deployment with Kamal
+
+This application is configured for deployment using Kamal, which provides zero-downtime deployments with automatic SSL certificates.
+
+### Prerequisites
+
+1. **Server Setup**: A Linux server with Docker installed
+2. **Domain**: Point your domain to the server IP
+3. **Docker Registry**: Account on Docker Hub (or other registry)
+
+### Initial Setup
+
+1. **Install Kamal CLI** (if not already installed):
+   ```bash
+   gem install kamal
+   ```
+
+2. **Set up 1Password CLI** (if not already done):
+   ```bash
+   # Install 1Password CLI
+   # On macOS: brew install --cask 1password/tap/1password-cli
+   # On Linux: See https://developer.1password.com/docs/cli/get-started/
+
+   # Sign in to 1Password CLI
+   op signin
+   ```
+
+3. **Create 1Password vault entry**:
+   - Create a new item called "Non-Profit Devs" in your vault
+   - Add these fields:
+     - `KAMAL_REGISTRY_PASSWORD`: Your Docker registry password/token
+     - `RAILS_MASTER_KEY`: Copy from `backend/config/master.key`
+
+4. **Configure Deployment**:
+   Edit `config/deploy.yml` and update:
+   - `servers.web` - Your server IP
+   - `proxy.host` - Your domain name
+   - `registry.username` - Your Docker registry username
+   - `env.clear.FRONTEND_URL` - Your domain with https://
+
+5. **Update 1Password account**:
+   Edit `.kamal/secrets` and replace `YOUR_1PASSWORD_ACCOUNT` with your 1Password account identifier (usually your email or account name).
+
+6. **Test secrets access**:
+   ```bash
+   kamal secrets fetch --adapter 1password --account YOUR_ACCOUNT --from "Non-Profit Devs" KAMAL_REGISTRY_PASSWORD
+   ```
+
+4. **Deploy**:
+   ```bash
+   kamal setup    # Initial setup
+   kamal deploy   # Deploy application
+   ```
+
+### Post-Deployment Tasks
+
+1. **Run Database Migrations**:
+   ```bash
+   kamal app exec "rails db:migrate"
+   ```
+
+2. **Seed Database** (optional):
+   ```bash
+   kamal app exec "rails db:seed"
+   ```
+
+### Useful Commands
+
+```bash
+# View logs
+kamal app logs
+
+# Access Rails console
+kamal app exec "rails console"
+
+# Access database console
+kamal app exec "rails dbconsole"
+
+# Restart application
+kamal app restart
+
+# Rollback to previous version
+kamal rollback
+```
+
+### File Structure
+
+The deployment creates a multi-stage Docker image that:
+- Builds the React frontend
+- Builds the Rails backend
+- Serves the frontend via nginx
+- Proxies API requests to Rails
+- Uses SQLite for the database (persisted via volume)
+
+### Environment Variables
+
+**Required Secrets** (set with `kamal secrets set`):
+- `KAMAL_REGISTRY_PASSWORD` - Docker registry authentication
+- `RAILS_MASTER_KEY` - Rails encryption key
+
+**Optional Environment Variables**:
+- `FRONTEND_URL` - Frontend URL for CORS (defaults to https://your-domain)
+- `RAILS_ENV` - Environment (automatically set to production)
+
+### Required Configuration Changes
+
+Before deploying, update these values in `config/deploy.yml`:
+
+```yaml
+servers:
+  web:
+    - YOUR_SERVER_IP  # Replace with your actual server IP address
+
+proxy:
+  host: YOUR_DOMAIN.com  # Replace with your actual domain name
+
+env:
+  clear:
+    FRONTEND_URL: https://YOUR_DOMAIN.com  # Replace with your actual domain
+```
+
+### Environment Variables to Set
+
+**System Environment Variables** (set in your shell):
+```bash
+export KAMAL_REGISTRY_PASSWORD="your-docker-registry-password"
+```
+
+**Domain/DNS Setup**:
+- Point your domain (YOUR_DOMAIN.com) to YOUR_SERVER_IP
+- Ensure ports 80 and 443 are open on your server
+
+### First-Time Deployment Checklist
+
+- [ ] Update `config/deploy.yml` with your server IP and domain
+- [ ] Set `KAMAL_REGISTRY_PASSWORD` environment variable
+- [ ] Ensure domain DNS points to server IP
+- [ ] Run `kamal setup` (initial setup)
+- [ ] Run `kamal deploy` (deploy application)
+- [ ] Run `kamal app exec "rails db:migrate"` (run migrations)
+- [ ] Run `kamal app exec "rails db:seed"` (optional: seed data)
+
+### Troubleshooting
+
+**SSL Issues**: Ensure your domain DNS points to the server IP before deploying.
+
+**Build Failures**: Check that all dependencies are properly declared in package.json and Gemfile.
+
+**Database Issues**: Run migrations after first deploy.
+
+**Frontend Not Loading**: Check nginx configuration and ensure frontend build completed successfully.
+
+---
+
 ## Running the Application
 
 ### Development:
