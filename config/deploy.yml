@@ -7,12 +7,12 @@ image: jenaroc/non-profit-devs
 # Deploy to these servers.
 servers:
   web:
-    - YOUR_SERVER_IP  # Replace with your actual server IP
+    - 178.156.197.43
 
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
 proxy:
   ssl: true
-  host: YOUR_DOMAIN.com  # Replace with your actual domain
+  host: nonprofitdevs.com
   app_port: 80  # Nginx serves on port 80
 
 # Credentials for your image host.
@@ -25,9 +25,9 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
-  clear:
-    RAILS_ENV: production
-    FRONTEND_URL: https://YOUR_DOMAIN.com  # Replace with your actual domain
+   clear:
+     RAILS_ENV: production
+     FRONTEND_URL: https://nonprofitdevs.com
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 aliases:
@@ -38,6 +38,7 @@ aliases:
 
 # Use a persistent storage volume for SQLite database and uploaded files.
 volumes:
+  - "/mnt/non-profit-devs/db:/rails/db"
   - "/mnt/non-profit-devs/storage:/rails/storage"
 
 # Configure builder setup.

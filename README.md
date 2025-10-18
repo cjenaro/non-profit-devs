@@ -59,6 +59,47 @@ Configuration is in `frontend/codegen.ts`.
 
 This application is configured for production deployment using [Kamal](https://kamal-deploy.org/).
 
+### VPS Setup
+
+Before deploying, prepare your Linux server. SSH into your server and run these commands:
+
+1. **Update system and install Docker**:
+   ```bash
+   sudo apt update
+   sudo apt install -y docker.io
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   ```
+
+2. **Add your user to Docker group** (replace `username` with your actual username):
+   ```bash
+   sudo usermod -aG docker username
+   # Logout and login again for group changes to take effect
+   ```
+
+3. **Create persistent storage directories**:
+   ```bash
+   sudo mkdir -p /mnt/non-profit-devs/storage
+   sudo mkdir -p /mnt/non-profit-devs/db
+   sudo chown -R $USER:$USER /mnt/non-profit-devs
+   ```
+
+4. **Configure firewall** (if using UFW):
+   ```bash
+   sudo ufw allow 22/tcp    # SSH
+   sudo ufw allow 80/tcp    # HTTP
+   sudo ufw allow 443/tcp   # HTTPS
+   sudo ufw --force enable
+   ```
+
+5. **Verify setup**:
+   ```bash
+   docker --version
+   ls -la /mnt/non-profit-devs/
+   ```
+
+6. **Point your domain DNS** to the server's IP address (178.156.197.43).
+
 ### Quick Deploy
 
 1. **Set up 1Password** (if not already done):
@@ -72,7 +113,7 @@ This application is configured for production deployment using [Kamal](https://k
    ```
 
 2. **Configure Deployment**:
-   Edit `config/deploy.yml` with your server IP and domain.
+   Edit `config/deploy.yml` with your server IP and domain (replace YOUR_SERVER_IP and YOUR_DOMAIN.com).
 
 3. **Deploy**:
    ```bash
