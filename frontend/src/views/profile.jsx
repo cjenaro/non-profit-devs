@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
-//* @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
@@ -26,10 +25,8 @@ export default function Profile() {
     user && user.skills && user.skills.map((s) => s.value)
   );
 
-  const [
-    updateUser,
-    { error: updateUserError, loading: updateUserLoading },
-  ] = useUpdateUser();
+  const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
+    useUpdateUser();
 
   const [
     changePassword,

@@ -1,5 +1,4 @@
-//* @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import Button from '../components/Button.jsx';
 import { useTranslation } from 'react-i18next';
 

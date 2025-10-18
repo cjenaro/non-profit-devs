@@ -1,5 +1,4 @@
-//* @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router';

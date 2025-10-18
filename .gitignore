@@ -10,8 +10,8 @@
 /coverage
 
 # Production builds
-/build
-/dist
+/frontend/build
+/frontend/dist
 
 # Rails
 /backend/log/*

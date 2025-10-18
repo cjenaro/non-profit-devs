@@ -1,8 +1,24 @@
-import { gql } from '@apollo/client';
+import { gql, TypedDocumentNode } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 
-// GraphQL Operations - Define outside hooks for reusability
-const GET_SKILLS_QUERY = gql`
+// Type definitions for GraphQL operations
+type GetSkillsQuery = {
+  __type: {
+    name: string;
+    enumValues: {
+      name: string;
+      description: string | null;
+    }[];
+  } | null;
+};
+
+type GetSkillsQueryVariables = {};
+
+// GraphQL Operations - Define outside hooks for reusability with TypedDocumentNode
+const GET_SKILLS_QUERY: TypedDocumentNode<
+  GetSkillsQuery,
+  GetSkillsQueryVariables
+> = gql`
   query GetSkills {
     __type(name: "Skill") {
       name
@@ -20,7 +36,7 @@ export function useGetSkills() {
 
   // Transform the introspection data into a more usable format
   const skills =
-    data?.__type?.enumValues?.map((enumValue) => ({
+    data?.__type?.enumValues?.map((enumValue: { name: string; description: string | null }) => ({
       value: enumValue.name,
       label: enumValue.description || enumValue.name,
     })) || [];
