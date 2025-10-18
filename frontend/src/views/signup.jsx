@@ -2,13 +2,14 @@ import { css } from '@emotion/react';
 import { useNavigate } from 'react-router';
 import { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserContext } from '../context/UserContext.jsx';
+import { UserContext } from '../context/UserContext';
 import { useSignup } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
-import Input from '../components/Input.jsx';
+import { Input } from '../components/Input';
 import { Title } from '../components/Title.jsx';
 import { Button } from '../components/Button.jsx';
-import ErrorMessage from '../components/ErrorMessage.jsx';
+import { ErrorMessage } from '../components/ErrorMessage.jsx';
+
 import Select from '../components/Select.jsx';
 
 export default function Signup() {

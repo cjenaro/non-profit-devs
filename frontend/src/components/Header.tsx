@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import Logo from './Logo';
+import { Logo } from './Logo';
 import { Button } from './Button';
 import Language from './Language';
 import { UserContext } from '../context/UserContext';
@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export const Header = ({ fixed }: HeaderProps) => {
   const location = useLocation();
-  const isProfile = (location.pathname as string).includes('profile');
+  const isProfile = location.pathname.includes('profile');
   const [user, setUser] = useContext(UserContext);
   const { t } = useTranslation();
 

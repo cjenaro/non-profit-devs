@@ -1,7 +1,7 @@
 //* @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-export default function ErrorMessage({ error }) {
+export function ErrorMessage({ error }) {
   let actualError = error;
   if (error && typeof error !== 'string' && error.length) {
     actualError = error[0];

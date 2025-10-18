@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import ProjectItem from '../components/ProjectItem.jsx';
 import Spinner from '../components/Spinner.jsx';
-import ErrorMessage from '../components/ErrorMessage.jsx';
+import { ErrorMessage } from '../components/ErrorMessage.jsx';
 import useProjects from '../hooks/use-projects';
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';

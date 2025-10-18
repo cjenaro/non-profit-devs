@@ -179,7 +179,7 @@ export function useGetProject(id: string) {
 }
 
 export function useCreateProject() {
-  return useMutation(CREATE_PROJECT_MUTATION);
+  return useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CREATE_PROJECT_MUTATION);
 }
 
 export function useAddUserToProject() {

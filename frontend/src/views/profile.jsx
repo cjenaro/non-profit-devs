@@ -3,16 +3,16 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
-import { UserContext } from '../context/UserContext.jsx';
+import { UserContext } from '../context/UserContext';
 import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
 
 import { Title } from '../components/Title.jsx';
-import Input from '../components/Input.jsx';
-import { Button } from '../components/Button.jsx';
+import { Input } from '../components/Input';
+import { Button } from '../components/Button';
 import Select from '../components/Select.jsx';
 import ProjectItem from '../components/ProjectItem.jsx';
-import ErrorMessage from '../components/ErrorMessage.jsx';
+import { ErrorMessage } from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
 import { Divider } from '../components/Divider';
 

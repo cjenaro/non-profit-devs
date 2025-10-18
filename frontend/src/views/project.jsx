@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@emotion/react';
 
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
-import { UserContext } from '../context/UserContext.jsx';
+import { UserContext } from '../context/UserContext';
 import { Title } from '../components/Title.jsx';
 import { Button } from '../components/Button.jsx';
 import Spinner from '../components/Spinner.jsx';
