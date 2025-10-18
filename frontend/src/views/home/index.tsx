@@ -1,8 +1,8 @@
-import Hero from './hero.jsx';
-import WhoWeAre from './who-we-are.jsx';
-import HowItWorks from './how-it-works.jsx';
+import Hero from './hero';
+import WhoWeAre from './who-we-are';
+import HowItWorks from './how-it-works';
 
-export default function Home() {
+export function Home() {
   return (
     <>
       <Hero />

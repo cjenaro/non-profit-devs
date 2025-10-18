@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
@@ -7,22 +6,22 @@ import { UserContext } from '../context/UserContext';
 import { useUpdateUser, useChangePassword } from '../hooks/use-devs';
 import { useGetSkills } from '../hooks/use-skills';
 
-import { Title } from '../components/Title.jsx';
+import { Title } from '../components/Title';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import Select from '../components/Select.jsx';
-import ProjectItem from '../components/ProjectItem.jsx';
-import { ErrorMessage } from '../components/ErrorMessage.jsx';
+import Select from '../components/Select';
+import ProjectItem from '../components/ProjectItem';
+import { ErrorMessage } from '../components/ErrorMessage';
 import { useTranslation } from 'react-i18next';
 import { Divider } from '../components/Divider';
 
-export default function Profile() {
+export function Profile() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [passwordError, setPasswordError] = useState('');
   const [user, setUser] = useContext(UserContext);
-  const [skill, setSkill] = useState(
-    user && user.skills && user.skills.map((s) => s.value)
+  const [skill, setSkill] = useState<string[]>(
+    user && user.skills && user.skills.map((s: any) => s.value)
   );
 
   const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
@@ -33,9 +32,9 @@ export default function Profile() {
     { error: changePasswordError, loading: changePasswordLoading },
   ] = useChangePassword();
 
-  const { data: skillsData } = useGetSkills();
+  const { skills: skillsData } = useGetSkills();
 
-  const handleUserUpdate = async (e) => {
+  const handleUserUpdate = async (e: any) => {
     e.preventDefault();
 
     const updateInput = {
@@ -51,7 +50,7 @@ export default function Profile() {
     }
   };
 
-  const handlePasswordChange = async (e) => {
+  const handlePasswordChange = async (e: any) => {
     e.preventDefault();
     setPasswordError('');
 
@@ -69,25 +68,15 @@ export default function Profile() {
     await changePassword({ variables: { input: updateInput } });
   };
 
-  const handleSkills = (skill) => {
-    setSkill(skill.map((s) => s.value));
+  const handleSkills = (skill: any[]) => {
+    setSkill(skill?.map((s) => s.value));
   };
 
-  const getSkillLabel = (value) => {
+  const getSkillLabel = (value: string) => {
     return value
       .split('_')
       .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
       .join(' ');
-  };
-
-  const getSkillOptions = () => {
-    return (
-      skillsData &&
-      skillsData.__type.enumValues.map((enumValue) => ({
-        label: getSkillLabel(enumValue.name),
-        value: enumValue.name,
-      }))
-    );
   };
 
   const getInitialSkills = () => {
@@ -95,7 +84,7 @@ export default function Profile() {
       user &&
       user.skills &&
       user.skills.length &&
-      user.skills.map((value) => ({ label: getSkillLabel(value), value }))
+      user.skills.map((value: any) => ({ label: getSkillLabel(value), value }))
     );
   };
 
@@ -105,29 +94,7 @@ export default function Profile() {
   }
 
   return (
-    <section
-      css={css`
-        padding-top: 50px;
-        padding-bottom: 100px;
-
-        .submit-btn {
-          margin-top: 40px;
-          width: 100%;
-          border: 1px solid var(--lavender);
-          color: var(--lavender);
-          background-color: var(--ember);
-          &.loading {
-            &::before {
-              color: var(--lavender);
-            }
-          }
-        }
-
-        @media (min-width: 768px) {
-          padding-bottom: 50px;
-        }
-      `}
-    >
+    <section className="pt-[50px] pb-[100px] md:pb-[50px]">
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
           {user.name}.
@@ -137,9 +104,7 @@ export default function Profile() {
           {t('IF_YOU_HAVE_NOT_JOINED_OUR_SLACK_WORKSPACE_YET')}{' '}
           <a
             rel="noopener noreferrer"
-            css={css`
-              color: currentColor;
-            `}
+            className="text-current"
             href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
             target="_blank"
           >
@@ -158,23 +123,22 @@ export default function Profile() {
             name="name"
             placeholder={user.name}
             id="name"
-            styles={css`
-              margin-top: 16px;
-            `}
+            className="mt-4"
           />
           {skillsData && (
             <Select
-              styles={css`
-                margin-top: 16px;
-              `}
+              styles="mt-4"
               initialSelectedItems={getInitialSkills()}
               placeholder={`${t('PROFILE_SKILLS')}:`}
               label={`${t('PROFILE_SKILLS')}:`}
               onChange={handleSkills}
-              options={getSkillOptions()}
+              options={skillsData}
             />
           )}
-          <Button loading={updateUserLoading} className="submit-btn">
+          <Button
+            loading={updateUserLoading}
+            className="mt-10 w-full border border-lavender text-lavender bg-ember"
+          >
             {t('PROFILE_SUBMIT')}
           </Button>
         </form>
@@ -188,33 +152,30 @@ export default function Profile() {
       <div className="container">
         <form onSubmit={handlePasswordChange}>
           <Input
-            styles={css`
-              margin-top: 16px;
-            `}
+            styles="mt-4"
             type="password"
             label={`${t('PROFILE_OLD_PASSWORD')}:`}
             name="oldPassword"
             id="oldPassword"
           />
           <Input
-            styles={css`
-              margin-top: 16px;
-            `}
+            styles="mt-4"
             type="password"
             label={`${t('PROFILE_NEW_PASSWORD')}:`}
             name="newPassword"
             id="newPassword"
           />
           <Input
-            styles={css`
-              margin-top: 16px;
-            `}
+            styles="mt-4"
             type="password"
             label={`${t('PROFILE_CONFIRM_PASSWORD')}:`}
             name="confirmPassword"
             id="confirmPassword"
           />
-          <Button loading={changePasswordLoading} className="submit-btn">
+          <Button
+            loading={changePasswordLoading}
+            className="mt-10 w-full border border-lavender text-lavender bg-ember"
+          >
             {t('PROFILE_CHANGE_PASSWORD')}
           </Button>
           <ErrorMessage error={passwordError || changePasswordError} />
@@ -229,13 +190,9 @@ export default function Profile() {
       <div className="container">
         <ul>
           {user.projects.length > 0 ? (
-            user.projects.map((project) => (
+            user.projects.map((project: any) => (
               <li
-                css={css`
-                  margin-bottom: 45px;
-                  min-height: 17px;
-                  border: 3px solid var(--lavender);
-                `}
+                className="mb-[45px] min-h-[17px] border-4 border-lavender"
                 key={project.id}
               >
                 <ProjectItem project={project} />
@@ -244,12 +201,7 @@ export default function Profile() {
           ) : (
             <h1>
               {t('THIS_LOOKS_REALLY_EMPTY')}{' '}
-              <Link
-                css={css`
-                  color: currentColor;
-                `}
-                to="/projects"
-              >
+              <Link className="text-current" to="/projects">
                 {t('GO_TO_PROJECTS')} &rarr;
               </Link>
             </h1>

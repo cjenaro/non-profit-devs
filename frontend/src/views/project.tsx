@@ -1,15 +1,14 @@
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css } from '@emotion/react';
 
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
 import { UserContext } from '../context/UserContext';
-import { Title } from '../components/Title.jsx';
-import { Button } from '../components/Button.jsx';
-import Spinner from '../components/Spinner.jsx';
+import { Title } from '../components/Title';
+import { Button } from '../components/Button';
+import Spinner from '../components/Spinner';
 import { useNavigate, useParams } from 'react-router';
 
-export default function Project() {
+export function Project() {
   const params = useParams();
   const navigate = useNavigate();
   const id = params.id;
@@ -21,9 +20,11 @@ export default function Project() {
     refetch: fetchProject,
   } = useGetProject(id);
   const [join, { loading }] = useAddUserToProject();
+  const project = projectData?.project;
 
   const handleJoinProject = async () => {
     if (!user) return navigate('/login');
+    if (!project) return;
 
     const addUserInput = { id: project.id, userId: user.id };
 
@@ -33,26 +34,10 @@ export default function Project() {
   };
 
   if (projectLoading) return <Spinner fullscreen />;
-  if (!projectData) return null;
-  const { project } = projectData;
+  if (!project) return null;
 
   return (
-    <section
-      css={css`
-        padding-top: 50px;
-        padding-bottom: 100px;
-        min-height: calc(100vh - 278px);
-
-        .join {
-          width: 100%;
-        }
-
-        @media (min-width: 768px) {
-          padding-bottom: 50px;
-          min-height: calc(100vh - 228px);
-        }
-      `}
-    >
+    <section className="pt-[50px] pb-[100px] min-h-[calc(100vh-278px)] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
           {project.name}.
@@ -71,9 +56,7 @@ export default function Project() {
             })}
             <a
               rel="noopener noreferrer"
-              css={css`
-                color: currentColor;
-              `}
+              className="text-current"
               href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
               target="_blank"
             >
@@ -81,30 +64,28 @@ export default function Project() {
             </a>
           </p>
         )}
-        <ul
-          css={css`
-            border: 3px solid var(--lavender);
-            padding: 20px;
-            margin-bottom: 40px;
-
-            li {
-              margin-bottom: 0.5em;
-              padding: 0.5em 0;
-              letter-spacing: 0.1em;
-              font-weight: bold;
-              border-bottom: 2px solid #e4e4e4;
-            }
-          `}
-        >
-          <li>{t('VOLUNTEERS_ON_THIS_PROJECT')}:</li>
-          {project.users.map((user) => (
-            <li key={user.id}>{user.name}</li>
+        <ul className="border-4 border-lavender p-5 mb-10">
+          <li className="mb-2 py-2 tracking-wider font-bold border-b-2 border-gray-300">
+            {t('VOLUNTEERS_ON_THIS_PROJECT')}:
+          </li>
+          {project.users.map((user: any) => (
+            <li
+              key={user.id}
+              className="mb-2 py-2 tracking-wider font-bold border-b-2 border-gray-300"
+            >
+              {user.name}
+            </li>
           ))}
         </ul>
-        <Button loading={loading} onClick={handleJoinProject} className="join">
+        <Button
+          loading={loading}
+          onClick={handleJoinProject}
+          className="w-full"
+        >
           {t('JOIN_THIS_PROJECT')}
         </Button>
       </div>
     </section>
   );
 }
+

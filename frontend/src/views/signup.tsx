@@ -11,7 +11,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 
 import Select from '../components/Select';
 
-export default function Signup() {
+export function Signup() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [error, setError] = useState<any>(null);
