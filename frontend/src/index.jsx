@@ -1,12 +1,13 @@
 import React from 'react';
+import './main.css';
 import { ApolloProvider } from '@apollo/client/react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import './i18n';
 import { UserProvider } from './context/UserContext.jsx';
-import Layout from './components/Layout.jsx';
-import Home from './views/home/index.jsx';
+import { Layout } from './components/Layout.jsx';
+import Home from './views/home/index';
 import Profile from './views/profile';
 import Pitch from './views/pitch';
 import Projects from './views/projects';
