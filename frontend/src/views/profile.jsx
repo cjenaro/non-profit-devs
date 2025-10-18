@@ -11,10 +11,10 @@ import { Title } from '../components/Title.jsx';
 import Input from '../components/Input.jsx';
 import { Button } from '../components/Button.jsx';
 import Select from '../components/Select.jsx';
-import Divider from '../components/Divider.jsx';
 import ProjectItem from '../components/ProjectItem.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { useTranslation } from 'react-i18next';
+import { Divider } from '../components/Divider';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -183,10 +183,7 @@ export default function Profile() {
         color="var(--ember)"
         backgroundColor="var(--lavender)"
         label={t('PROFILE_CHANGE_PASSWORD')}
-        styles={css`
-          margin-top: 50px;
-          margin-bottom: 30px;
-        `}
+        className="mt-12.5 mb-7.5"
       />
       <div className="container">
         <form onSubmit={handlePasswordChange}>
@@ -227,10 +224,7 @@ export default function Profile() {
         color="var(--ember)"
         backgroundColor="var(--lavender)"
         label={t('YOUR_PROJECTS')}
-        styles={css`
-          margin-top: 50px;
-          margin-bottom: 30px;
-        `}
+        className="mt-12.5 mb-7.5"
       />
       <div className="container">
         <ul>
