@@ -1,8 +1,5 @@
 /// <reference types="vite/client" />
 
-declare const localStorage: any
-declare const window: any
-
 import {
   ApolloClient,
   ApolloLink,
