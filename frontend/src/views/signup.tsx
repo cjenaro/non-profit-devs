@@ -1,10 +1,17 @@
 import { type ChangeEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
-import Select from '../components/Select'
+import { Button } from '../components/ui/button'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import type { Skill } from '../generated/graphql'
@@ -86,51 +93,83 @@ export function Signup() {
           {t('SIGNUP')}
         </Title>
 
-        <form onSubmit={handleFormSubmit} className="mt-16 mb-4">
-          <Input
-            className="mb-4"
-            label={`${t('SIGNUP_EMAIL')}:`}
-            name="email"
-            id="email"
-            value={loginInput.email}
-            onChange={handleLoginInput}
-          />
-          <Input
-            className="mb-4"
-            label={`${t('SIGNUP_NAME')}:`}
-            name="name"
-            id="name"
-          />
-          <Input
-            className="mb-4"
-            label={`${t('SIGNUP_PASSWORD')}:`}
-            name="password"
-            id="password"
-            type="password"
-            value={loginInput.password}
-            onChange={handleLoginInput}
-          />
-          <Input
-            className="mb-4"
-            label={`${t('SIGNUP_CONFIRM_PASSWORD')}:`}
-            name="confirmPassword"
-            id="confirmPassword"
-            type="password"
-          />
-          {!skillsLoading && (
-            <Select
-              label={t('SIGNUP_SKILLS')}
-              styles="mb-4"
-              placeholder={t('SIGNUP_SKILLS')}
-              onChange={handleSkills}
-              options={skillsData}
+        <form onSubmit={handleFormSubmit} className="mt-16 mb-4 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t('SIGNUP_EMAIL')}:</Label>
+            <Input
+              name="email"
+              id="email"
+              type="email"
+              value={loginInput.email}
+              onChange={handleLoginInput}
+              required
             />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">{t('SIGNUP_NAME')}:</Label>
+            <Input name="name" id="name" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">{t('SIGNUP_PASSWORD')}:</Label>
+            <Input
+              name="password"
+              id="password"
+              type="password"
+              value={loginInput.password}
+              onChange={handleLoginInput}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">
+              {t('SIGNUP_CONFIRM_PASSWORD')}:
+            </Label>
+            <Input
+              name="confirmPassword"
+              id="confirmPassword"
+              type="password"
+              required
+            />
+          </div>
+          {!skillsLoading && skillsData && (
+            <div className="space-y-2">
+              <Label>{t('SIGNUP_SKILLS')}:</Label>
+              <Select
+                onValueChange={(value) => {
+                  const selectedSkill = skillsData.find(
+                    (skill) => skill.value === value
+                  )
+                  if (selectedSkill) {
+                    handleSkills([selectedSkill])
+                  }
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t('SIGNUP_SKILLS')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {skillsData.map((skill) => (
+                    <SelectItem key={skill.value} value={skill.value}>
+                      {skill.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           )}
-          <Button loading={signupLoading || skillsLoading}>
-            {t('SIGNUP_SUBMIT')}
+          <Button type="submit" disabled={signupLoading || skillsLoading}>
+            {signupLoading || skillsLoading
+              ? t('SIGNUP_SUBMIT')
+              : t('SIGNUP_SUBMIT')}
           </Button>
         </form>
-        <ErrorMessage error={signupError || skillsError || error} />
+        {(signupError || skillsError || error) && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertDescription>
+              {(signupError || skillsError || error)?.message}
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
     </section>
   )

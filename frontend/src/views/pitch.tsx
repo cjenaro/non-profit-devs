@@ -1,9 +1,11 @@
 import type React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
+import { Button } from '../components/ui/button'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import { Spinner } from '../components/ui/spinner'
 import { Title } from '../components/Title'
 import { useCreateProject } from '../hooks/use-projects'
 
@@ -54,35 +56,47 @@ export function Pitch() {
             'WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW'
           )}
         </p>
-        <form onSubmit={handleSubmit} className="mt-16 mb-4">
-          <Input
-            inverted
-            label={`${t('THE_NAME_OF_YOUR_NGO')}:`}
-            name="ongName"
-            id="ongName"
-          />
-          <Input
-            inverted
-            label={`${t('CONTACT_EMAIL')}:`}
-            name="contactEmail"
-            id="contactEmail"
-          />
-          <label
-            htmlFor="description"
-            className="text-base uppercase w-full block relative mb-4 before:content-[''] before:w-1.25 before:h-full before:bg-ember before:absolute before:top-0 before:-left-4 before:scale-x-0 before:origin-right before:transition-transform before:duration-200 focus-within:before:scale-x-100"
-          >
-            {t('BRIEF_DESCRIPTION_OF_WEBSITE')}:
+        <form onSubmit={handleSubmit} className="mt-16 mb-4 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="ongName" className="text-foreground">
+              {t('THE_NAME_OF_YOUR_NGO')}:
+            </Label>
+            <Input name="ongName" id="ongName" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="contactEmail" className="text-foreground">
+              {t('CONTACT_EMAIL')}:
+            </Label>
+            <Input
+              name="contactEmail"
+              id="contactEmail"
+              type="email"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="description" className="text-foreground">
+              {t('BRIEF_DESCRIPTION_OF_WEBSITE')}:
+            </Label>
             <textarea
-              className="px-4 py-2.5 w-[calc(100%-32px)] text-lavender font-hind-madurai mt-1 bg-ember border border-lavender"
+              className="w-full p-3 border border-input bg-background text-foreground rounded-md resize-none min-h-[120px]"
               name="description"
               id="description"
               cols={30}
               rows={10}
+              required
             ></textarea>
-          </label>
-          <Button loading={loading}>{t('SUBMIT_PITCH')}</Button>
+          </div>
+          <Button type="submit" disabled={loading}>
+            {loading && <Spinner className="mr-2 h-4 w-4" />}
+            {t('SUBMIT_PITCH')}
+          </Button>
         </form>
-        <ErrorMessage error={error} />
+        {error && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertDescription>{error.message}</AlertDescription>
+          </Alert>
+        )}
       </div>
     </section>
   )

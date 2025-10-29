@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSearch } from 'react-icons/fi'
-import { ErrorMessage } from '../components/ErrorMessage'
+import { Alert, AlertDescription } from '../components/ui/alert'
 import ProjectItem from '../components/ProjectItem'
-import Spinner from '../components/Spinner'
+import { Spinner } from '../components/ui/spinner'
 import useProjects from '../hooks/use-projects'
 
 export function Projects() {
@@ -13,7 +13,12 @@ export function Projects() {
 
   if (loading) return <Spinner />
 
-  if (error) return <ErrorMessage error={error} />
+  if (error)
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{error.message}</AlertDescription>
+      </Alert>
+    )
 
   const handleSearch = (e: any) => {
     setSearch(e.target.value)

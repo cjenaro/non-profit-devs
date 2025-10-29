@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../components/Button'
-import Spinner from '../components/Spinner'
+import { Button } from '../components/ui/button'
+import { Spinner } from '../components/ui/spinner'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
@@ -31,7 +31,12 @@ export function Project() {
     fetchProject()
   }
 
-  if (projectLoading) return <Spinner fullscreen />
+  if (projectLoading)
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-278px)]">
+        <Spinner className="h-8 w-8" />
+      </div>
+    )
   if (!project) return null
 
   return (
@@ -76,10 +81,11 @@ export function Project() {
           ))}
         </ul>
         <Button
-          loading={loading}
           onClick={handleJoinProject}
+          disabled={loading}
           className="w-full"
         >
+          {loading && <Spinner className="mr-2 h-4 w-4" />}
           {t('JOIN_THIS_PROJECT')}
         </Button>
       </div>

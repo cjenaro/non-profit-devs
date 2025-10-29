@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { Divider } from '../components/Divider'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
+import { Button } from '../components/ui/button'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select'
+import { Separator } from '../components/ui/separator'
 import ProjectItem from '../components/ProjectItem'
-import Select from '../components/Select'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import type { Skill } from '../generated/graphql'
@@ -115,83 +122,114 @@ export function Profile() {
             {t('HERE_IS_THE_LINK')}
           </a>
         </p>
-        <form onSubmit={handleUserUpdate}>
-          <Input
-            label={`${t('PROFILE_EMAIL')}:`}
-            placeholder={user?.email}
-            name="email"
-            id="email"
-          />
-          <Input
-            label={`${t('PROFILE_NAME')}:`}
-            name="name"
-            placeholder={user?.name}
-            id="name"
-            className="mt-4"
-          />
-          {skillsData && (
-            <Select
-              styles="mt-4"
-              initialSelectedItems={getInitialSkills()}
-              placeholder={`${t('PROFILE_SKILLS')}:`}
-              label={`${t('PROFILE_SKILLS')}:`}
-              onChange={handleSkills}
-              options={skillsData}
+        <form onSubmit={handleUserUpdate} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t('PROFILE_EMAIL')}:</Label>
+            <Input
+              name="email"
+              id="email"
+              placeholder={user?.email}
+              type="email"
             />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">{t('PROFILE_NAME')}:</Label>
+            <Input name="name" id="name" placeholder={user?.name} />
+          </div>
+          {skillsData && (
+            <div className="space-y-2">
+              <Label>{t('PROFILE_SKILLS')}:</Label>
+              <Select
+                value={skill.length > 0 ? skill[0] : undefined}
+                onValueChange={(value) => {
+                  const selectedSkill = skillsData.find(
+                    (skill) => skill.value === value
+                  )
+                  if (selectedSkill) {
+                    handleSkills([selectedSkill])
+                  }
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t('PROFILE_SKILLS')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {skillsData.map((skillOption) => (
+                    <SelectItem
+                      key={skillOption.value}
+                      value={skillOption.value}
+                    >
+                      {skillOption.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           )}
           <Button
-            loading={updateUserLoading}
-            className="mt-10 w-full border border-lavender text-lavender bg-ember"
+            type="submit"
+            disabled={updateUserLoading}
+            className="mt-10 w-full"
+            variant="outline"
           >
             {t('PROFILE_SUBMIT')}
           </Button>
         </form>
       </div>
-      <Divider
-        color="var(--ember)"
-        backgroundColor="var(--lavender)"
-        label={t('PROFILE_CHANGE_PASSWORD')}
-        className="mt-12.5 mb-7.5"
-      />
-      <div className="container">
-        <form onSubmit={handlePasswordChange}>
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_OLD_PASSWORD')}:`}
-            name="oldPassword"
-            id="oldPassword"
-          />
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_NEW_PASSWORD')}:`}
-            name="newPassword"
-            id="newPassword"
-          />
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_CONFIRM_PASSWORD')}:`}
-            name="confirmPassword"
-            id="confirmPassword"
-          />
+      <div className="container mt-12 mb-8">
+        <h2 className="text-2xl font-bold mb-6">
+          {t('PROFILE_CHANGE_PASSWORD')}
+        </h2>
+        <form onSubmit={handlePasswordChange} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="oldPassword">{t('PROFILE_OLD_PASSWORD')}:</Label>
+            <Input
+              name="oldPassword"
+              id="oldPassword"
+              type="password"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">{t('PROFILE_NEW_PASSWORD')}:</Label>
+            <Input
+              name="newPassword"
+              id="newPassword"
+              type="password"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">
+              {t('PROFILE_CONFIRM_PASSWORD')}:
+            </Label>
+            <Input
+              name="confirmPassword"
+              id="confirmPassword"
+              type="password"
+              required
+            />
+          </div>
           <Button
-            loading={changePasswordLoading}
-            className="mt-10 w-full border border-lavender text-lavender bg-ember"
+            type="submit"
+            disabled={changePasswordLoading}
+            className="mt-10 w-full"
+            variant="outline"
           >
             {t('PROFILE_CHANGE_PASSWORD')}
           </Button>
-          <ErrorMessage error={passwordError || changePasswordError} />
+          {(passwordError || changePasswordError) && (
+            <Alert variant="destructive" className="mt-4">
+              <AlertDescription>
+                {passwordError || changePasswordError?.message}
+              </AlertDescription>
+            </Alert>
+          )}
         </form>
       </div>
-      <Divider
-        color="var(--ember)"
-        backgroundColor="var(--lavender)"
-        label={t('YOUR_PROJECTS')}
-        className="mt-12.5 mb-7.5"
-      />
+      <Separator className="my-8" />
       <div className="container">
+        <h2 className="text-2xl font-bold mb-6">{t('YOUR_PROJECTS')}</h2>
         <ul>
           {user?.projects && user.projects.length > 0 ? (
             user.projects.map((project: any) => (

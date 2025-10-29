@@ -2,9 +2,10 @@ import type React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
+import { Button } from '../components/ui/button'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import { useLogin } from '../hooks/use-devs'
@@ -48,23 +49,24 @@ export function Login() {
           {t('LOGIN')}
         </Title>
 
-        <form onSubmit={handleFormSubmit} className="mt-16 mb-4">
-          <Input
-            className="mb-4"
-            label={`${t('LOGIN_EMAIL')}:`}
-            name="email"
-            id="email"
-          />
-          <Input
-            className="mb-4"
-            label={`${t('LOGIN_PASSWORD')}:`}
-            name="password"
-            type="password"
-            id="password"
-          />
-          <Button loading={loading}>{t('LOGIN_SUBMIT')}</Button>
+        <form onSubmit={handleFormSubmit} className="mt-16 mb-4 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t('LOGIN_EMAIL')}:</Label>
+            <Input name="email" id="email" type="email" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">{t('LOGIN_PASSWORD')}:</Label>
+            <Input name="password" id="password" type="password" required />
+          </div>
+          <Button type="submit" disabled={loading}>
+            {loading ? t('LOGIN_SUBMIT') : t('LOGIN_SUBMIT')}
+          </Button>
         </form>
-        <ErrorMessage error={error} />
+        {error && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertDescription>{error.message}</AlertDescription>
+          </Alert>
+        )}
       </div>
     </section>
   )

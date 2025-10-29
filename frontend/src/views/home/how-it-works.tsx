@@ -8,7 +8,7 @@ export default function HowItWorks() {
   return (
     <section className="py-12.5 pb-25 relative">
       <svg
-        className="hidden absolute opacity-10 top-30 -left-[10%] rotate-y-180 scale-150 text-lavender md:block"
+        className="hidden absolute opacity-10 top-30 -left-[10%] rotate-y-180 scale-150 text-muted-foreground md:block"
         id="BRICKS"
         xmlns="http://www.w3.org/2000/svg"
         width="610"
@@ -62,7 +62,7 @@ export default function HowItWorks() {
       </svg>
       <div className="container">
         <div className="mb-12.5">
-          <Title color="var(--ember)" borderColor="var(--lavender)">
+          <Title color="var(--primary)" borderColor="var(--background)">
             {t('HOW_IT_WORKS')}
           </Title>
         </div>
