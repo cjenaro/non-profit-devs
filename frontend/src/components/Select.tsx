@@ -1,5 +1,5 @@
 import { useMultipleSelection, useSelect } from 'downshift'
-import type React from 'react'
+import React from 'react'
 
 interface Option {
   value: string
@@ -14,6 +14,7 @@ interface SelectProps {
   label?: string
   inverted?: boolean
   initialSelectedItems?: Option[]
+  disabled?: boolean
 }
 
 function Select({
@@ -24,7 +25,11 @@ function Select({
   label,
   inverted = false,
   initialSelectedItems = [],
+  disabled = false,
 }: SelectProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [highlightedIndex, setHighlightedIndex] = React.useState(-1)
+
   const {
     getSelectedItemProps,
     getDropdownProps,
@@ -33,47 +38,56 @@ function Select({
     selectedItems,
   } = useMultipleSelection<Option>({
     initialSelectedItems,
-    onStateChange: (changes: any) => {
-      onChange(changes.selectedItems)
+    onStateChange: (changes) => {
+      onChange(changes.selectedItems || [])
     },
   })
 
-  const {
-    isOpen,
-    getToggleButtonProps,
-    getLabelProps,
-    getMenuProps,
-    highlightedIndex,
-    getItemProps,
-    selectItem,
-  } = useSelect<Option | null>({
-    items: options,
-    onStateChange: (changes: any) => {
-      const { type, selectedItem } = changes
-      switch (type) {
-        case 'MenuKeyDownEnter':
-        case 'MenuKeyDownSpaceButton':
-        case 'ItemClick':
-        case 'MenuBlur':
-          if (selectedItem) {
-            addSelectedItem(selectedItem)
-            selectItem(null)
-          }
-          break
-        default:
-          break
-      }
-    },
-  })
+  const handleToggleDropdown = () => {
+    if (!disabled) {
+      setIsOpen(!isOpen)
+      setHighlightedIndex(-1)
+    }
+  }
+
+  const handleSelectItem = (item: Option) => {
+    addSelectedItem(item)
+    setIsOpen(false)
+    setHighlightedIndex(-1)
+  }
 
   const handleRemoveItem = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as any
+    e.preventDefault()
+    e.stopPropagation()
+    const target = e.currentTarget
     const value = target.dataset.value
-    const item = (selectedItems as any).find(
-      (item: any) => item.value === value
-    )
+    const item = selectedItems.find((item) => item.value === value)
     if (item) {
       removeSelectedItem(item)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape' && isOpen) {
+      setIsOpen(false)
+      setHighlightedIndex(-1)
+    }
+    if (e.key === 'ArrowDown' && isOpen) {
+      e.preventDefault()
+      setHighlightedIndex((prev) =>
+        prev < (options?.length || 0) - 1 ? prev + 1 : prev
+      )
+    }
+    if (e.key === 'ArrowUp' && isOpen) {
+      e.preventDefault()
+      setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : prev))
+    }
+    if (e.key === 'Enter' && isOpen && highlightedIndex >= 0) {
+      e.preventDefault()
+      const item = options?.[highlightedIndex]
+      if (item) {
+        handleSelectItem(item)
+      }
     }
   }
 
@@ -82,61 +96,147 @@ function Select({
   const baseTextColor = inverted ? 'text-lavender' : 'text-ember'
   const menuBgColor = inverted ? 'bg-lavender' : 'bg-ember'
   const itemBorderColor = inverted ? 'border-ember' : 'border-lavender'
+  const highlightedBgColor = inverted ? 'bg-ember/20' : 'bg-lavender/20'
+
+  const getDisplayText = () => {
+    if (selectedItems.length === 0) return placeholder
+    if (selectedItems.length === 1) return selectedItems[0].label
+    return `${selectedItems[0].label} (+${selectedItems.length - 1})`
+  }
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (!target.closest('.select-container')) {
+        setIsOpen(false)
+        setHighlightedIndex(-1)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
-    <div className={`relative ${styles || ''}`}>
-      <label {...getLabelProps()} className="text-base uppercase w-full block">
-        {label}:
+    <div
+      className={`relative select-container ${styles || ''}`}
+      onKeyDown={handleKeyDown}
+    >
+      <label className="text-sm font-medium uppercase w-full block mb-2">
+        {label}
       </label>
       <button
-        {...getToggleButtonProps(
-          getDropdownProps({ preventKeyAction: isOpen })
-        )}
         type="button"
-        className={`text-base border w-full px-4 py-2.5 ${baseBorderColor} ${baseBgColor} ${baseTextColor}`}
+        disabled={disabled}
+        onClick={handleToggleDropdown}
+        className={`
+          text-base border w-full px-4 py-3 rounded-lg transition-all duration-200
+          ${baseBorderColor} ${baseBgColor} ${baseTextColor}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:opacity-80'}
+          ${isOpen ? 'ring-2 ring-offset-2 ' + (inverted ? 'ring-lavender' : 'ring-ember') : ''}
+        `}
+        aria-label={`${label}: ${getDisplayText()}`}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
       >
-        {(selectedItems as any).length > 0
-          ? (selectedItems as any).length > 1
-            ? `${(selectedItems as any)[0].label} (+ ${
-                (selectedItems as any).length - 1
-              })`
-            : (selectedItems as any)[0].label
-          : placeholder}
+        <span className="flex items-center justify-between">
+          <span className="truncate">{getDisplayText()}</span>
+          <svg
+            className={`w-4 h-4 ml-2 transition-transform duration-200 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </span>
       </button>
-      <ul {...getMenuProps()} className={`absolute w-full z-10 ${menuBgColor}`}>
-        {isOpen &&
-          (options || []).map((option: Option, index: number) =>
-            !(selectedItems as any)
-              .map((item: any) => item.value)
-              .includes(option.value) ? (
+
+      {isOpen && (
+        <ul
+          className={`
+            absolute w-full z-50 rounded-lg shadow-lg border-2 mt-1 max-h-60 overflow-y-auto
+            ${menuBgColor} ${baseBorderColor}
+          `}
+          role="listbox"
+        >
+          {(options || []).map((option: Option, index: number) => {
+            const isSelected = selectedItems.some(
+              (item) => item.value === option.value
+            )
+            const isHighlighted = highlightedIndex === index
+
+            return isSelected ? (
               <li
-                className={`px-1.5 py-1.5 border-b border-l border-r ${itemBorderColor} ${
-                  highlightedIndex === index ? 'bg-red-600' : ''
-                }`}
                 key={`${option.value}-${index}`}
-                {...getItemProps({ item: option, index })}
+                className={`
+                  px-4 py-3 border-b last:border-b-0 transition-all duration-150
+                  ${itemBorderColor} ${baseTextColor}
+                  ${isHighlighted ? highlightedBgColor : ''}
+                  flex items-center justify-between group
+                `}
+                role="option"
+                aria-selected={true}
               >
-                {option.label}
-              </li>
-            ) : (
-              <li
-                className={`px-1.5 py-1.5 border-b border-l border-r ${itemBorderColor} bg-red-600 flex items-center justify-between`}
-                key={`${option.value}-${index}`}
-                {...getSelectedItemProps({ selectedItem: option, index })}
-              >
-                {option.label}
+                <span className="flex-1">{option.label}</span>
                 <button
                   type="button"
                   data-value={option.value}
                   onClick={handleRemoveItem}
-                  className="bg-transparent cursor-pointer border-0 text-base"
+                  className={`
+                    ml-2 p-1 rounded transition-all duration-150
+                    ${inverted ? 'hover:bg-ember/20' : 'hover:bg-lavender/20'}
+                    focus:outline-none focus:ring-2 focus:ring-offset-1
+                    ${inverted ? 'focus:ring-lavender' : 'focus:ring-ember'}
+                  `}
+                  aria-label={`Remove ${option.label}`}
                 >
-                  &times;
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </li>
+            ) : (
+              <li
+                key={`${option.value}-${index}`}
+                className={`
+                  px-4 py-3 border-b last:border-b-0 transition-all duration-150 cursor-pointer
+                  ${itemBorderColor} ${baseTextColor}
+                  ${isHighlighted ? highlightedBgColor : ''}
+                  hover:${inverted ? 'bg-ember/10' : 'bg-lavender/10'}
+                `}
+                onClick={() => handleSelectItem(option)}
+                role="option"
+                aria-selected={false}
+              >
+                {option.label}
+              </li>
             )
-          )}
-      </ul>
+          })}
+        </ul>
+      )}
     </div>
   )
 }

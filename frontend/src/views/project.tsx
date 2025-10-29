@@ -1,38 +1,38 @@
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '../components/Button';
-import Spinner from '../components/Spinner';
-import { Title } from '../components/Title';
-import { useUserContext } from '../context/UserContext';
-import { useAddUserToProject, useGetProject } from '../hooks/use-projects';
+import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Button } from '../components/Button'
+import Spinner from '../components/Spinner'
+import { Title } from '../components/Title'
+import { useUserContext } from '../context/UserContext'
+import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
 
 export function Project() {
-  const params = useParams();
-  const navigate = useNavigate();
-  const id = params.id;
-  const { t } = useTranslation();
-  const [user] = useUserContext();
+  const params = useParams()
+  const navigate = useNavigate()
+  const id = params.id
+  const { t } = useTranslation()
+  const [user] = useUserContext()
   const {
     data: projectData,
     loading: projectLoading,
     refetch: fetchProject,
-  } = useGetProject(id || '');
-  const [join, { loading }] = useAddUserToProject();
-  const project = projectData?.project;
+  } = useGetProject(id || '')
+  const [join, { loading }] = useAddUserToProject()
+  const project = projectData?.project
 
   const handleJoinProject = async () => {
-    if (!user) return navigate('/login');
-    if (!project) return;
+    if (!user) return navigate('/login')
+    if (!project) return
 
-    const addUserInput = { id: project.id, userId: user.id };
+    const addUserInput = { id: project.id, userId: user.id }
 
-    await join({ variables: { input: addUserInput } });
+    await join({ variables: { input: addUserInput } })
 
-    fetchProject();
-  };
+    fetchProject()
+  }
 
-  if (projectLoading) return <Spinner fullscreen />;
-  if (!project) return null;
+  if (projectLoading) return <Spinner fullscreen />
+  if (!project) return null
 
   return (
     <section className="pt-[50px] pb-[100px] min-h-[calc(100vh-278px)] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
@@ -84,5 +84,5 @@ export function Project() {
         </Button>
       </div>
     </section>
-  );
+  )
 }
