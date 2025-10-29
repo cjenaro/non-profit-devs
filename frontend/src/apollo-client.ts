@@ -1,35 +1,32 @@
 /// <reference types="vite/client" />
 
-declare const localStorage: any;
-declare const window: any;
-
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloLink,
   HttpLink,
-} from '@apollo/client';
+  InMemoryCache,
+} from '@apollo/client'
 
 const httpLink = new HttpLink({
   uri: import.meta.env.DEV ? 'http://localhost:3000/graphql' : '/graphql',
-});
+})
 
 const authLink = new ApolloLink((operation, forward) => {
   const token =
-    typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+    typeof window !== 'undefined' ? localStorage.getItem('authToken') : null
 
   operation.setContext({
     headers: {
       authorization: token ? `Bearer ${token}` : '',
     },
-  });
+  })
 
-  return forward(operation);
-});
+  return forward(operation)
+})
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-});
+})
 
-export default client;
+export default client

@@ -1,58 +1,14 @@
-import { css } from '@emotion/react';
-
 export default function Hero() {
   return (
-    <section
-      css={css`
-        overflow: hidden;
-        padding-top: 40px;
-        padding-bottom: 40px;
-      `}
-    >
-      <div
-        css={css`
-          max-width: var(--max-width);
-          margin: 0 auto;
-          position: relative;
-        `}
-      >
-        <div
-          css={css`
-            width: 300px;
-            height: 300px;
-            display: block;
-            margin: 0 auto;
-            border: 1px solid var(--lavender);
-
-            @media (min-width: 768px) {
-              margin: 0 auto 0 0;
-            }
-          `}
-        >
-          <h1
-            css={css`
-              text-transform: uppercase;
-              font-size: 82px;
-              margin: 0 -12px 0;
-              -webkit-text-stroke: 2px var(--ember);
-              letter-spacing: 4px;
-            `}
-          >
+    <section className="py-10 overflow-hidden">
+      <div className="max-w-[var(--max-width)] mx-auto relative">
+        <div className="w-[300px] h-[300px] block mx-auto md:mr-0 md:ml-0 border-lavender border">
+          <h1 className="uppercase text-[82px] font-[82px] ml-[-12px] tracking-[3.5px] [-webkit-text-stroke:2px_var(--ember)]">
             Non Profit Devs
           </h1>
         </div>
         <svg
-          css={css`
-            display: none;
-            position: absolute;
-            opacity: 0.1;
-            top: 20px;
-            right: -35%;
-            color: var(--lavender);
-            @media (min-width: 768px) {
-              display: block;
-            }
-          `}
+          className="hidden absolute opacity-10 top-5 -right-[35%] text-lavender md:block"
           id="BRICKS"
           xmlns="http://www.w3.org/2000/svg"
           width="610"
@@ -106,5 +62,5 @@ export default function Hero() {
         </svg>
       </div>
     </section>
-  );
+  )
 }
