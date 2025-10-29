@@ -7,9 +7,9 @@ import { Input } from '../components/Input'
 import Select from '../components/Select'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
+import type { Skill } from '../generated/graphql'
 import { useSignup } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
-import { Skill } from '../generated/graphql'
 
 export function Signup() {
   const navigate = useNavigate()

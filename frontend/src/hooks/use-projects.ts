@@ -1,6 +1,6 @@
 import { gql, type TypedDocumentNode } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
-import {
+import type {
   AddUserToProjectMutation,
   AddUserToProjectMutationVariables,
   CreateProjectMutation,

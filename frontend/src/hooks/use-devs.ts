@@ -1,20 +1,20 @@
 import { gql, type TypedDocumentNode } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
-import {
-  SignupMutation,
-  SignupMutationVariables,
-  LoginMutation,
-  LoginMutationVariables,
-  UpdateUserMutation,
-  UpdateUserMutationVariables,
-  ChangePasswordMutation,
-  ChangePasswordMutationVariables,
+import type {
   AddProjectToUserMutation,
   AddProjectToUserMutationVariables,
-  GetUserQuery,
-  GetUserQueryVariables,
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables,
   GetUserProjectsQuery,
   GetUserProjectsQueryVariables,
+  GetUserQuery,
+  GetUserQueryVariables,
+  LoginMutation,
+  LoginMutationVariables,
+  SignupMutation,
+  SignupMutationVariables,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
 } from '../generated/graphql'
 
 // GraphQL Operations - Define outside hooks for reusability with TypedDocumentNode

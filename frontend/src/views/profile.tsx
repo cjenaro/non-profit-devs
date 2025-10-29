@@ -9,9 +9,9 @@ import ProjectItem from '../components/ProjectItem'
 import Select from '../components/Select'
 import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
+import type { Skill } from '../generated/graphql'
 import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
 import { useGetSkills } from '../hooks/use-skills'
-import { Skill } from '../generated/graphql'
 
 export function Profile() {
   const navigate = useNavigate()
