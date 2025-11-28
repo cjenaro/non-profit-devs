@@ -1,173 +1,167 @@
-import { type ChangeEvent, useEffect, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+ import { z } from 'zod'
+import { SkillsSelector } from '../components/SkillsSelector'
 import { Title } from '../components/Title'
 import { Alert, AlertDescription } from '../components/ui/alert'
 import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../components/ui/select'
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../components/ui/form'
+import { Input } from '../components/ui/input'
 import { useUserContext } from '../context/UserContext'
-import type { Skill } from '../generated/graphql'
 import { useSignup } from '../hooks/use-devs'
-import { useGetSkills } from '../hooks/use-skills'
 
 export function Signup() {
   const navigate = useNavigate()
+  const [, setUser] = useUserContext()
   const { t } = useTranslation()
-  const [error, setError] = useState<any>(null)
-  const [loginInput, setLoginInput] = useState({ email: '', password: '' })
-  const [skills, setSkills] = useState<Skill[]>([])
-  const [user, setUser] = useUserContext()
 
-  const [
-    signup,
-    { data: signupData, loading: signupLoading, error: signupError },
-  ] = useSignup()
+  const signupSchema = z
+    .object({
+      email: z
+        .string()
+        .check(z.minLength(1, t('Email is required')))
+        .check(z.email(t('Please enter a valid email address'))),
+      name: z.string().check(z.minLength(1, t('Name is required'))),
+      password: z.string().check(z.minLength(1, t('Password is required'))),
+      confirmPassword: z
+        .string()
+        .check(z.minLength(1, t('Confirm password is required'))),
+       skills: z.array(z.string()),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('PASSWORDS_DO_NOT_MATCH'),
+      path: ['confirmPassword'],
+    })
 
-  const {
-    skills: skillsData,
-    loading: skillsLoading,
-    error: skillsError,
-  } = useGetSkills()
+  type SignupFormData = z.infer<typeof signupSchema>
 
-  const handleSkills = (skill: any[]) => {
-    setSkills(skill.map((s) => s.value as Skill))
-  }
+  const form = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  })
 
-  const handleFormSubmit = async (e: any) => {
-    e.preventDefault()
+  const [signup, { loading, error }] = useSignup({
+    onCompleted(data) {
+      if (data.signup?.user) {
+         setUser({
+           ...data.signup.user,
+           token: '',
+           projects: [],
+         })
+        navigate('/login')
+      }
+    },
+  })
 
-    if (e.target.password.value !== e.target.confirmPassword.value) {
-      setError({ message: t('PASSWORDS_DO_NOT_MATCH') })
-      return
-    }
-
-    const signupInput = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      name: e.target.name.value,
-      skills: skills,
-    }
-
+  const onSubmit = async (data: SignupFormData) => {
     await signup({
       variables: {
-        input: signupInput,
+        input: {
+          email: data.email,
+          password: data.password,
+          name: data.name,
+           skills: data.skills as any,
+        },
       },
     })
   }
 
-  useEffect(() => {
-    if (signupData?.signup?.user) {
-      setUser({
-        ...signupData.signup.user,
-        token: '',
-        createdAt: new Date().toISOString(),
-        projects: [],
-        updatedAt: new Date().toISOString(),
-      })
-      navigate('/login')
-    }
-  }, [signupData, setUser])
-
-  useEffect(() => {
-    if (user && user.token) {
-      navigate('/profile')
-    }
-  }, [user])
-
-  const handleLoginInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginInput({ ...loginInput, [e.target.name]: e.target.value })
-  }
-
   return (
-    <section className="pt-[50px] pb-[100px] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
+    <section className="pt-[50px] pb-[100px] min-h-[calc(100vh-278px)] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
       <div className="container">
         <Title color="var(--ember)" borderColor="var(--lavender)">
           {t('SIGNUP')}
         </Title>
 
-        <form onSubmit={handleFormSubmit} className="mt-16 mb-4 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('SIGNUP_EMAIL')}:</Label>
-            <Input
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-16 mb-4 space-y-4"
+          >
+            <FormField
+              control={form.control}
               name="email"
-              id="email"
-              type="email"
-              value={loginInput.email}
-              onChange={handleLoginInput}
-              required
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('SIGNUP_EMAIL')}</FormLabel>
+                  <FormControl>
+                    <Input type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="name">{t('SIGNUP_NAME')}:</Label>
-            <Input name="name" id="name" required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">{t('SIGNUP_PASSWORD')}:</Label>
-            <Input
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('SIGNUP_NAME')}</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="password"
-              id="password"
-              type="password"
-              value={loginInput.password}
-              onChange={handleLoginInput}
-              required
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('SIGNUP_PASSWORD')}</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">
-              {t('SIGNUP_CONFIRM_PASSWORD')}:
-            </Label>
-            <Input
+            <FormField
+              control={form.control}
               name="confirmPassword"
-              id="confirmPassword"
-              type="password"
-              required
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('SIGNUP_CONFIRM_PASSWORD')}</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          {!skillsLoading && skillsData && (
-            <div className="space-y-2">
-              <Label>{t('SIGNUP_SKILLS')}:</Label>
-              <Select
-                onValueChange={(value) => {
-                  const selectedSkill = skillsData.find(
-                    (skill) => skill.value === value
-                  )
-                  if (selectedSkill) {
-                    handleSkills([selectedSkill])
-                  }
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('SIGNUP_SKILLS')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {skillsData.map((skill) => (
-                    <SelectItem key={skill.value} value={skill.value}>
-                      {skill.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-          <Button type="submit" disabled={signupLoading || skillsLoading}>
-            {signupLoading || skillsLoading
-              ? t('SIGNUP_SUBMIT')
-              : t('SIGNUP_SUBMIT')}
-          </Button>
-        </form>
-        {(signupError || skillsError || error) && (
+            <FormField
+              control={form.control}
+              name="skills"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('SIGNUP_SKILLS')}</FormLabel>
+                  <FormControl>
+                     <SkillsSelector
+                       value={field.value as any || []}
+                       onChange={field.onChange}
+                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Loading...' : t('SIGNUP_SUBMIT')}
+            </Button>
+          </form>
+        </Form>
+        {error && (
           <Alert variant="destructive" className="mt-4">
-            <AlertDescription>
-              {(signupError || skillsError || error)?.message}
-            </AlertDescription>
+            <AlertDescription>{error.message}</AlertDescription>
           </Alert>
         )}
       </div>

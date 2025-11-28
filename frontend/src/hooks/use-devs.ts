@@ -155,8 +155,10 @@ const GET_USER_PROJECTS_QUERY: TypedDocumentNode<
 `
 
 // Custom hooks - Use the operations defined above
-export function useSignup() {
-  return useMutation(SIGNUP_MUTATION)
+export function useSignup(
+  options?: useMutation.Options<SignupMutation, SignupMutationVariables>
+) {
+  return useMutation(SIGNUP_MUTATION, options)
 }
 
 export function useLogin(

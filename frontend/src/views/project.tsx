@@ -12,7 +12,7 @@ import {
 } from '../components/ui/select'
 import { useUserContext } from '../context/UserContext'
 import { GET_PROJECT_QUERY, useAddUserToProject, useGetProject, useRemoveUserFromProject, useUpdateProject } from '../hooks/use-projects'
-import { ProjectStatus } from '../generated/graphql'
+import { type Project, ProjectStatus } from '../generated/graphql'
 
 export function Project() {
   const params = useParams()
@@ -63,11 +63,23 @@ export function Project() {
       variables: { input: updateInput },
       update: (cache, { data }) => {
         if (data?.updateProject?.project) {
-          cache.writeQuery({
+          const existing = cache.readQuery({
             query: GET_PROJECT_QUERY,
             variables: { id: project.id },
-            data: { project: data.updateProject.project },
           })
+          if (existing) {
+            const updatedProject = {
+              ...existing.project,
+              ...data.updateProject.project,
+            } as Project
+            cache.writeQuery({
+              query: GET_PROJECT_QUERY,
+              variables: { id: project.id },
+              data: {
+                project: updatedProject,
+              },
+            })
+          }
         }
       },
     })
