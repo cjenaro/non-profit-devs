@@ -241,11 +241,10 @@ export function Profile() {
       <Separator className="my-8" />
       <div className="container">
         <h2 className="text-2xl font-bold mb-6">{t('YOUR_PROJECTS')}</h2>
-        <ul>
+        <ul className='space-y-4'>
           {user?.projects && user.projects.length > 0 ? (
             user.projects.map((project) => (
               <li
-                className="mb-[45px] min-h-[17px] border-4 border-lavender"
                 key={project.id}
               >
                 <ProjectItem project={project} />

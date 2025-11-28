@@ -23,7 +23,7 @@ export default function WhoWeAre() {
               )}
             </p>
           </CardContent>
-          <CardFooter className="flex gap-4">
+          <CardFooter className="flex gap-4 justify-center">
             <Button className="text-xl" asChild>
               <Link to="/pitch">{t('PITCH_YOUR_NGOS_WEBSITE')}</Link>
             </Button>

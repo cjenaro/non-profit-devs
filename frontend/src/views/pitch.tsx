@@ -1,103 +1,145 @@
-import type React from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { Title } from '../components/Title'
-import { Alert, AlertDescription } from '../components/ui/alert'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Spinner } from '../components/ui/spinner'
-import { useCreateProject } from '../hooks/use-projects'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod/mini";
+import { Title } from "../components/Title";
+import { Alert, AlertDescription } from "../components/ui/alert";
+import { Button } from "../components/ui/button";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "../components/ui/form";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { useCreateProject } from "../hooks/use-projects";
+
+const pitchSchema = z.object({
+	name: z
+		.string()
+		.check(z.minLength(1, "NGO name is required")),
+	contactEmail: z
+		.string()
+		.check(z.email("Please enter a valid email address")),
+	description: z
+		.string()
+		.check(z.minLength(1, "Description is required"))
+		.check(z.minLength(10, "Description must be at least 10 characters")),
+});
+
+type PitchFormData = z.infer<typeof pitchSchema>;
 
 export function Pitch() {
-  const navigate = useNavigate()
-  const [createProject, { loading, error }] = useCreateProject()
+	const navigate = useNavigate();
+	const { t } = useTranslation();
+	const [createProject, { loading, error }] = useCreateProject();
 
-  const { t } = useTranslation()
+	const form = useForm<PitchFormData>({
+		resolver: zodResolver(pitchSchema),
+		defaultValues: {
+			name: "",
+			contactEmail: "",
+			description: "",
+		},
+	});
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const target = e.currentTarget
+	const handleSubmit = async (data: PitchFormData) => {
+		const newProjectInput = {
+			input: {
+				name: data.name,
+				description: data.description,
+				contactEmail: data.contactEmail,
+				status: "PENDING_REVIEW",
+			},
+		};
 
-    const nameInput = target.elements.namedItem('name') as HTMLInputElement
-    const descriptionInput = target.elements.namedItem(
-      'description'
-    ) as HTMLInputElement
-    const contactEmailInput = target.elements.namedItem(
-      'contactEmail'
-    ) as HTMLInputElement
+		const result = await createProject({
+			variables: newProjectInput,
+		});
 
-    const newProjectInput = {
-      input: {
-        name: nameInput.value,
-        description: descriptionInput.value,
-        contactEmail: contactEmailInput.value,
-        status: 'PENDING_REVIEW',
-      },
-    }
+		if (result.data?.createProject?.project?.id) {
+			navigate(`/projects/${result.data.createProject.project.id}`);
+		}
+	};
 
-    const result = await createProject({
-      variables: newProjectInput,
-    })
-
-    if (result.data?.createProject?.project?.slug) {
-      navigate(`/projects/${result.data.createProject.project.slug}`)
-    }
-  }
-
-  return (
-    <section className="bg-lavender text-ember pt-12.5 pb-25 min-h-[calc(100vh-288px)] border-t-5 border-b-5 border-ember md:min-h-[calc(100vh-238px)] md:pb-12.5">
-      <div className="container">
-        <Title color="var(--lavender)" borderColor="var(--ember)">
-          {t('NEW_PROJECT')}
-        </Title>
-        <p>
-          {t(
-            'WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW'
-          )}
-        </p>
-        <form onSubmit={handleSubmit} className="mt-16 mb-4 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="ongName" className="text-foreground">
-              {t('THE_NAME_OF_YOUR_NGO')}:
-            </Label>
-            <Input name="ongName" id="ongName" required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="contactEmail" className="text-foreground">
-              {t('CONTACT_EMAIL')}:
-            </Label>
-            <Input
-              name="contactEmail"
-              id="contactEmail"
-              type="email"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="description" className="text-foreground">
-              {t('BRIEF_DESCRIPTION_OF_WEBSITE')}:
-            </Label>
-            <textarea
-              className="w-full p-3 border border-input bg-background text-foreground rounded-md resize-none min-h-[120px]"
-              name="description"
-              id="description"
-              cols={30}
-              rows={10}
-              required
-            ></textarea>
-          </div>
-          <Button type="submit" disabled={loading}>
-            {loading && <Spinner className="mr-2 h-4 w-4" />}
-            {t('SUBMIT_PITCH')}
-          </Button>
-        </form>
-        {error && (
-          <Alert variant="destructive" className="mt-4">
-            <AlertDescription>{error.message}</AlertDescription>
-          </Alert>
-        )}
-      </div>
-    </section>
-  )
+	return (
+		<section className="pt-[50px] pb-[100px] md:pb-[50px]">
+			<div className="container">
+				<Title color="var(--primary)" borderColor="var(--background)">
+					{t("NEW_PROJECT")}
+				</Title>
+				<p>
+					{t(
+						"WE_ARE_GLAD_YOU_VE_DECIDED_TO_PITCH_YOUR_PROJECT_TO_US_PLEASE_FILL_IN_THE_FORM_BELOW",
+					)}
+				</p>
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(handleSubmit)}
+						className="mt-16 mb-4 space-y-4"
+					>
+						<FormField
+							control={form.control}
+							name="name"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("THE_NAME_OF_YOUR_NGO")}:</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="contactEmail"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("CONTACT_EMAIL")}:</FormLabel>
+									<FormControl>
+										<Input {...field} type="email" />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("BRIEF_DESCRIPTION_OF_WEBSITE")}:</FormLabel>
+									<FormControl>
+										<Textarea
+											{...field}
+											className="min-h-[120px] resize-none"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button
+							type="submit"
+							disabled={loading}
+							className="mt-10 w-full"
+							variant="outline"
+						>
+							{t("SUBMIT_PITCH")}
+						</Button>
+					</form>
+				</Form>
+				{error && (
+					<Alert variant="destructive" className="mt-4">
+						<AlertDescription>{error.message}</AlertDescription>
+					</Alert>
+				)}
+			</div>
+		</section>
+	);
 }
