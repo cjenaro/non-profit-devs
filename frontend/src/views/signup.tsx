@@ -1,8 +1,9 @@
 import { type ChangeEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/ui/button'
+import { Title } from '../components/Title'
 import { Alert, AlertDescription } from '../components/ui/alert'
+import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import {
@@ -12,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select'
-import { Title } from '../components/Title'
 import { useUserContext } from '../context/UserContext'
 import type { Skill } from '../generated/graphql'
 import { useSignup } from '../hooks/use-devs'
