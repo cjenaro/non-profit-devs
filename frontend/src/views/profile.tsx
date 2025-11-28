@@ -1,255 +1,239 @@
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
-import { Button } from '../components/ui/button'
-import { Alert, AlertDescription } from '../components/ui/alert'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
+import { FormEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+import ProjectItem from "../components/ProjectItem";
+import { Title } from "../components/Title";
+import { Alert, AlertDescription } from "../components/ui/alert";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../components/ui/select'
-import { Separator } from '../components/ui/separator'
-import ProjectItem from '../components/ProjectItem'
-import { Title } from '../components/Title'
-import { useUserContext } from '../context/UserContext'
-import type { Skill } from '../generated/graphql'
-import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
-import { useGetSkills } from '../hooks/use-skills'
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../components/ui/select";
+import { Separator } from "../components/ui/separator";
+import { useUserContext } from "../context/UserContext";
+import type { Skill } from "../generated/graphql";
+import { useChangePassword, useUpdateUser } from "../hooks/use-devs";
+import { useGetSkills } from "../hooks/use-skills";
 
 export function Profile() {
-  const navigate = useNavigate()
-  const { t } = useTranslation()
-  const [passwordError, setPasswordError] = useState('')
-  const [user, setUser] = useUserContext()
-  const [skill, setSkill] = useState<Skill[]>(user?.skills || [])
+	const navigate = useNavigate();
+	const { t } = useTranslation();
+	const [passwordError, setPasswordError] = useState("");
+	const [user, setUser] = useUserContext();
+	const [skill, setSkill] = useState<Skill[]>(user?.skills || []);
 
-  const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
-    useUpdateUser()
+	const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
+		useUpdateUser();
 
-  const [
-    changePassword,
-    { error: changePasswordError, loading: changePasswordLoading },
-  ] = useChangePassword()
+	const [
+		changePassword,
+		{ error: changePasswordError, loading: changePasswordLoading },
+	] = useChangePassword();
 
-  const { skills: skillsData } = useGetSkills()
+	const { skills: skillsData } = useGetSkills();
 
-  const handleUserUpdate = async (e: any) => {
-    e.preventDefault()
+	const handleUserUpdate = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 
-    if (!user) return
+		if (!user) return;
 
-    const updateInput = {
-      id: user.id,
-      name: e.target.name.value || user.name,
-      skills: skill,
-      email: e.target.email.value || user.email,
-    }
+		const updateInput = {
+			id: user.id,
+			name: e.target.name.value || user.name,
+			skills: skill,
+			email: e.target.email.value || user.email,
+		};
 
-    await updateUser({ variables: { input: updateInput } })
-    if (!updateUserError && !updateUserLoading) {
-      setUser({
-        ...user,
-        ...updateInput,
-        token: user.token,
-      })
-    }
-  }
+		await updateUser({ variables: { input: updateInput } });
+		if (!updateUserError && !updateUserLoading) {
+			setUser({
+				...user,
+				...updateInput,
+				token: user.token,
+			});
+		}
+	};
 
-  const handlePasswordChange = async (e: any) => {
-    e.preventDefault()
-    setPasswordError('')
+	const handlePasswordChange = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setPasswordError("");
 
-    if (e.target.confirmPassword.value !== e.target.newPassword.value) {
-      setPasswordError(t('PASSWORDS_DO_NOT_MATCH'))
-      return
-    }
+		if (e.target.confirmPassword.value !== e.target.newPassword.value) {
+			setPasswordError(t("PASSWORDS_DO_NOT_MATCH"));
+			return;
+		}
 
-    if (!user) return
+		if (!user) return;
 
-    const updateInput = {
-      id: user.id,
-      currentPassword: e.target.oldPassword.value,
-      newPassword: e.target.newPassword.value,
-    }
+		const updateInput = {
+			id: user.id,
+			currentPassword: e.target.oldPassword.value,
+			newPassword: e.target.newPassword.value,
+		};
 
-    await changePassword({ variables: { input: updateInput } })
-  }
+		await changePassword({ variables: { input: updateInput } });
+	};
 
-  const handleSkills = (skill: any[]) => {
-    setSkill(skill?.map((s) => s.value as Skill))
-  }
+	const handleSkills = (skill: Array<{ value: Skill }>) => {
+		setSkill(skill?.map((s) => s.value));
+	};
 
-  const getSkillLabel = (value: Skill) => {
-    return value
-      .split('_')
-      .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
-      .join(' ')
-  }
+	if (!user) {
+		navigate("/login");
+		return null;
+	}
 
-  const getInitialSkills = () => {
-    return user?.skills?.length
-      ? user.skills.map((value: Skill) => ({
-          label: getSkillLabel(value),
-          value,
-        }))
-      : []
-  }
+	return (
+		<section className="pt-[50px] pb-[100px] md:pb-[50px]">
+			<div className="container">
+				<Title color="var(--ember)" borderColor="var(--lavender)">
+					{user.name}.
+				</Title>
 
-  if (!user) {
-    navigate('/login')
-    return null
-  }
-
-  return (
-    <section className="pt-[50px] pb-[100px] md:pb-[50px]">
-      <div className="container">
-        <Title color="var(--ember)" borderColor="var(--lavender)">
-          {user.name}.
-        </Title>
-
-        <p>
-          {t('IF_YOU_HAVE_NOT_JOINED_OUR_SLACK_WORKSPACE_YET')}{' '}
-          <a
-            rel="noopener noreferrer"
-            className="text-current"
-            href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
-            target="_blank"
-          >
-            {t('HERE_IS_THE_LINK')}
-          </a>
-        </p>
-        <form onSubmit={handleUserUpdate} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('PROFILE_EMAIL')}:</Label>
-            <Input
-              name="email"
-              id="email"
-              placeholder={user?.email}
-              type="email"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="name">{t('PROFILE_NAME')}:</Label>
-            <Input name="name" id="name" placeholder={user?.name} />
-          </div>
-          {skillsData && (
-            <div className="space-y-2">
-              <Label>{t('PROFILE_SKILLS')}:</Label>
-              <Select
-                value={skill.length > 0 ? skill[0] : undefined}
-                onValueChange={(value) => {
-                  const selectedSkill = skillsData.find(
-                    (skill) => skill.value === value
-                  )
-                  if (selectedSkill) {
-                    handleSkills([selectedSkill])
-                  }
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('PROFILE_SKILLS')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {skillsData.map((skillOption) => (
-                    <SelectItem
-                      key={skillOption.value}
-                      value={skillOption.value}
-                    >
-                      {skillOption.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-          <Button
-            type="submit"
-            disabled={updateUserLoading}
-            className="mt-10 w-full"
-            variant="outline"
-          >
-            {t('PROFILE_SUBMIT')}
-          </Button>
-        </form>
-      </div>
-      <div className="container mt-12 mb-8">
-        <h2 className="text-2xl font-bold mb-6">
-          {t('PROFILE_CHANGE_PASSWORD')}
-        </h2>
-        <form onSubmit={handlePasswordChange} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="oldPassword">{t('PROFILE_OLD_PASSWORD')}:</Label>
-            <Input
-              name="oldPassword"
-              id="oldPassword"
-              type="password"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="newPassword">{t('PROFILE_NEW_PASSWORD')}:</Label>
-            <Input
-              name="newPassword"
-              id="newPassword"
-              type="password"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">
-              {t('PROFILE_CONFIRM_PASSWORD')}:
-            </Label>
-            <Input
-              name="confirmPassword"
-              id="confirmPassword"
-              type="password"
-              required
-            />
-          </div>
-          <Button
-            type="submit"
-            disabled={changePasswordLoading}
-            className="mt-10 w-full"
-            variant="outline"
-          >
-            {t('PROFILE_CHANGE_PASSWORD')}
-          </Button>
-          {(passwordError || changePasswordError) && (
-            <Alert variant="destructive" className="mt-4">
-              <AlertDescription>
-                {passwordError || changePasswordError?.message}
-              </AlertDescription>
-            </Alert>
-          )}
-        </form>
-      </div>
-      <Separator className="my-8" />
-      <div className="container">
-        <h2 className="text-2xl font-bold mb-6">{t('YOUR_PROJECTS')}</h2>
-        <ul>
-          {user?.projects && user.projects.length > 0 ? (
-            user.projects.map((project: any) => (
-              <li
-                className="mb-[45px] min-h-[17px] border-4 border-lavender"
-                key={project.id}
-              >
-                <ProjectItem project={project} />
-              </li>
-            ))
-          ) : (
-            <h1>
-              {t('THIS_LOOKS_REALLY_EMPTY')}{' '}
-              <Link className="text-current" to="/projects">
-                {t('GO_TO_PROJECTS')} &rarr;
-              </Link>
-            </h1>
-          )}
-        </ul>
-      </div>
-    </section>
-  )
+				<p>
+					{t("IF_YOU_HAVE_NOT_JOINED_OUR_SLACK_WORKSPACE_YET")}{" "}
+					<a
+						rel="noopener noreferrer"
+						className="text-current"
+						href="https://join.slack.com/t/nonprofitdevs/shared_invite/zt-fd7sjx0l-9vf9TRTA~4lfCiG78LRJuw"
+						target="_blank"
+					>
+						{t("HERE_IS_THE_LINK")}
+					</a>
+				</p>
+				<form onSubmit={handleUserUpdate} className="space-y-4">
+					<div className="space-y-2">
+						<Label htmlFor="email">{t("PROFILE_EMAIL")}:</Label>
+						<Input
+							name="email"
+							id="email"
+							placeholder={user?.email}
+							type="email"
+						/>
+					</div>
+					<div className="space-y-2">
+						<Label htmlFor="name">{t("PROFILE_NAME")}:</Label>
+						<Input name="name" id="name" placeholder={user?.name} />
+					</div>
+					{skillsData && (
+						<div className="space-y-2">
+							<Label>{t("PROFILE_SKILLS")}:</Label>
+							<Select
+								value={skill.length > 0 ? skill[0] : undefined}
+								onValueChange={(value) => {
+									const selectedSkill = skillsData.find(
+										(skill) => skill.value === value,
+									);
+									if (selectedSkill) {
+										handleSkills([selectedSkill]);
+									}
+								}}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder={t("PROFILE_SKILLS")} />
+								</SelectTrigger>
+								<SelectContent>
+									{skillsData.map((skillOption) => (
+										<SelectItem
+											key={skillOption.value}
+											value={skillOption.value}
+										>
+											{skillOption.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+					)}
+					<Button
+						type="submit"
+						disabled={updateUserLoading}
+						className="mt-10 w-full"
+						variant="outline"
+					>
+						{t("PROFILE_SUBMIT")}
+					</Button>
+				</form>
+			</div>
+			<div className="container mt-12 mb-8">
+				<h2 className="text-2xl font-bold mb-6">
+					{t("PROFILE_CHANGE_PASSWORD")}
+				</h2>
+				<form onSubmit={handlePasswordChange} className="space-y-4">
+					<div className="space-y-2">
+						<Label htmlFor="oldPassword">{t("PROFILE_OLD_PASSWORD")}:</Label>
+						<Input
+							name="oldPassword"
+							id="oldPassword"
+							type="password"
+							required
+						/>
+					</div>
+					<div className="space-y-2">
+						<Label htmlFor="newPassword">{t("PROFILE_NEW_PASSWORD")}:</Label>
+						<Input
+							name="newPassword"
+							id="newPassword"
+							type="password"
+							required
+						/>
+					</div>
+					<div className="space-y-2">
+						<Label htmlFor="confirmPassword">
+							{t("PROFILE_CONFIRM_PASSWORD")}:
+						</Label>
+						<Input
+							name="confirmPassword"
+							id="confirmPassword"
+							type="password"
+							required
+						/>
+					</div>
+					<Button
+						type="submit"
+						disabled={changePasswordLoading}
+						className="mt-10 w-full"
+						variant="outline"
+					>
+						{t("PROFILE_CHANGE_PASSWORD")}
+					</Button>
+					{(passwordError || changePasswordError) && (
+						<Alert variant="destructive" className="mt-4">
+							<AlertDescription>
+								{passwordError || changePasswordError?.message}
+							</AlertDescription>
+						</Alert>
+					)}
+				</form>
+			</div>
+			<Separator className="my-8" />
+			<div className="container">
+				<h2 className="text-2xl font-bold mb-6">{t("YOUR_PROJECTS")}</h2>
+				<ul>
+					{user?.projects && user.projects.length > 0 ? (
+						user.projects.map((project) => (
+							<li
+								className="mb-[45px] min-h-[17px] border-4 border-lavender"
+								key={project.id}
+							>
+								<ProjectItem project={project} />
+							</li>
+						))
+					) : (
+						<h1>
+							{t("THIS_LOOKS_REALLY_EMPTY")}{" "}
+							<Link className="text-current" to="/projects">
+								{t("GO_TO_PROJECTS")} &rarr;
+							</Link>
+						</h1>
+					)}
+				</ul>
+			</div>
+		</section>
+	);
 }
