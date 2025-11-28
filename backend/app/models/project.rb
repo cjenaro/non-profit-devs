@@ -1,6 +1,17 @@
 class Project < ApplicationRecord
   has_and_belongs_to_many :users
 
+  STATUSES = {
+    pending_review: "PENDING_REVIEW",
+    planning: "PLANNING",
+    open: "OPEN",
+    active: "ACTIVE",
+    completed: "COMPLETED",
+    cancelled: "CANCELLED"
+  }.freeze
+
+  enum :status, STATUSES
+
   validates :name, presence: true
   validates :description, presence: true
   validates :contact_email, presence: true,
