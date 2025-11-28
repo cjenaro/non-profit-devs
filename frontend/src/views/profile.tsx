@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import ProjectItem from '../components/ProjectItem'
@@ -13,12 +14,40 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '../components/ui/form'
 import { Input } from '../components/ui/input'
 import { Separator } from '../components/ui/separator'
 import { useUserContext } from '../context/UserContext'
-import type { Skill } from '../generated/graphql'
+import { Skill } from '../generated/graphql'
 import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
+import { z } from 'zod/mini'
+
+const userUpdateSchema = z.object({
+  name: z
+    .string()
+    .check(z.minLength(1, 'Name is required'))
+    .check(z.minLength(2, 'Name must be at least 2 characters')),
+  email: z
+    .string()
+    .check(z.email('Please enter a valid email address')),
+  skills: z.array(z.enum(Skill)),
+})
+
+const passwordChangeSchema = z.object({
+  oldPassword: z
+    .string()
+    .check(z.minLength(1, 'Current password is required')),
+  newPassword: z
+    .string()
+    .check(z.minLength(8, 'Password must be at least 8 characters')),
+  confirmPassword: z
+    .string()
+    .check(z.minLength(1, 'Please confirm your new password')),
+})
+
+type UserUpdateFormData = z.infer<typeof userUpdateSchema>
+type PasswordChangeFormData = z.infer<typeof passwordChangeSchema>
 
 export function Profile() {
   const navigate = useNavigate()
@@ -34,7 +63,8 @@ export function Profile() {
     { error: changePasswordError, loading: changePasswordLoading },
   ] = useChangePassword()
 
-  const form = useForm({
+  const form = useForm<UserUpdateFormData>({
+    resolver: zodResolver(userUpdateSchema),
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
@@ -42,7 +72,8 @@ export function Profile() {
     },
   })
 
-  const passwordForm = useForm({
+  const passwordForm = useForm<PasswordChangeFormData>({
+    resolver: zodResolver(passwordChangeSchema),
     defaultValues: {
       oldPassword: '',
       newPassword: '',
@@ -50,11 +81,7 @@ export function Profile() {
     },
   })
 
-  const handleUserUpdate = async (data: {
-    name: string
-    email: string
-    skills: Skill[]
-  }) => {
+  const handleUserUpdate = async (data: UserUpdateFormData) => {
     if (!user) return
 
     const updateInput = {
@@ -74,11 +101,7 @@ export function Profile() {
     }
   }
 
-  const handlePasswordChange = async (data: {
-    oldPassword: string
-    newPassword: string
-    confirmPassword: string
-  }) => {
+  const handlePasswordChange = async (data: PasswordChangeFormData) => {
     setPasswordError('')
 
     if (data.confirmPassword !== data.newPassword) {
@@ -134,6 +157,7 @@ export function Profile() {
                   <FormControl>
                     <Input {...field} type="email" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -146,6 +170,7 @@ export function Profile() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -161,6 +186,7 @@ export function Profile() {
                       onChange={field.onChange}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -193,6 +219,7 @@ export function Profile() {
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -205,6 +232,7 @@ export function Profile() {
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -217,6 +245,7 @@ export function Profile() {
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
