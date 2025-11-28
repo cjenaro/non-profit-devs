@@ -9,7 +9,7 @@ module Types
     field :description, String, null: false
     field :contact_email, String, null: false
     field :slug, String, null: false
-    field :status, String, null: false
+    field :status, Types::ProjectStatusType, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 

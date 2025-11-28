@@ -48,6 +48,7 @@
   "JOIN_THE_NON_PROFIT_CHANNEL_ON_OUR_SLACK": "Join the {{channel}} channel on our ",
   "VOLUNTEERS_ON_THIS_PROJECT": "Volunteers on this project",
   "JOIN_THIS_PROJECT": "Join this project",
+  "LEAVE_THIS_PROJECT": "Leave this project",
 
   "FILTER_PROJECTS_BY_NAME": "Filter projects by name...",
   "LOOKS_LIKE_THERE_ARE_NO_PROJECTS_HERE_YET": "Looks like there are no projects here... yet!",

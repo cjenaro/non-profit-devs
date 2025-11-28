@@ -53,7 +53,7 @@ export function Pitch() {
 				name: data.name,
 				description: data.description,
 				contactEmail: data.contactEmail,
-				status: "PENDING_REVIEW",
+				status: "pending_review",
 			},
 		};
 

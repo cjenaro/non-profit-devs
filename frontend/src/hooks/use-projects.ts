@@ -9,6 +9,10 @@ import type {
   GetProjectQueryVariables,
   GetProjectsQuery,
   GetProjectsQueryVariables,
+  RemoveUserFromProjectMutation,
+  RemoveUserFromProjectMutationVariables,
+  UpdateProjectMutation,
+  UpdateProjectMutationVariables,
 } from '../generated/graphql'
 
 // GraphQL Operations - Define outside hooks for reusability with TypedDocumentNode
@@ -35,7 +39,7 @@ const GET_PROJECTS_QUERY: TypedDocumentNode<
   }
 `
 
-const GET_PROJECT_QUERY: TypedDocumentNode<
+export const GET_PROJECT_QUERY: TypedDocumentNode<
   GetProjectQuery,
   GetProjectQueryVariables
 > = gql`
@@ -96,6 +100,49 @@ const ADD_USER_TO_PROJECT_MUTATION: TypedDocumentNode<
   }
 `
 
+const REMOVE_USER_FROM_PROJECT_MUTATION: TypedDocumentNode<
+  RemoveUserFromProjectMutation,
+  RemoveUserFromProjectMutationVariables
+> = gql`
+  mutation RemoveUserFromProject($input: RemoveUserFromProjectInput!) {
+    removeUserFromProject(input: $input) {
+      project {
+        id
+        name
+        description
+        contactEmail
+        users {
+          id
+          name
+          email
+        }
+      }
+    }
+  }
+`
+
+const UPDATE_PROJECT_MUTATION: TypedDocumentNode<
+  UpdateProjectMutation,
+  UpdateProjectMutationVariables
+> = gql`
+  mutation UpdateProject($input: UpdateProjectInput!) {
+    updateProject(input: $input) {
+      project {
+        id
+        name
+        description
+        contactEmail
+        status
+        users {
+          id
+          name
+          email
+        }
+      }
+    }
+  }
+`
+
 // Custom hooks - Use the operations defined above
 export default function useProjects() {
   return useQuery(GET_PROJECTS_QUERY)
@@ -116,4 +163,12 @@ export function useCreateProject() {
 
 export function useAddUserToProject() {
   return useMutation(ADD_USER_TO_PROJECT_MUTATION)
+}
+
+export function useRemoveUserFromProject() {
+  return useMutation(REMOVE_USER_FROM_PROJECT_MUTATION)
+}
+
+export function useUpdateProject() {
+  return useMutation(UPDATE_PROJECT_MUTATION)
 }

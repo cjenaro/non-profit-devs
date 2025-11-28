@@ -33,19 +33,19 @@ projects = [
     name: "Food Bank Management System",
     description: "A system to help food banks track inventory and donations",
     contact_email: "contact@foodbank.org",
-    status: "OPEN"
+     status: "open"
   },
   {
     name: "Volunteer Coordination Platform",
     description: "Platform to coordinate volunteers for various nonprofits",
     contact_email: "volunteer@platform.org",
-    status: "OPEN"
+     status: "open"
   },
   {
     name: "Educational Resources Hub",
     description: "Free educational resources for underserved communities",
     contact_email: "education@hub.org",
-    status: "PLANNING"
+     status: "planning"
   }
 ].map { |attrs| Project.create!(attrs) }
 
