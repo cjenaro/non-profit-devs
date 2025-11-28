@@ -15,6 +15,7 @@ export default function HowItWorks() {
         height="268"
         viewBox="0 0 610 268"
       >
+        <title>Bricks</title>
         <rect
           id="_5"
           data-name="5"
