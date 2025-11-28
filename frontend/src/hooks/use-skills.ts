@@ -12,13 +12,8 @@ type GetSkillsQuery = {
   } | null
 }
 
-type GetSkillsQueryVariables = {}
-
 // GraphQL Operations - Define outside hooks for reusability with TypedDocumentNode
-const GET_SKILLS_QUERY: TypedDocumentNode<
-  GetSkillsQuery,
-  GetSkillsQueryVariables
-> = gql`
+const GET_SKILLS_QUERY: TypedDocumentNode<GetSkillsQuery> = gql`
   query GetSkills {
     __type(name: "Skill") {
       name

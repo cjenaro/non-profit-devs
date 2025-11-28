@@ -1,24 +1,59 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { Divider } from '../components/Divider'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { Input } from '../components/Input'
 import ProjectItem from '../components/ProjectItem'
-import Select from '../components/Select'
+import { SkillsSelector } from '../components/SkillsSelector'
 import { Title } from '../components/Title'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Button } from '../components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../components/ui/form'
+import { Input } from '../components/ui/input'
+import { Separator } from '../components/ui/separator'
 import { useUserContext } from '../context/UserContext'
-import type { Skill } from '../generated/graphql'
+import { Skill } from '../generated/graphql'
 import { useChangePassword, useUpdateUser } from '../hooks/use-devs'
-import { useGetSkills } from '../hooks/use-skills'
+import { z } from 'zod/mini'
+
+const userUpdateSchema = z.object({
+  name: z
+    .string()
+    .check(z.minLength(1, 'Name is required'))
+    .check(z.minLength(2, 'Name must be at least 2 characters')),
+  email: z
+    .string()
+    .check(z.email('Please enter a valid email address')),
+  skills: z.array(z.enum(Skill)),
+})
+
+const passwordChangeSchema = z.object({
+  oldPassword: z
+    .string()
+    .check(z.minLength(1, 'Current password is required')),
+  newPassword: z
+    .string()
+    .check(z.minLength(8, 'Password must be at least 8 characters')),
+  confirmPassword: z
+    .string()
+    .check(z.minLength(1, 'Please confirm your new password')),
+})
+
+type UserUpdateFormData = z.infer<typeof userUpdateSchema>
+type PasswordChangeFormData = z.infer<typeof passwordChangeSchema>
 
 export function Profile() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [passwordError, setPasswordError] = useState('')
   const [user, setUser] = useUserContext()
-  const [skill, setSkill] = useState<Skill[]>(user?.skills || [])
 
   const [updateUser, { error: updateUserError, loading: updateUserLoading }] =
     useUpdateUser()
@@ -28,18 +63,32 @@ export function Profile() {
     { error: changePasswordError, loading: changePasswordLoading },
   ] = useChangePassword()
 
-  const { skills: skillsData } = useGetSkills()
+  const form = useForm<UserUpdateFormData>({
+    resolver: zodResolver(userUpdateSchema),
+    defaultValues: {
+      name: user?.name || '',
+      email: user?.email || '',
+      skills: user?.skills || [],
+    },
+  })
 
-  const handleUserUpdate = async (e: any) => {
-    e.preventDefault()
+  const passwordForm = useForm<PasswordChangeFormData>({
+    resolver: zodResolver(passwordChangeSchema),
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+  })
 
+  const handleUserUpdate = async (data: UserUpdateFormData) => {
     if (!user) return
 
     const updateInput = {
       id: user.id,
-      name: e.target.name.value || user.name,
-      skills: skill,
-      email: e.target.email.value || user.email,
+      name: data.name,
+      skills: data.skills,
+      email: data.email,
     }
 
     await updateUser({ variables: { input: updateInput } })
@@ -52,11 +101,10 @@ export function Profile() {
     }
   }
 
-  const handlePasswordChange = async (e: any) => {
-    e.preventDefault()
+  const handlePasswordChange = async (data: PasswordChangeFormData) => {
     setPasswordError('')
 
-    if (e.target.confirmPassword.value !== e.target.newPassword.value) {
+    if (data.confirmPassword !== data.newPassword) {
       setPasswordError(t('PASSWORDS_DO_NOT_MATCH'))
       return
     }
@@ -65,31 +113,11 @@ export function Profile() {
 
     const updateInput = {
       id: user.id,
-      currentPassword: e.target.oldPassword.value,
-      newPassword: e.target.newPassword.value,
+      currentPassword: data.oldPassword,
+      newPassword: data.newPassword,
     }
 
     await changePassword({ variables: { input: updateInput } })
-  }
-
-  const handleSkills = (skill: any[]) => {
-    setSkill(skill?.map((s) => s.value as Skill))
-  }
-
-  const getSkillLabel = (value: Skill) => {
-    return value
-      .split('_')
-      .map((word) => `${word[0]}${word.slice(1).toLowerCase()}`)
-      .join(' ')
-  }
-
-  const getInitialSkills = () => {
-    return user?.skills?.length
-      ? user.skills.map((value: Skill) => ({
-          label: getSkillLabel(value),
-          value,
-        }))
-      : []
   }
 
   if (!user) {
@@ -99,8 +127,8 @@ export function Profile() {
 
   return (
     <section className="pt-[50px] pb-[100px] md:pb-[50px]">
-      <div className="container">
-        <Title color="var(--ember)" borderColor="var(--lavender)">
+      <div className="container space-y-6">
+        <Title color="var(--primary)" borderColor="var(--background)">
           {user.name}.
         </Title>
 
@@ -115,88 +143,137 @@ export function Profile() {
             {t('HERE_IS_THE_LINK')}
           </a>
         </p>
-        <form onSubmit={handleUserUpdate}>
-          <Input
-            label={`${t('PROFILE_EMAIL')}:`}
-            placeholder={user?.email}
-            name="email"
-            id="email"
-          />
-          <Input
-            label={`${t('PROFILE_NAME')}:`}
-            name="name"
-            placeholder={user?.name}
-            id="name"
-            className="mt-4"
-          />
-          {skillsData && (
-            <Select
-              styles="mt-4"
-              initialSelectedItems={getInitialSkills()}
-              placeholder={`${t('PROFILE_SKILLS')}:`}
-              label={`${t('PROFILE_SKILLS')}:`}
-              onChange={handleSkills}
-              options={skillsData}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleUserUpdate)}
+            className="space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_EMAIL')}:</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="email" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          )}
-          <Button
-            loading={updateUserLoading}
-            className="mt-10 w-full border border-lavender text-lavender bg-ember"
-          >
-            {t('PROFILE_SUBMIT')}
-          </Button>
-        </form>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_NAME')}:</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="skills"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_SKILLS')}:</FormLabel>
+                  <FormControl>
+                    <SkillsSelector
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              disabled={updateUserLoading}
+              className="w-full"
+              variant="outline"
+            >
+              {t('PROFILE_SUBMIT')}
+            </Button>
+          </form>
+        </Form>
       </div>
-      <Divider
-        color="var(--ember)"
-        backgroundColor="var(--lavender)"
-        label={t('PROFILE_CHANGE_PASSWORD')}
-        className="mt-12.5 mb-7.5"
-      />
       <div className="container">
-        <form onSubmit={handlePasswordChange}>
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_OLD_PASSWORD')}:`}
-            name="oldPassword"
-            id="oldPassword"
-          />
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_NEW_PASSWORD')}:`}
-            name="newPassword"
-            id="newPassword"
-          />
-          <Input
-            className="mt-4"
-            type="password"
-            label={`${t('PROFILE_CONFIRM_PASSWORD')}:`}
-            name="confirmPassword"
-            id="confirmPassword"
-          />
-          <Button
-            loading={changePasswordLoading}
-            className="mt-10 w-full border border-lavender text-lavender bg-ember"
+        <h2 className="text-2xl font-bold mt-8 mb-6">
+          {t('PROFILE_CHANGE_PASSWORD')}
+        </h2>
+        <Form {...passwordForm}>
+          <form
+            onSubmit={passwordForm.handleSubmit(handlePasswordChange)}
+            className="space-y-4"
           >
-            {t('PROFILE_CHANGE_PASSWORD')}
-          </Button>
-          <ErrorMessage error={passwordError || changePasswordError} />
-        </form>
+            <FormField
+              control={passwordForm.control}
+              name="oldPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_OLD_PASSWORD')}:</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={passwordForm.control}
+              name="newPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_NEW_PASSWORD')}:</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={passwordForm.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('PROFILE_CONFIRM_PASSWORD')}:</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              disabled={changePasswordLoading}
+              className="w-full"
+              variant="outline"
+            >
+              {t('PROFILE_CHANGE_PASSWORD')}
+            </Button>
+            {(passwordError || changePasswordError) && (
+              <Alert variant="destructive" className="mt-4">
+                <AlertDescription>
+                  {passwordError || changePasswordError?.message}
+                </AlertDescription>
+              </Alert>
+            )}
+          </form>
+        </Form>
       </div>
-      <Divider
-        color="var(--ember)"
-        backgroundColor="var(--lavender)"
-        label={t('YOUR_PROJECTS')}
-        className="mt-12.5 mb-7.5"
-      />
+      <Separator className="my-8" />
       <div className="container">
-        <ul>
+        <h2 className="text-2xl font-bold mb-6">{t('YOUR_PROJECTS')}</h2>
+        <ul className='space-y-4'>
           {user?.projects && user.projects.length > 0 ? (
-            user.projects.map((project: any) => (
+            user.projects.map((project) => (
               <li
-                className="mb-[45px] min-h-[17px] border-4 border-lavender"
                 key={project.id}
               >
                 <ProjectItem project={project} />

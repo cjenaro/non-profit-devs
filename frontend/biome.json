@@ -1,5 +1,16 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
+  "overrides": [
+    {
+      "includes": ["src/generated/**", "src/components/ui/**"],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ],
   "linter": {
     "enabled": true,
     "rules": {

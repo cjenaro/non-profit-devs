@@ -2,8 +2,9 @@ import type React from 'react'
 import { createContext, type ReactNode, useContext, useState } from 'react'
 import type { User } from '../generated/graphql'
 
-interface UserWithToken extends User {
-  token: string
+interface UserWithToken extends Pick<User, 'id' | 'email' | 'name' | 'skills'> {
+  token: string;
+  projects: Pick<User["projects"][number], 'id' | 'name' | 'description' | 'createdAt' | 'status'>[];
 }
 
 type UserContextType = [

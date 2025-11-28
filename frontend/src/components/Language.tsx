@@ -19,7 +19,7 @@ const Language = () => {
   return availableLanguages.map((availableLanguage: LanguageItem) => (
     <button
       key={availableLanguage.code}
-      className="border-none bg-none uppercase text-red-600 mr-2 p-2 cursor-pointer focus:outline-dotted block w-full mb-2 md:inline-block md:w-auto md:mb-0"
+      className="border-none bg-none uppercase text-foreground mr-2 p-2 cursor-pointer focus:outline-dotted block w-full mb-2 md:inline-block md:w-auto md:mb-0 hover:text-primary"
       onClick={() => i18n.changeLanguage(availableLanguage.code)}
     >
       {availableLanguage.label}

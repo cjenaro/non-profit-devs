@@ -17,7 +17,10 @@ import { Project } from './views/project'
 import { Projects } from './views/projects'
 import { Signup } from './views/signup'
 
-const root = createRoot(document.getElementById('root')!)
+const rootEl = document.getElementById('root')
+if (!rootEl) throw new Error("Root element does not exist!")
+
+const root = createRoot(rootEl)
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -25,7 +28,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-        loader: () => ({ message: 'HOME' }),
       },
       {
         path: '/profile',

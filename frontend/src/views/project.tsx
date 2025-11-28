@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../components/Button'
-import Spinner from '../components/Spinner'
 import { Title } from '../components/Title'
+import { Button } from '../components/ui/button'
+import { Spinner } from '../components/ui/spinner'
 import { useUserContext } from '../context/UserContext'
 import { useAddUserToProject, useGetProject } from '../hooks/use-projects'
 
@@ -31,13 +31,18 @@ export function Project() {
     fetchProject()
   }
 
-  if (projectLoading) return <Spinner fullscreen />
+  if (projectLoading)
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-278px)]">
+        <Spinner className="h-8 w-8" />
+      </div>
+    )
   if (!project) return null
 
   return (
     <section className="pt-[50px] pb-[100px] min-h-[calc(100vh-278px)] md:pb-[50px] md:min-h-[calc(100vh-228px)]">
       <div className="container">
-        <Title color="var(--ember)" borderColor="var(--lavender)">
+        <Title color="var(--primary)" borderColor="var(--background)">
           {project.name}.
         </Title>
         <p>{project.description}</p>
@@ -66,7 +71,7 @@ export function Project() {
           <li className="mb-2 py-2 tracking-wider font-bold border-b-2 border-gray-300">
             {t('VOLUNTEERS_ON_THIS_PROJECT')}:
           </li>
-          {project.users.map((user: any) => (
+          {project.users.map((user) => (
             <li
               key={user.id}
               className="mb-2 py-2 tracking-wider font-bold border-b-2 border-gray-300"
@@ -76,10 +81,11 @@ export function Project() {
           ))}
         </ul>
         <Button
-          loading={loading}
           onClick={handleJoinProject}
+          disabled={loading}
           className="w-full"
         >
+          {loading && <Spinner className="mr-2 h-4 w-4" />}
           {t('JOIN_THIS_PROJECT')}
         </Button>
       </div>
